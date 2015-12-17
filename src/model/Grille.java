@@ -1,6 +1,8 @@
 
 package model;
 
+import java.util.Observable;
+
 /**
  *
  * @author 0404ragrau
@@ -12,13 +14,11 @@ public class Grille extends Observable {
 
     
     public Grille() {
-        this.grille = new Case[15][15];
-      
+        this.grille = new Case[15][15];   
     }
  
 
-    
-    private void notify() {
+    public void notif() {
         setChanged();
         notifyObservers(grille);
     }
@@ -26,7 +26,7 @@ public class Grille extends Observable {
     // méthode qui va démarrer l'application
     public void initGrille() {
         
-        notify();
+        notif();
     }
   
     
@@ -35,7 +35,7 @@ public class Grille extends Observable {
         
     // une fois qu'on met à jour la grille, on va notifier 
     // les observeurs (ici en l'occurence, la view)
-        notify();
+        notif();
     }
     
     
@@ -50,13 +50,13 @@ public class Grille extends Observable {
     
     
     
-    public void initGrille() {
-        for ( int row = 0; row < 8; row++ ) {
-            for ( int col = 0; col < 8; col++ ) {
-                
-                
-            }
-    }
+//    public void initGrille() {
+//        for ( int row = 0; row < 8; row++ ) {
+//            for ( int col = 0; col < 8; col++ ) {
+//                
+//                
+//            }
+//    }
     
    
     
@@ -73,11 +73,11 @@ public class Grille extends Observable {
     
  
     
-    public static void main(String[] args) {
-        
-//        initGrille();
-        
-        
-    }
+//    public static void main(String[] args) {
+//        
+////        initGrille();
+//        
+//        
+//    }
    
-}
+

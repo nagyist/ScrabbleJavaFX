@@ -1,11 +1,13 @@
 
 package model;
 
+import java.util.Observable;
+
 /**
  *
  * @author 0404ragrau
  */
-public class Chevalet {
+public class Chevalet extends Observable {
     
     // le chevalet est un tableau de jetons
     public Jeton[] chev;
@@ -14,23 +16,37 @@ public class Chevalet {
     
 
     // par défaut, le chevalet est vide
-    public Chevalet(int nbJetons, Jeton[] chev) {
+    public Chevalet() {
         this.nbJetons = 0;
         this.chev = new Jeton[7];
-    
-}
-    
-    // methode random qui place 7 jetons au hasard sur le chevalet
-    public DistribJetons() {
         
+        for (int i = 0; i < 7 ; ++i) {
+            chev[i] = new Jeton();
+            ++nbJetons;
+        }
         
+    }
+    
+    
+    
+    public void notif() {
+        setChanged();
+        notifyObservers();
     }
     
     
-    // le joueur choisi la lettre qu'il veut placer ainsi que les coordonnées de 
-    // la case où il veut la placer
-    public placerMot() {
-        
-    }
+//    
+//    // methode random qui place 7 jetons au hasard sur le chevalet
+//    public DistribJetons() {
+//        
+//        
+//    }
+//    
+//    
+//    // le joueur choisi la lettre qu'il veut placer ainsi que les coordonnées de 
+//    // la case où il veut la placer
+//    public placerMot() {
+//        
+//    }
     
 }

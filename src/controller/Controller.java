@@ -12,12 +12,12 @@ package controller;
  */
 public interface Controller {
     
-    public void afficherGrille();
-    public void afficheChevalet();
-    public void choisirLettre();
-    
-    public void distribJetons();
-    public void placerJeton();
+//    public void afficherGrille();
+//    public void afficheChevalet();
+//    public void choisirLettre();
+//    
+//    public void distribJetons();
+//    public void placerJeton();
 
             
     

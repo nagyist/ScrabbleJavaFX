@@ -7,9 +7,12 @@
 package view;
 
 import controller.Controller;
+import controller.ControllerImpl;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import model.Chevalet;
+import model.Grille;
 
 /**
  *
@@ -20,10 +23,12 @@ public class View implements Observer {
     
     private final Controller ctrl;
     private final Scanner scanner = new Scanner(System.in);
+    public Chevalet chev;
+    public Grille grille;
     
-    
-    public View(Controller ctrl) {
+    public View(ControllerImpl ctrl) {
         this.ctrl = ctrl;
+        this.chev = ctrl.getChevalet();
     }
 
 //    private static final String CASENORMALE = "\u001b[40m ";
@@ -42,7 +47,8 @@ public class View implements Observer {
 
     // va afficher le chevalet à l'écran
     public void afficheChevalet() {
-    
+        
+        
     }
 
     // utilisateur va sélectionner une lettre de son chevalet à placer sur la grille
@@ -55,8 +61,9 @@ public class View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        
-        
+//        afficherGrille();
+//        afficheChevalet();
+        System.out.println("coucou");
     }
 
 
@@ -70,18 +77,19 @@ public class View implements Observer {
 //    }
 
 
+//
+//    public static void main(String[] args) {
+//        
+//        
+//        // Test couleurs :
+//        System.out.println(CASENORMALE + "Case normale " + RESET);
+//        System.out.println(CASEMOTTRIPLE + "Case mot triple " + RESET);
+//        System.out.println(CASEMOTDOUBLE + "Case mot double " + RESET);
+//        System.out.println(CASELETTRETRIPLE + "Case lettre triple " + RESET);
+//        System.out.println(CASELETTREDOUBLE + "Case lettre double " + RESET);
+//        System.out.println(CASECENTRE + "Case centre " + RESET);
+//        
+//    }
 
-    public static void main(String[] args) {
-        
-        
-        // Test couleurs :
-        System.out.println(CASENORMALE + "Case normale " + RESET);
-        System.out.println(CASEMOTTRIPLE + "Case mot triple " + RESET);
-        System.out.println(CASEMOTDOUBLE + "Case mot double " + RESET);
-        System.out.println(CASELETTRETRIPLE + "Case lettre triple " + RESET);
-        System.out.println(CASELETTREDOUBLE + "Case lettre double " + RESET);
-        System.out.println(CASECENTRE + "Case centre " + RESET);
-        
-    }
 
-
+}

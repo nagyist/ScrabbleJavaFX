@@ -17,18 +17,18 @@ public class Case {
     
     
     
-    public Case(String lettre, boolean caseJouée, enum CASETYPE) {
+    public Case(String lettre, boolean caseJouée, CASETYPE caseType) {
         this.caseJouée = false;
         this.lettre = lettre;
-        this.CASETYPE = CASETYPE;
+        //this.CASETYPE = CASETYPE;
     }  
     
     
     
     // methode qui va prendre la lettre du Jeton et l'ajouter à la case jouée
-    public String getLettre() {
-        
-    }
+//    public String getLettre() {
+//        
+//    }
     
     
 

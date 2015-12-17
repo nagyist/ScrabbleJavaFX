@@ -6,35 +6,47 @@
 
 package controller;
 
-import view.View;
+import model.Chevalet;
 import model.Grille;
+import view.View;
 
 /**
  *
  * @author 0404ragrau
  */
 public class ControllerImpl implements Controller {
+//public class ControllerImpl{
     
     
     private Grille grille;
     private View vue;
+    private Chevalet chevalet;
+    
     
 
     public ControllerImpl() {
         this.vue = new View(this);
         this.grille = new Grille();
-        grille.addObserver(view);
+        this.chevalet = new Chevalet();
+        grille.addObserver(vue);
+        chevalet.addObserver(vue);
     }
     
     public void lancer() {
-        grille.initGrille();
+//        grille.initGrille();
+        grille.notif();
+        chevalet.notif();
     }
      
+    public Chevalet getChevalet() {
+        return this.chevalet;
+    }
      
     public static void main(String[] args) {
     
         ControllerImpl control = new ControllerImpl();
         control.lancer();
+
     }
      
 }
