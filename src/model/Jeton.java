@@ -27,9 +27,13 @@ public class Jeton {
     public Jeton() {
         
         Random rand = new Random();
-        int  n = rand.nextInt(26);
+        int n = rand.nextInt(26);
         this.lettre = lettres[n];
 
+    }
+    
+    public char getChar() {
+        return lettre;
     }
     
     

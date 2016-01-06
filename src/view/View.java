@@ -43,10 +43,20 @@ public class View implements Observer {
     // affichage de la grille à l'écran
     public void afficherGrille() {
         
+        
     }
+    
+
+        
+    
 
     // va afficher le chevalet à l'écran
     public void afficheChevalet() {
+       
+        System.out.println("chevalet :");
+        chev.affiche();
+        
+        
         
         
     }
@@ -61,9 +71,9 @@ public class View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-//        afficherGrille();
-//        afficheChevalet();
-        System.out.println("coucou");
+        afficherGrille();
+        afficheChevalet();
+
     }
 
 

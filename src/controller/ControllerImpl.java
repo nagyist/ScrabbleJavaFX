@@ -30,12 +30,16 @@ public class ControllerImpl implements Controller {
         this.chevalet = new Chevalet();
         grille.addObserver(vue);
         chevalet.addObserver(vue);
+        lancer();
     }
     
     public void lancer() {
 //        grille.initGrille();
-        grille.notif();
-        chevalet.notif();
+//        grille.notif();
+//        chevalet.notif();
+        grille.initGrille();
+        chevalet.affiche();
+        grille.afficheGrille();
     }
      
     public Chevalet getChevalet() {
@@ -45,7 +49,6 @@ public class ControllerImpl implements Controller {
     public static void main(String[] args) {
     
         ControllerImpl control = new ControllerImpl();
-        control.lancer();
 
     }
      

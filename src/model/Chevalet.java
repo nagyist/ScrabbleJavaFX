@@ -15,7 +15,7 @@ public class Chevalet extends Observable {
     
     
 
-    // par défaut, le chevalet est vide
+    // 
     public Chevalet() {
         this.nbJetons = 0;
         this.chev = new Jeton[7];
@@ -24,6 +24,17 @@ public class Chevalet extends Observable {
             chev[i] = new Jeton();
             ++nbJetons;
         }
+        
+    }
+    
+
+    
+    public void affiche() {
+        
+        System.out.println("chevalet :");
+        for (Jeton j : chev)
+            System.out.print(j.getChar() + " ");
+        System.out.print("\n");
         
     }
     

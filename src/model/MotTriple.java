@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package model;
+
+/**
+ *
+ * @author 0404ragrau
+ */
+public class MotTriple extends Case {
+    
+    private static final String MOTTRIPLE = "\u001b[41m ";
+    private static final String RESET = "\u001B[0m ";
+    
+    @Override
+    public void printCase() {
+        System.out.print(MOTTRIPLE + " d " + RESET);
+    }
+
+    @Override
+    public char getChar() {
+        return lettre;
+    }
+    
+}
