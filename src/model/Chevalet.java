@@ -1,7 +1,10 @@
 
 package model;
 
+
+import java.awt.Point;
 import java.util.Observable;
+import java.util.Scanner;
 
 /**
  *
@@ -12,10 +15,9 @@ public class Chevalet extends Observable {
     // le chevalet est un tableau de jetons
     public Jeton[] chev;
     public int nbJetons;
-    
+    private final Scanner scanner = new Scanner(System.in);
     
 
-    // 
     public Chevalet() {
         this.nbJetons = 0;
         this.chev = new Jeton[7];
@@ -23,41 +25,45 @@ public class Chevalet extends Observable {
         for (int i = 0; i < 7 ; ++i) {
             chev[i] = new Jeton();
             ++nbJetons;
-        }
+        }    
+    }
+    
+    public void getJetons() {
         
     }
     
+   
+    private boolean seTrouveDansChev(char c) {
+
+        for (Jeton j : chev.getJetons()) {
+            if (j.getChar() == c) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    public void verifLettre(char c) {
+        
+        while (!seTrouveDansChev(c)) {
+            System.out.println("vous ne possédez pas cette lettre sur votre chevalet");
+            c = scanner.next().charAt(0);
+        }
+    }
+        
 
     
-    public void affiche() {
+    public void placerMot() {
         
-        System.out.println("chevalet :");
-        for (Jeton j : chev)
-            System.out.print(j.getChar() + " ");
-        System.out.print("\n");
-        
+        notif();
     }
-    
-    
     
     public void notif() {
         setChanged();
         notifyObservers();
-    }
-    
-    
-//    
-//    // methode random qui place 7 jetons au hasard sur le chevalet
-//    public DistribJetons() {
-//        
-//        
-//    }
-//    
-//    
-//    // le joueur choisi la lettre qu'il veut placer ainsi que les coordonnées de 
-//    // la case où il veut la placer
-//    public placerMot() {
-//        
-//    }
-    
+    }    
 }
+    
+    
+

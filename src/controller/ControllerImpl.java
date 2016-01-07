@@ -8,6 +8,7 @@ package controller;
 
 import model.Chevalet;
 import model.Grille;
+import model.Jeton;
 import view.View;
 
 /**
@@ -15,7 +16,6 @@ import view.View;
  * @author 0404ragrau
  */
 public class ControllerImpl implements Controller {
-//public class ControllerImpl{
     
     
     private Grille grille;
@@ -32,14 +32,31 @@ public class ControllerImpl implements Controller {
         chevalet.addObserver(vue);
         lancer();
     }
+
+    
+    public void positionnerLettre(int li, int co) {
+        
+    }
+    
+    
+    public void verifierLettre(char c) {
+       
+        chevalet.verifLettre(c);
+    }
+    
+
     
     public void lancer() {
 //        grille.initGrille();
 //        grille.notif();
 //        chevalet.notif();
         grille.initGrille();
-        chevalet.affiche();
-        grille.afficheGrille();
+//        chevalet.affiche();
+//        grille.afficheGrille();
+        vue.choisirLettre();
+        vue.choisirPosition();
+//        grille.placerLettreGrille();
+        
     }
      
     public Chevalet getChevalet() {

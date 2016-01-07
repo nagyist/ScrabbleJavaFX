@@ -12,7 +12,7 @@ package model;
  */
 public class Simple extends Case {
 
-    private static final String SIMPLE = "\u001b[40m ";
+    private static final String SIMPLE = "\u001b[40m";
     private static final String RESET = "\u001B[0m ";
     
     

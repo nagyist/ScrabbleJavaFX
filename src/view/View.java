@@ -13,6 +13,8 @@ import java.util.Observer;
 import java.util.Scanner;
 import model.Chevalet;
 import model.Grille;
+import static model.Grille.DIM;
+import model.Jeton;
 
 /**
  *
@@ -21,85 +23,98 @@ import model.Grille;
 public class View implements Observer {
     
     
-    private final Controller ctrl;
+    private final ControllerImpl ctrl;
     private final Scanner scanner = new Scanner(System.in);
     public Chevalet chev;
     public Grille grille;
+    
     
     public View(ControllerImpl ctrl) {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
     }
 
-//    private static final String CASENORMALE = "\u001b[40m ";
-//    private static final String CASEMOTTRIPLE = "\u001b[41m "; 
-//    private static final String CASEMOTDOUBLE = "\u001b[45m "; 
-//    private static final String CASELETTRETRIPLE = "\u001b[44m "; 
-//    private static final String CASELETTREDOUBLE = "\u001b[46m "; 
-//    private static final String CASECENTRE = "\u001b[43m ";
-//    private static final String RESET = "\u001B[0m ";
-//    
+    
+    public void affMsg(String msg) {
+        System.out.println(msg);
+    }
 
-    // affichage de la grille à l'écran
+    
     public void afficherGrille() {
         
+        System.out.println("grille :");
+        
+        for (int li = 0; li < DIM; li++) {
+            System.out.print("|");
+            for (int co = 0; co < DIM; co++) {
+                grille[li][co].printCase();
+                
+            }
+            System.out.print("|\n");
+        }
         
     }
-    
 
+    
+    public void afficherChevalet() {
         
-    
-
-    // va afficher le chevalet à l'écran
-    public void afficheChevalet() {
-       
         System.out.println("chevalet :");
-        chev.affiche();
-        
-        
-        
+        for (Jeton j : chev.getJetons())
+            System.out.print(j.getChar() + " ");
+        System.out.print("\n");
         
     }
+    
 
-    // utilisateur va sélectionner une lettre de son chevalet à placer sur la grille
+    public void choisirPosition() {
+        
+//      Point pt;    
+        System.out.println("choisir position (li, co) : ");
+        
+        int li = scanner.nextInt();
+        int co = scanner.nextInt();
+        
+        while (li < 0 || li > 14 || co < 0 || co > 14) {
+            System.out.println("mauvaise position");
+            li = scanner.nextInt();
+            co = scanner.nextInt();   
+        }
+        
+        ctrl.positionnerLettre(li, co);
+        
+         
+    }
+    
+    
+    
+    
     public void choisirLettre() {
         
+        System.out.println("choisir lettre : ");
+        char c = scanner.next().charAt(0);
+        
+        ctrl.verifierLettre(c);
+        
+ 
     }
     
-    
 
+
+    // utilisateur va sélectionner une lettre + positions (li,co) à placer sur la grille
+    public void placerLettre() {
+        
+      
+    }
+    
 
     @Override
     public void update(Observable o, Object arg) {
-        afficherGrille();
-        afficheChevalet();
+        
+        if (o instanceof Chevalet)
+            afficherChevalet();
+        else if (o instanceof Grille)
+            afficherGrille();
 
     }
-
-
-
-//dessiner grille
-//        for (int row = 0; row < 15; row++) {
-//            for (int col = 0; col < 15; col++) {
-//                grille[row][col] = new Case();
-//            }
-//        }
-//    }
-
-
-//
-//    public static void main(String[] args) {
-//        
-//        
-//        // Test couleurs :
-//        System.out.println(CASENORMALE + "Case normale " + RESET);
-//        System.out.println(CASEMOTTRIPLE + "Case mot triple " + RESET);
-//        System.out.println(CASEMOTDOUBLE + "Case mot double " + RESET);
-//        System.out.println(CASELETTRETRIPLE + "Case lettre triple " + RESET);
-//        System.out.println(CASELETTREDOUBLE + "Case lettre double " + RESET);
-//        System.out.println(CASECENTRE + "Case centre " + RESET);
-//        
-//    }
-
 
 }
