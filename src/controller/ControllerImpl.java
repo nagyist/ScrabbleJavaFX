@@ -6,6 +6,7 @@
 
 package controller;
 
+//import model.Case;
 import model.Chevalet;
 import model.Grille;
 import model.Jeton;
@@ -44,17 +45,40 @@ public class ControllerImpl implements Controller {
         chevalet.verifLettre(c);
     }
     
+    
+    
+    public void fournirChoix(int choix) {
+        if (choix != 3) {
+            switch (choix) {
+                case 1:
+                    System.out.println("1");
+                    break;
+                case 2:
+                    System.out.println("2");
+                    break;
+                case 3:
+                    System.out.println("3");
+                    break;
+                default:
+                    vue.affMsg("Erreur de choix");
+                    grille.notif();
+            }
+            grille.notif();
+        }
+    }
 
     
     public void lancer() {
+        grille.notif();
+        chevalet.notif();
 //        grille.initGrille();
 //        grille.notif();
 //        chevalet.notif();
-        grille.initGrille();
-//        chevalet.affiche();
-//        grille.afficheGrille();
-        vue.choisirLettre();
-        vue.choisirPosition();
+//        grille.initGrille();
+//        vue.afficherChevalet();
+//        vue.afficherGrille();
+//        vue.choisirLettre();
+//        vue.choisirPosition();
 //        grille.placerLettreGrille();
         
     }
@@ -62,10 +86,18 @@ public class ControllerImpl implements Controller {
     public Chevalet getChevalet() {
         return this.chevalet;
     }
-     
+    
+    public Grille getGrille() {
+        return this.grille;
+    }
+    
+
+    
     public static void main(String[] args) {
     
         ControllerImpl control = new ControllerImpl();
+        
+        
 
     }
      

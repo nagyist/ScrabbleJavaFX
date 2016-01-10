@@ -1,7 +1,10 @@
 
 package model;
 
+import java.awt.Point;
+import java.util.HashSet;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  *
@@ -10,21 +13,111 @@ import java.util.Observable;
 public class Grille extends Observable {
     
 
-    private Case[][] grille;
+    public Case[][] grille;
     public static final int DIM = 15;
+    
 
+    private static final Set<Point> simples = new HashSet<Point>();
+    private static final Set<Point> doubles = new HashSet<Point>();
+    private static final Set<Point> triples = new HashSet<Point>();
+    private static final Set<Point> motdoubles = new HashSet<Point>();
+    private static final Set<Point> mottriples = new HashSet<Point>();
+
+       
     
     public Grille() {
         this.grille = new Case[DIM][DIM];   
     }
- 
 
+    
+    public Case getCase(int li, int co) {
+        return this.grille[li][co];
+    }
+    
     public void notif() {
         setChanged();
         notifyObservers();
     }
     
     public void initGrille() {
+        
+        /*
+        doubles.add(new Point(0, 3));
+        doubles.add(new Point(0, DIM-4));
+        doubles.add(new Point(2, 6));
+        doubles.add(new Point(2, DIM-7));
+        
+        doubles.add(new Point(3, 0));
+        doubles.add(new Point(3, 7));
+        doubles.add(new Point(3, DIM-1));
+        
+        doubles.add(new Point(6, 2));
+        doubles.add(new Point(6, 6));
+        doubles.add(new Point(6, DIM-7));
+        doubles.add(new Point(6, DIM-3));
+        
+        doubles.add(new Point(7, 3));
+        doubles.add(new Point(7, DIM-4));
+        
+        doubles.add(new Point(DIM-7, 2));
+        doubles.add(new Point(DIM-7, 6));
+        doubles.add(new Point(DIM-7, DIM-7));
+        doubles.add(new Point(DIM-7, DIM-3));
+        
+        doubles.add(new Point(DIM-4, 0));
+        doubles.add(new Point(DIM-4, 7));
+        doubles.add(new Point(DIM-4, DIM-1));
+        
+        doubles.add(new Point(DIM-3, 6));
+        doubles.add(new Point(DIM-3, DIM-7));
+        doubles.add(new Point(DIM-1, 3));
+        doubles.add(new Point(DIM-1, DIM-4));
+        
+        triples.add(new Point(1,5));
+        triples.add(new Point(1, DIM-6));
+        triples.add(new Point(5,1));
+        triples.add(new Point(5,5));
+        triples.add(new Point(5, DIM-6));
+        triples.add(new Point(5,DIM-2));
+        
+        triples.add(new Point(DIM-6, 1));
+        triples.add(new Point(DIM-6, 5));
+        triples.add(new Point(DIM-6, DIM-6));
+        triples.add(new Point(DIM-6,DIM-2));
+        triples.add(new Point(DIM-2, 5));
+        triples.add(new Point(DIM-2, DIM-6));        
+        
+        motdoubles.add(new Point(1, 1));
+        motdoubles.add(new Point(DIM-2, DIM-2));
+        motdoubles.add(new Point(2, 2));
+        motdoubles.add(new Point(DIM-3, DIM-3));
+        motdoubles.add(new Point(3, 3));
+        motdoubles.add(new Point(DIM-4, DIM-4));
+        motdoubles.add(new Point(4, 4));
+        motdoubles.add(new Point(DIM-5, DIM-5));
+        
+        motdoubles.add(new Point(7, 7));
+
+        motdoubles.add(new Point(DIM-5, 4));
+        motdoubles.add(new Point(DIM-5, DIM-5));
+        motdoubles.add(new Point(DIM-4, 3));
+        motdoubles.add(new Point(DIM-4, DIM-4));
+        motdoubles.add(new Point(DIM-3, 2));
+        motdoubles.add(new Point(DIM-3, DIM-3));
+        motdoubles.add(new Point(DIM-2, 1));
+        motdoubles.add(new Point(DIM-2, DIM-2));
+
+        mottriples.add(new Point(0, 0));
+        mottriples.add(new Point(0, 7));
+        mottriples.add(new Point(0, DIM - 1));
+        mottriples.add(new Point(7, 0));
+        mottriples.add(new Point(7, DIM-1));
+        mottriples.add(new Point(DIM - 1, 0));
+        mottriples.add(new Point(DIM - 1, 7));
+        mottriples.add(new Point(DIM - 1, DIM - 1));
+                
+        */
+        
         
         for (int li = 0; li < DIM; ++li) {
             for (int co = 0; co < DIM; ++co) {
@@ -71,13 +164,14 @@ public class Grille extends Observable {
     }
   
     
-    // methode qui va mettre à jour la grille après chaque coup joué
+    
     public void updateGrille() {
-        
-        
+  
         notif();
     }
     
+
 }
+
 
 

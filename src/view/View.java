@@ -27,11 +27,15 @@ public class View implements Observer {
     private final Scanner scanner = new Scanner(System.in);
     public Chevalet chev;
     public Grille grille;
+
     
     
     public View(ControllerImpl ctrl) {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
+        this.grille = ctrl.getGrille();
+ 
+
     }
 
     
@@ -39,6 +43,17 @@ public class View implements Observer {
         System.out.println(msg);
     }
 
+    private void testObs() {
+        System.out.println("entrer nombre : ");
+        ctrl.fournirChoix(entrerNb("choix : "));
+    }
+    
+    
+    public int entrerNb(String msg) {
+        affMsg(msg);
+        int entree = Integer.parseInt(scanner.next());
+        return entree;
+    }
     
     public void afficherGrille() {
         
@@ -46,23 +61,23 @@ public class View implements Observer {
         
         for (int li = 0; li < DIM; li++) {
             System.out.print("|");
-            for (int co = 0; co < DIM; co++) {
-                grille[li][co].printCase();
-                
+            for (int co = 0; co < DIM; co++) {  
+                System.out.println(grille.getCase(li,co));  
             }
             System.out.print("|\n");
-        }
-        
+        }    
     }
 
     
     public void afficherChevalet() {
         
         System.out.println("chevalet :");
-        for (Jeton j : chev.getJetons())
-            System.out.print(j.getChar() + " ");
+        chev.getJetons();
+//        
+//        for (Jeton j : chev.getJetons())
+//            System.out.print(j.getChar() + " ");
         System.out.print("\n");
-        
+//        
     }
     
 
@@ -86,8 +101,6 @@ public class View implements Observer {
     }
     
     
-    
-    
     public void choisirLettre() {
         
         System.out.println("choisir lettre : ");
@@ -109,12 +122,17 @@ public class View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        
         if (o instanceof Chevalet)
             afficherChevalet();
-        else if (o instanceof Grille)
+        else if (o instanceof Grille) {
             afficherGrille();
+        }
+        choisirPosition();
+        choisirLettre();
+//        testObs();
+//            
 
     }
 
+    
 }

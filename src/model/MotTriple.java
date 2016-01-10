@@ -16,8 +16,8 @@ public class MotTriple extends Case {
     private static final String RESET = "\u001B[0m ";
     
     @Override
-    public void printCase() {
-        System.out.print(MOTTRIPLE + " d " + RESET);
+    public String toString() {
+        return MOTTRIPLE + " d " + RESET;
     }
 
     @Override

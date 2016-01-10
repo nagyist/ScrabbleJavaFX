@@ -3,6 +3,8 @@ package model;
 
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 
@@ -12,35 +14,38 @@ import java.util.Scanner;
  */
 public class Chevalet extends Observable {
     
-    // le chevalet est un tableau de jetons
-    public Jeton[] chev;
+    public List<Jeton> chev; 
     public int nbJetons;
     private final Scanner scanner = new Scanner(System.in);
     
 
     public Chevalet() {
         this.nbJetons = 0;
-        this.chev = new Jeton[7];
+        this.chev = new ArrayList<>();
         
         for (int i = 0; i < 7 ; ++i) {
-            chev[i] = new Jeton();
+            chev.add(new Jeton());
             ++nbJetons;
         }    
     }
     
     public void getJetons() {
-        
+        for (Jeton j : chev)
+            System.out.println(j.getChar() + " ");
+
     }
     
    
     private boolean seTrouveDansChev(char c) {
 
-        for (Jeton j : chev.getJetons()) {
-            if (j.getChar() == c) {
-                return true;
-            }
-        }
-        return false;
+        return chev.contains(c);
+            
+//        for (Jeton j : chev) {
+//            if (j.getChar() == c) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
     
     
@@ -56,7 +61,6 @@ public class Chevalet extends Observable {
     
     public void placerMot() {
         
-        notif();
     }
     
     public void notif() {

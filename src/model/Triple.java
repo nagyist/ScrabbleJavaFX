@@ -21,8 +21,8 @@ public class Triple extends Case {
     }
 
     @Override
-    public void printCase() {
-        System.out.print(TRIPLE + " t " + RESET);
+    public String toString() {
+        return TRIPLE + " t " + RESET;
     }
 
     

@@ -21,8 +21,8 @@ public class Double extends Case {
     }
 
     @Override
-    public void printCase() {
-        System.out.print(DOUBLE + " d " + RESET);
+    public String toString() {
+        return DOUBLE + " d " + RESET;
     }
 
     

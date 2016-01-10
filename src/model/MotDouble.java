@@ -17,8 +17,8 @@ public class MotDouble extends Case {
     
     
     @Override
-    public void printCase() {
-        System.out.print(MOTDOUBLE + " d " + RESET);
+    public String toString() {
+        return MOTDOUBLE + " d " + RESET;
     }
 
     @Override
