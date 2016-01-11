@@ -9,7 +9,7 @@ public abstract class Case {
 
     private static final String RESET = "\u001B[0m ";
     private boolean caseJouée;
-    char lettre;
+    char lettre = ' ';
     
 
     public Case() {
@@ -21,7 +21,6 @@ public abstract class Case {
     public void setChar(char lettre) { 
         
         if (!caseJouée) {
-            System.out.println("test");
             this.lettre = lettre;
         }
         caseJouée = true;

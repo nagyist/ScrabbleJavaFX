@@ -122,15 +122,16 @@ public class Grille extends Observable {
         
         for (int li = 0; li < DIM; ++li) {
             for (int co = 0; co < DIM; ++co) {
+                Point pt = new Point();
                 if (li == 0 | li == DIM-1 | li == 7 && ( co == 3 | co == 11)   
-                || (li == 2 | li == DIM-2) && (co == 6 | co == 8) 
+                || (li == 2 | li == DIM-3) && (co == 6 | co == 8) 
                 || (li == 3 | li == DIM-4) && (co == 0 | co == 7 | co == 14)
                 || (li == 6 | li == DIM-7) && (co == 2| co == 6 | co == 8 | co == 12))
-                
+//                if (doubles.contains(pt))
                     
                     grille[li][co] = new Double();
                 
-                else if ((li == 5 | li == 9 && co == 1 | co == 5 | co == 9 | co == 14) 
+                else if ((li == 5 | li == 9 && co == 1 | co == 5 | co == 9 | co == 13) 
                       || (li == 1 | li == 13 && co == 5 | co == 9 ))
                     
                     grille[li][co] = new Triple();

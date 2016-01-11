@@ -12,8 +12,8 @@ package model;
  */
 public class MotTriple extends Case {
     
-    private static final String MOTTRIPLE = "\u001b[41m ";
-    private static final String RESET = "\u001B[0m ";
+    private static final String MOTTRIPLE = "\u001b[41m";
+    private static final String RESET = "\u001B[0m";
     
 
     @Override

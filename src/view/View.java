@@ -1,6 +1,5 @@
 package view;
 
-import controller.Controller;
 import controller.ControllerImpl;
 import java.util.Observable;
 import java.util.Observer;
@@ -8,7 +7,6 @@ import java.util.Scanner;
 import model.Chevalet;
 import model.Grille;
 import static model.Grille.DIM;
-import model.Jeton;
 
 /**
  *
@@ -39,32 +37,33 @@ public class View implements Observer {
    
     public void afficherGrille() {
         
-        System.out.println("grille :");
-        
+        System.out.println("-----------------------------------------------");
         for (int li = 0; li < DIM; li++) {
             System.out.print("|");
             for (int co = 0; co < DIM; co++) {  
                 System.out.print(grille.getCase(li,co));  
             }
             System.out.print("|\n");
-        }    
+        } 
+        System.out.println("-----------------------------------------------");
     }
 
     
     public void afficherChevalet() {
         
-        System.out.println("chevalet :");
         chev.getJetons();
-        System.out.print("\n");  
+        System.out.print("\n"); 
+        System.out.println("-----------------------------------------------");
     }
     
         
-    public void choisirLettre() {
+    public char choisirLettre() {
         
         System.out.println("choisir lettre : ");
         c = scanner.next().charAt(0);
         
         ctrl.verifierLettre(c);
+        return c;
 
     }
 
@@ -84,7 +83,7 @@ public class View implements Observer {
         ctrl.positionnerLettre(li, co, c);
       
     }
-
+ 
    
 
     @Override
@@ -94,13 +93,12 @@ public class View implements Observer {
 //        else if (o instanceof Grille) {
 //            afficherGrille();
 //        }
+        
         afficherGrille();
         afficherChevalet();
+        
         choisirLettre();
-        choisirPosition();
-
-//        testObs();
-//            
+        choisirPosition();          
 
     }
 

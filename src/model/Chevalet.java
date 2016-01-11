@@ -31,7 +31,7 @@ public class Chevalet extends Observable {
     
     public void getJetons() {
         for (Jeton j : getChev())
-            System.out.print(j.getChar() + " ");
+            System.out.print(j.getChar() + "  ");
     }
     
     

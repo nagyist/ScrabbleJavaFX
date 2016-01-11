@@ -12,8 +12,8 @@ package model;
  */
 public class Triple extends Case {
     
-    private static final String TRIPLE = "\u001b[44m "; 
-    private static final String RESET = "\u001B[0m ";
+    private static final String TRIPLE = "\u001b[44m"; 
+    private static final String RESET = "\u001B[0m";
 
     @Override
     public char getChar() {
