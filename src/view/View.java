@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import controller.Controller;
@@ -27,6 +21,7 @@ public class View implements Observer {
     private final Scanner scanner = new Scanner(System.in);
     public Chevalet chev;
     public Grille grille;
+    private char c;
 
     
     
@@ -34,8 +29,6 @@ public class View implements Observer {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
         this.grille = ctrl.getGrille();
- 
-
     }
 
     
@@ -43,18 +36,7 @@ public class View implements Observer {
         System.out.println(msg);
     }
 
-    private void testObs() {
-        System.out.println("entrer nombre : ");
-        ctrl.fournirChoix(entrerNb("choix : "));
-    }
-    
-    
-    public int entrerNb(String msg) {
-        affMsg(msg);
-        int entree = Integer.parseInt(scanner.next());
-        return entree;
-    }
-    
+   
     public void afficherGrille() {
         
         System.out.println("grille :");
@@ -62,7 +44,7 @@ public class View implements Observer {
         for (int li = 0; li < DIM; li++) {
             System.out.print("|");
             for (int co = 0; co < DIM; co++) {  
-                System.out.println(grille.getCase(li,co));  
+                System.out.print(grille.getCase(li,co));  
             }
             System.out.print("|\n");
         }    
@@ -73,17 +55,21 @@ public class View implements Observer {
         
         System.out.println("chevalet :");
         chev.getJetons();
-//        
-//        for (Jeton j : chev.getJetons())
-//            System.out.print(j.getChar() + " ");
-        System.out.print("\n");
-//        
+        System.out.print("\n");  
     }
     
+        
+    public void choisirLettre() {
+        
+        System.out.println("choisir lettre : ");
+        c = scanner.next().charAt(0);
+        
+        ctrl.verifierLettre(c);
+
+    }
 
     public void choisirPosition() {
-        
-//      Point pt;    
+         
         System.out.println("choisir position (li, co) : ");
         
         int li = scanner.nextInt();
@@ -95,40 +81,24 @@ public class View implements Observer {
             co = scanner.nextInt();   
         }
         
-        ctrl.positionnerLettre(li, co);
-        
-         
-    }
-    
-    
-    public void choisirLettre() {
-        
-        System.out.println("choisir lettre : ");
-        char c = scanner.next().charAt(0);
-        
-        ctrl.verifierLettre(c);
-        
- 
-    }
-    
-
-
-    // utilisateur va sélectionner une lettre + positions (li,co) à placer sur la grille
-    public void placerLettre() {
-        
+        ctrl.positionnerLettre(li, co, c);
       
     }
-    
+
+   
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof Chevalet)
-            afficherChevalet();
-        else if (o instanceof Grille) {
-            afficherGrille();
-        }
-        choisirPosition();
+//        if (o instanceof Chevalet)
+//            afficherChevalet();
+//        else if (o instanceof Grille) {
+//            afficherGrille();
+//        }
+        afficherGrille();
+        afficherChevalet();
         choisirLettre();
+        choisirPosition();
+
 //        testObs();
 //            
 

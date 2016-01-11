@@ -5,19 +5,26 @@ package model;
  *
  * @author 0404ragrau
  */
-abstract class Case {
+public abstract class Case {
 
+    private static final String RESET = "\u001B[0m ";
     private boolean caseJouée;
     char lettre;
     
 
     public Case() {
-        this.lettre = lettre;    
+        this.lettre = lettre;
+        caseJouée = false;
     }
     
     
     public void setChar(char lettre) { 
-        this.lettre = lettre; 
+        
+        if (!caseJouée) {
+            System.out.println("test");
+            this.lettre = lettre;
+        }
+        caseJouée = true;
     }
     
     @Override

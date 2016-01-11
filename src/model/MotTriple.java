@@ -15,14 +15,15 @@ public class MotTriple extends Case {
     private static final String MOTTRIPLE = "\u001b[41m ";
     private static final String RESET = "\u001B[0m ";
     
-    @Override
-    public String toString() {
-        return MOTTRIPLE + " d " + RESET;
-    }
 
     @Override
     public char getChar() {
         return lettre;
+    }
+    
+    @Override
+    public String toString() {
+        return MOTTRIPLE + " " + lettre + " " + RESET;
     }
     
 }

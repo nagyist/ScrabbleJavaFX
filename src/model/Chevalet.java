@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class Chevalet extends Observable {
     
-    public List<Jeton> chev; 
+    private List<Jeton> chev; 
     public int nbJetons;
     private final Scanner scanner = new Scanner(System.in);
     
@@ -30,34 +30,14 @@ public class Chevalet extends Observable {
     }
     
     public void getJetons() {
-        for (Jeton j : chev)
-            System.out.println(j.getChar() + " ");
-
-    }
-    
-   
-    private boolean seTrouveDansChev(char c) {
-
-        return chev.contains(c);
-            
-//        for (Jeton j : chev) {
-//            if (j.getChar() == c) {
-//                return true;
-//            }
-//        }
-//        return false;
+        for (Jeton j : getChev())
+            System.out.print(j.getChar() + " ");
     }
     
     
-    public void verifLettre(char c) {
-        
-        while (!seTrouveDansChev(c)) {
-            System.out.println("vous ne possédez pas cette lettre sur votre chevalet");
-            c = scanner.next().charAt(0);
-        }
+    public void removeJeton(Jeton j) {
+        chev.remove(j);
     }
-        
-
     
     public void placerMot() {
         
@@ -67,6 +47,13 @@ public class Chevalet extends Observable {
         setChanged();
         notifyObservers();
     }    
+
+    /**
+     * @return the chev
+     */
+    public List<Jeton> getChev() {
+        return chev;
+    }
 }
     
     

@@ -22,7 +22,7 @@ public class Triple extends Case {
 
     @Override
     public String toString() {
-        return TRIPLE + " t " + RESET;
+        return TRIPLE + " " + lettre + " " + RESET;
     }
 
     

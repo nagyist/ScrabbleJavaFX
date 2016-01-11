@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controller;
 
-//import model.Case;
+import java.util.Scanner;
 import model.Chevalet;
 import model.Grille;
 import model.Jeton;
@@ -19,54 +13,42 @@ import view.View;
 public class ControllerImpl implements Controller {
     
     
-    private Grille grille;
-    private View vue;
-    private Chevalet chevalet;
-    
+    private final Grille grille = new Grille();
+    private final View vue;
+    private final Chevalet chevalet = new Chevalet();
+    private final Scanner scanner = new Scanner(System.in);
     
 
     public ControllerImpl() {
         this.vue = new View(this);
-        this.grille = new Grille();
-        this.chevalet = new Chevalet();
         grille.addObserver(vue);
         chevalet.addObserver(vue);
         lancer();
     }
 
-    
-    public void positionnerLettre(int li, int co) {
-        
+  
+    public boolean exists(char c){
+        for(Jeton j : chevalet.getChev()){
+            if(j.getChar()==c){
+                return true;
+            }
+        }
+        return false;
     }
-    
     
     public void verifierLettre(char c) {
-       
-        chevalet.verifLettre(c);
-    }
-    
-    
-    
-    public void fournirChoix(int choix) {
-        if (choix != 3) {
-            switch (choix) {
-                case 1:
-                    System.out.println("1");
-                    break;
-                case 2:
-                    System.out.println("2");
-                    break;
-                case 3:
-                    System.out.println("3");
-                    break;
-                default:
-                    vue.affMsg("Erreur de choix");
-                    grille.notif();
-            }
-            grille.notif();
+        while (!exists(c)) {
+            System.out.println("vous ne possédez pas cette lettre sur votre chevalet");
+            c = scanner.next().charAt(0);
         }
     }
-
+    
+        
+    public void positionnerLettre(int li, int co, char c) {
+     
+        grille.getCase(li, co).setChar(c); 
+    }
+    
     
     public void lancer() {
         grille.notif();
@@ -96,9 +78,6 @@ public class ControllerImpl implements Controller {
     public static void main(String[] args) {
     
         ControllerImpl control = new ControllerImpl();
-        
-        
 
-    }
-     
+    }   
 }

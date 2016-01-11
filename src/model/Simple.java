@@ -28,7 +28,7 @@ public class Simple extends Case {
     
     @Override
     public String toString() {
-        return SIMPLE + " s " + RESET;
+        return SIMPLE + " " + lettre + " " + RESET;
     }
 
     

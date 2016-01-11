@@ -26,7 +26,8 @@ public class Grille extends Observable {
        
     
     public Grille() {
-        this.grille = new Case[DIM][DIM];   
+        this.grille = new Case[DIM][DIM];
+        initGrille();
     }
 
     

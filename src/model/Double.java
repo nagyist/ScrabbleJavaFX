@@ -22,7 +22,7 @@ public class Double extends Case {
 
     @Override
     public String toString() {
-        return DOUBLE + " d " + RESET;
+        return DOUBLE + " " + lettre + " " + RESET;
     }
 
     
