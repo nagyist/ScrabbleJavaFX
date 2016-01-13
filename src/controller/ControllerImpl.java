@@ -57,8 +57,7 @@ public class ControllerImpl implements Controller {
             
             while (!exists(ch) && ch != CHAR_FIN_MOT) {
                 System.out.println("vous ne possédez pas cette lettre sur votre chevalet");
-                ch = scanner.next().charAt(0);  
-            
+                ch = scanner.next().charAt(0);       
         }
         return ch;
     }
@@ -68,7 +67,6 @@ public class ControllerImpl implements Controller {
 
         grille.getCase(pt).setChar(ch);
         Jeton j = chevalet.getJeton(ch);
-//        System.out.println("j : " + j.getChar());
         mot.ajouterJetonMot(j);
         chevalet.removeJeton(ch);
         grille.notif();
@@ -78,16 +76,7 @@ public class ControllerImpl implements Controller {
     
     public void lancer() {
         grille.notif();
-        chevalet.notif();
-//        grille.initGrille();
-//        grille.notif();
-//        chevalet.notif();
-//        grille.initGrille();
-//        vue.afficherChevalet();
-//        vue.afficherGrille();
-//        vue.choisirLettre();
-//        vue.choisirPosition();
-//        grille.placerLettreGrille();    
+        chevalet.notif();   
     }
 
   

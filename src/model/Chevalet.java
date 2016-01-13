@@ -14,17 +14,14 @@ import java.util.Scanner;
 public class Chevalet extends Observable {
     
     private List<Jeton> chev; 
-    private int nbJetons;
     private final Scanner scanner = new Scanner(System.in);
     
 
     public Chevalet() {
-        this.nbJetons = 0;
         this.chev = new ArrayList<>();
         
         for (int i = 0; i < 7 ; ++i) {
             chev.add(new Jeton());
-            ++nbJetons;
         }    
     }
       

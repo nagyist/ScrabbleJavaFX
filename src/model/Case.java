@@ -25,11 +25,7 @@ public abstract class Case {
         } 
         caseJouée = true;
     }
-    
-//    public boolean caseJouée() {
-//        return caseJouée;
-//    }
-    
+       
     @Override
     abstract public String toString();
 

@@ -18,17 +18,11 @@ public class Mot {
     }
     
     public void ajouterJetonMot(Jeton j) {
-        mot.add(j);
-        
+        mot.add(j);  
     }
     
     public void afficherMot() {
         for (Jeton j : mot)
             System.out.print(j.getChar());
-    }
-    
-    
-    
-    
-    
+    }   
 }
