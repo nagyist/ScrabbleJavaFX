@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +13,21 @@ public class Mot {
     
     List<Jeton> mot = new ArrayList<>();
 
-    public Mot(List<Jeton> mot) {
+    public Mot() {
         this.mot = mot;
     }
     
-    public void ajouterLettre(Jeton j) {
+    public void ajouterJetonMot(Jeton j) {
         mot.add(j);
         
     }
+    
+    public void afficherMot() {
+        for (Jeton j : mot)
+            System.out.print(j.getChar());
+    }
+    
+    
     
     
     

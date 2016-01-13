@@ -16,6 +16,7 @@ public class Simple extends Case {
     private static final String RESET = "\u001B[0m";
 
     public Simple() {
+        this.lettre = lettre;
     }
     
     

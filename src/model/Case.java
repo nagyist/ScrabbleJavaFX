@@ -9,7 +9,7 @@ public abstract class Case {
 
     private static final String RESET = "\u001B[0m ";
     private boolean caseJouée;
-    char lettre = ' ';
+    public char lettre = ' ';
     
 
     public Case() {
@@ -22,9 +22,13 @@ public abstract class Case {
         
         if (!caseJouée) {
             this.lettre = lettre;
-        }
+        } 
         caseJouée = true;
     }
+    
+//    public boolean caseJouée() {
+//        return caseJouée;
+//    }
     
     @Override
     abstract public String toString();

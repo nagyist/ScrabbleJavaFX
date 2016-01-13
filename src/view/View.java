@@ -1,12 +1,14 @@
 package view;
 
 import controller.ControllerImpl;
+import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import model.Chevalet;
 import model.Grille;
 import static model.Grille.DIM;
+import model.Mot;
 
 /**
  *
@@ -17,31 +19,28 @@ public class View implements Observer {
     
     private final ControllerImpl ctrl;
     private final Scanner scanner = new Scanner(System.in);
+    private char CHAR_FIN_MOT = '/';
     public Chevalet chev;
     public Grille grille;
-    private char c;
-
+    public Mot mot;
     
     
     public View(ControllerImpl ctrl) {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
         this.grille = ctrl.getGrille();
+        this.mot = ctrl.getMot();
     }
 
-    
-    public void affMsg(String msg) {
-        System.out.println(msg);
-    }
-
-   
+      
     public void afficherGrille() {
         
         System.out.println("-----------------------------------------------");
         for (int li = 0; li < DIM; li++) {
             System.out.print("|");
             for (int co = 0; co < DIM; co++) {  
-                System.out.print(grille.getCase(li,co));  
+                Point pt = new Point(li,co);
+                System.out.print(grille.getCase(pt));  
             }
             System.out.print("|\n");
         } 
@@ -56,32 +55,41 @@ public class View implements Observer {
         System.out.println("-----------------------------------------------");
     }
     
+    public void afficherMot(Mot mot) {
+        System.out.print("Mot placé : ");
+        mot.afficherMot();
+        System.out.print("\n"); 
+    }
+    
         
     public char choisirLettre() {
         
         System.out.println("choisir lettre : ");
-        c = scanner.next().charAt(0);
-        
-        ctrl.verifierLettre(c);
-        return c;
+        return ctrl.getCh();
 
     }
 
-    public void choisirPosition() {
-         
+    
+    private boolean positionValide(Point pt) {
+        return pt.x >= 0 && pt.x < DIM && 
+                pt.y >= 0 && pt.y < DIM &&
+                grille.getCharAt(pt) == ' ';
+    }
+    
+    public Point choisirPosition() {
+   
+        Point pt = new Point(); 
         System.out.println("choisir position (li, co) : ");
         
-        int li = scanner.nextInt();
-        int co = scanner.nextInt();
+        pt.x = scanner.nextInt();
+        pt.y = scanner.nextInt();
         
-        while (li < 0 || li > 14 || co < 0 || co > 14) {
+        while (!positionValide(pt)) {
             System.out.println("mauvaise position");
-            li = scanner.nextInt();
-            co = scanner.nextInt();   
-        }
-        
-        ctrl.positionnerLettre(li, co, c);
-      
+            pt.x = scanner.nextInt();
+            pt.y = scanner.nextInt();   
+        } 
+        return pt;      
     }
  
    
@@ -97,8 +105,14 @@ public class View implements Observer {
         afficherGrille();
         afficherChevalet();
         
-        choisirLettre();
-        choisirPosition();          
+        char ch = choisirLettre();
+        if (ch == CHAR_FIN_MOT)
+            afficherMot(mot);
+        else {
+            Point pt = choisirPosition();
+            ctrl.positionnerLettre(pt, ch);
+        }
+
 
     }
 
