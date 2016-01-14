@@ -1,22 +1,25 @@
-package model;
+package view;
+
+import model.*;
 
 /**
  *
  * @author 0404ragrau
  */
-public class Simple extends Case {
+public class ViewSimple extends ViewCase {
 
     private static final String SIMPLE = "\u001b[40m";
     private static final String RESET = "\u001B[0m";
+
+
     
-    
-    public Simple() {
-        getChar();
+    public ViewSimple(char lettre) {
+        super(lettre);
     }
-       
+    
     @Override
     public String toString() {
-        return SIMPLE + " " + getChar() + " " + RESET;
+        return SIMPLE + " " + getLettre() + " " + RESET;
     }
 
     

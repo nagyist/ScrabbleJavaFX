@@ -9,7 +9,7 @@ import java.util.Random;
 public class Jeton {
     
     
-    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n'+
+    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n',
                                 'o','p','q','r','s','t','u','v','w','x','y','z'};
     private final char lettre;
 
@@ -17,7 +17,7 @@ public class Jeton {
     public Jeton() {
         
         Random rand = new Random();
-        int n = rand.nextInt(26);
+        int n = rand.nextInt(lettres.length);
         this.lettre = lettres[n];
 
     }
@@ -26,5 +26,9 @@ public class Jeton {
         return lettre;
     }
 
+    public static void affJetons() {
+        for(char c : lettres)
+            System.out.print(""+c+ "  ");
+    }
 
 }

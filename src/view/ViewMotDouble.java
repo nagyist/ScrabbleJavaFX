@@ -1,22 +1,24 @@
-package model;
+package view;
+
+import model.*;
 
 /**
  *
  * @author 0404ragrau
  */
-public class MotDouble extends Case {
+public class ViewMotDouble extends ViewCase {
     
     private static final String MOTDOUBLE = "\u001b[45m"; 
     private static final String RESET = "\u001B[0m";
     
     
-    public MotDouble() {
-        getChar();
+    public ViewMotDouble(char lettre) {
+        super(lettre);
     }
    
     @Override
     public String toString() {
-        return MOTDOUBLE + " " + getChar() + " " + RESET;
+        return MOTDOUBLE + " " + getLettre() + " " + RESET;
     }
     
 }

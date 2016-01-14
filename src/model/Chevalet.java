@@ -29,10 +29,6 @@ public class Chevalet extends Observable {
         return chev;
     }
     
-    public void getJetons() {
-        for (Jeton j : chev)
-            System.out.print(j.getChar() + "  ");
-    }
     
     //ne peut etre appelé que si ch est dans le chevalet    
     public Jeton getJeton(char c) {

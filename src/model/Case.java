@@ -1,4 +1,3 @@
-
 package model;
 
 /**
@@ -7,16 +6,20 @@ package model;
  */
 public abstract class Case {
 
-    private static final String RESET = "\u001B[0m ";
+//    private static final String RESET = "\u001B[0m ";
     private boolean caseJouée;
-    public char lettre = ' ';
+    private char lettre = ' ';
+
     
 
     public Case() {
-        this.lettre = lettre;
+        getChar();
         caseJouée = false;
     }
     
+    public char getChar() {
+        return this.lettre;
+    }
     
     public void setChar(char lettre) { 
         
@@ -26,10 +29,9 @@ public abstract class Case {
         caseJouée = true;
     }
        
-    @Override
-    abstract public String toString();
+//    @Override
+//    abstract public String toString();
 
-    abstract public char getChar();
    
   
 

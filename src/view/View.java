@@ -1,15 +1,21 @@
 package view;
 
-import controller.ControllerImpl;
+import controller.Controller;
 import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
-import model.Chevalet;
-import model.Grille;
 import static model.Grille.DIM;
+import model.Case;
+import model.Chevalet;
+import model.Double;
+import model.Grille;
+import model.Jeton;
 import model.Mot;
-
+import model.MotDouble;
+import model.MotTriple;
+import model.Simple;
+import model.Triple;
 /**
  *
  * @author 0404ragrau
@@ -17,7 +23,7 @@ import model.Mot;
 public class View implements Observer {
     
     
-    private final ControllerImpl ctrl;
+    private final Controller ctrl;
     private final Scanner scanner = new Scanner(System.in);
     private char CHAR_FIN_MOT = '/';
     public Chevalet chev;
@@ -25,7 +31,7 @@ public class View implements Observer {
     public Mot mot;
     
     
-    public View(ControllerImpl ctrl) {
+    public View(Controller ctrl) {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
         this.grille = ctrl.getGrille();
@@ -40,7 +46,27 @@ public class View implements Observer {
             System.out.print("|");
             for (int co = 0; co < DIM; co++) {  
                 Point pt = new Point(li,co);
-                System.out.print(grille.getCase(pt));  
+                Case caseCourante = grille.getCase(pt);
+                if (caseCourante instanceof Simple) {
+                    ViewCase vSimple = new ViewSimple(caseCourante.getChar());
+                    System.out.print(vSimple);
+                }
+                else if (caseCourante instanceof Double) {
+                    ViewCase vDouble = new ViewDouble(caseCourante.getChar());
+                    System.out.print(vDouble);
+                }
+                else if (caseCourante instanceof Triple) {
+                    ViewCase vTriple = new ViewTriple(caseCourante.getChar());
+                    System.out.print(vTriple);
+                }
+                else if (caseCourante instanceof MotDouble) {
+                    ViewCase vMotDouble = new ViewMotDouble(caseCourante.getChar());
+                    System.out.print(vMotDouble);
+                } 
+                else if (caseCourante instanceof MotTriple) {
+                    ViewCase vMotTriple = new ViewMotTriple(caseCourante.getChar());
+                    System.out.print(vMotTriple);
+                } 
             }
             System.out.print("|\n");
         } 
@@ -50,13 +76,17 @@ public class View implements Observer {
     
     public void afficherChevalet() {
         
-        chev.getJetons();
+        for (Jeton j : chev.getChev())
+            System.out.print(j.getChar() + "  ");
+        
         System.out.print("\n"); 
         System.out.println("-----------------------------------------------");
     }
     
-    public void afficherMot(Mot mot) {
+    public void afficherMot(Mot m) {
+        
         System.out.print("Mot placé : ");
+        ViewMot mot = new ViewMot(m);        
         mot.afficherMot();
         System.out.print("\n"); 
     }
@@ -66,7 +96,6 @@ public class View implements Observer {
         
         System.out.println("choisir lettre : ");
         return ctrl.getCh();
-
     }
 
     
