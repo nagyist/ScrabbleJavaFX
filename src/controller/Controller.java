@@ -7,13 +7,17 @@ import model.Grille;
 import model.Jeton;
 import model.Mot;
 import view.View;
-
+import javafx.stage.Stage;
+import javafx.application.Application;
 /**
  *
  * @author 0404ragrau
  */
-public class Controller {
+public class Controller extends Application{
     
+    public static void main(String[] args) {
+        launch();
+    }
     
     private final Grille grille = new Grille();
     private final View vue;
@@ -21,7 +25,12 @@ public class Controller {
     private final Scanner scanner = new Scanner(System.in);
     private Mot mot = new Mot();
     private char CHAR_FIN_MOT = '/';
-
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        
+        newFenetre(primaryStage);
+    }
 
     public Controller() {
         this.vue = new View(this);
@@ -79,9 +88,5 @@ public class Controller {
         chevalet.notif();   
     }
 
-  
-    public static void main(String[] args) {
-    
-        Controller control = new Controller();
-    }   
+
 }
