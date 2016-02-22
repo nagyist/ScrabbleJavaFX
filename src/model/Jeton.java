@@ -25,10 +25,14 @@ public class Jeton {
     public char getChar() {
         return lettre;
     }
+    
+    public String getStr() {
+        return ""+lettre;
+    }
 
     public static void affJetons() {
         for(char c : lettres)
-            System.out.print(""+c+ "  ");
+            System.out.print(c + "  ");
     }
 
 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.Scanner;
  */
 public class Chevalet extends Observable {
     
-    private List<Jeton> chev; 
+    private final List<Jeton> chev; 
     private final Scanner scanner = new Scanner(System.in);
     
 
@@ -30,7 +29,7 @@ public class Chevalet extends Observable {
     }
     
     
-    //ne peut etre appelé que si ch est dans le chevalet    
+    // ne peut etre appelé que si ch est dans le chevalet    
     public Jeton getJeton(char c) {
         for (Jeton j : chev)
             if (j.getChar() == c) {
@@ -48,10 +47,6 @@ public class Chevalet extends Observable {
                 return;
             }
         }       
-    }
-    
-    public void placerMot() {
-        
     }
 
 

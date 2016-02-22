@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +10,6 @@ import java.util.List;
 public class Mot {
 
     List<Jeton> mot = new ArrayList<>();
-
-    public Mot() {
-        this.mot = mot;
-    }
 
     public void ajouterJetonMot(Jeton j) {
         mot.add(j);

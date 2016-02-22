@@ -1,7 +1,5 @@
 package view;
 
-import model.*;
-
 /**
  *
  * @author 0404ragrau

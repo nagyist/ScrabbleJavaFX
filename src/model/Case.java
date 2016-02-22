@@ -6,14 +6,11 @@ package model;
  */
 public abstract class Case {
 
-//    private static final String RESET = "\u001B[0m ";
     private boolean caseJouée;
     private char lettre = ' ';
 
-    
 
     public Case() {
-        getChar();
         caseJouée = false;
     }
     
@@ -28,9 +25,7 @@ public abstract class Case {
         } 
         caseJouée = true;
     }
-       
-//    @Override
-//    abstract public String toString();
+
 
    
   

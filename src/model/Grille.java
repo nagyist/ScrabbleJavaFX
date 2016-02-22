@@ -14,12 +14,11 @@ public class Grille extends Observable {
     public Case[][] grille;
     public static final int DIM = 15;
 
-    private static final Set<Point> simples = new HashSet<Point>();
-    private static final Set<Point> doubles = new HashSet<Point>();
-    private static final Set<Point> triples = new HashSet<Point>();
-    private static final Set<Point> motsDoubles = new HashSet<Point>();
-    private static final Set<Point> motsTriples = new HashSet<Point>();
-
+    private static final Set<Point> simples = new HashSet<>();
+    private static final Set<Point> doubles = new HashSet<>();
+    private static final Set<Point> triples = new HashSet<>();
+    private static final Set<Point> motsDoubles = new HashSet<>();
+    private static final Set<Point> motsTriples = new HashSet<>();
        
     
     public Grille() {
