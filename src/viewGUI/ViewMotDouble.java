@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 public class ViewMotDouble extends ViewCase {
 
 
-    public ViewMotDouble(String lettre) {
-        super(lettre);
+    public ViewMotDouble(String lettre, ViewGrille viewGrille) {
+        super(lettre, viewGrille);
         carreCase.setFill(Color.web("ffcccc"));
     }
     

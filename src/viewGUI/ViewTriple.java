@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 public class ViewTriple extends ViewCase {
 
     
-    public ViewTriple(String lettre) {
-        super(lettre);
+    public ViewTriple(String lettre, ViewGrille viewGrille) {
+        super(lettre, viewGrille);
         carreCase.setFill(Color.web("0066cc"));
     }
     

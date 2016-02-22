@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import model.Case;
 import model.Grille;
 import static model.Grille.DIM;
+import model.Jeton;
 import model.MotDouble;
 import model.MotTriple;
 import model.Triple;
@@ -23,7 +24,7 @@ public class ViewGrille extends GridPane {
         
     public ViewGrille(ControllerGUI ctrl) {
         this.ctrl = ctrl;
-        this.grille = ctrl.getGrille();
+        this.grille = ctrl.getGrille(); 
     }    
     
     public void afficherGrille() {
@@ -34,25 +35,33 @@ public class ViewGrille extends GridPane {
                 Case caseCourante = grille.getCase(pt);
                 ViewCase viewCase;
                 if (caseCourante.getChar() != ' ') {
-                    viewCase = new ViewSimple("" + caseCourante.getChar());
+                    viewCase = new ViewSimple("" + caseCourante.getChar(), this);
                 } else if (caseCourante instanceof model.Double) {
-                    viewCase = new ViewDouble("" + caseCourante.getChar());
+                    viewCase = new ViewDouble("" + caseCourante.getChar(), this);
                 }
                 else if (caseCourante instanceof Triple) {
-                    viewCase = new ViewTriple("" + caseCourante.getChar());
+                    viewCase = new ViewTriple("" + caseCourante.getChar(), this);
                 }
                 else if (caseCourante instanceof MotDouble) {
-                    viewCase = new ViewMotDouble("" + caseCourante.getChar());
+                    viewCase = new ViewMotDouble("" + caseCourante.getChar(), this);
                 } 
                 else if (caseCourante instanceof MotTriple) {
-                    viewCase = new ViewMotTriple("" + caseCourante.getChar());
+                    viewCase = new ViewMotTriple("" + caseCourante.getChar(), this);
                 } else {
-                    viewCase = new ViewSimple("" + caseCourante.getChar());  
+                    viewCase = new ViewSimple("" + caseCourante.getChar(), this);  
                 }
                 this.add(viewCase, li, co);
                 
             }
         }
+    }
+    
+    public Jeton getCourant() {
+        return ctrl.getCourant();
+    }
+    
+    public void setCourant(Jeton courant) {
+        ctrl.setCourant(courant);
     }
     
 

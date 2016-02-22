@@ -1,13 +1,18 @@
 package viewGUI;
 
+import controllerGUI.ControllerGUI;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.Jeton;
 
 /**
  *
@@ -15,12 +20,18 @@ import javafx.scene.text.Text;
  */
 public class ViewJeton extends StackPane {
     
-    final Text lettre;
+    public Text lettre;
     final Rectangle jeton;
     private int positionX;
     private int positionY;
+    private ControllerGUI ctrl;
+    private Jeton courant;
+    private final ViewChevalet viewChevalet;
     
-    public ViewJeton(String lettre) {
+    public ViewJeton(Jeton lettre, ControllerGUI ctrl, ViewChevalet viewChevalet) {
+        this.ctrl = ctrl;
+        this.viewChevalet = viewChevalet;
+        this.courant = lettre;
         jeton = new Rectangle(40, 40, Color.web("ffffcc"));
         
         jeton.setArcWidth(10);
@@ -28,8 +39,7 @@ public class ViewJeton extends StackPane {
 
         this.getChildren().add(jeton);
         
-        
-        
+ 
         final String cssDefault = 
         "-fx-stroke: black;\n"
       + "-fx-stroke-width: 3;\n"
@@ -38,7 +48,7 @@ public class ViewJeton extends StackPane {
         
         jeton.setStyle(cssDefault);
        
-        this.lettre = new Text (lettre);
+        this.lettre = new Text (lettre.getStr());
         this.lettre.setFont(new Font("Serif", 24));
         this.lettre.setFill(Color.BLACK);
         
@@ -46,29 +56,34 @@ public class ViewJeton extends StackPane {
         this.getChildren().add(this.lettre);    
         
 
-        this.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent me){
-               jeton.setFill(Color.web("f9ffe6"));
-            }
+        this.setOnMouseEntered((MouseEvent me) -> {
+            jeton.setFill(Color.web("f9ffe6"));
         });
-        this.setOnMouseExited(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent me){
-                jeton.setFill(Color.web("ffffcc"));
-            }
+        this.setOnMouseExited((MouseEvent me) -> {
+            jeton.setFill(Color.web("ffffcc"));
         });
-        this.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                appuyer();
-            }
+        this.setOnMousePressed((MouseEvent me) -> {
+            appuyer();
         });
+        this.setOnMouseReleased((MouseEvent me) -> {
+            relacher();
+        });
+        
+        
+        this.setOnDragDetected((event) -> {
+            System.out.println("drag n drop détecté");
+            final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 
-        this.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                relacher();
-            }
-        });
-        
-        
+            final ClipboardContent content = new ClipboardContent();
+            content.putString("bla bla bla");
+            db.setContent(content);
+            
+            viewChevalet.setCourant(courant);
+            
+            
+
+            event.consume();
+        });  
     }
     public void appuyer() {
         jeton.setFill(Color.web("fff9b3"));
@@ -81,8 +96,7 @@ public class ViewJeton extends StackPane {
         this.setTranslateY(positionY);
         this.setTranslateX(positionX);
     }
-    
-    
+  
     public Text getLettre() {
         return lettre;
         

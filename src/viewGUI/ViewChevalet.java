@@ -12,14 +12,16 @@ import model.Jeton;
  *
  * @author raphaelgrau
  */
-public class ViewChevalet extends FlowPane implements Iterable {
+public class ViewChevalet extends FlowPane {
     
     
     private final Chevalet chev;
+    private final ControllerGUI ctrl;
     
 
     public ViewChevalet(ControllerGUI ctrl) {
-        this.chev = ctrl.getChevalet();       
+        this.chev = ctrl.getChevalet();   
+        this.ctrl = ctrl;
     }
     
     
@@ -27,19 +29,17 @@ public class ViewChevalet extends FlowPane implements Iterable {
     public void afficherChevalet() {
         
         for (Jeton j : chev.getChev()) {
-            ViewJeton vJeton = new ViewJeton(j.getStr().toUpperCase());
+            ViewJeton vJeton = new ViewJeton(j, ctrl, this);
             this.getChildren().add(vJeton);
         }    
     } 
-
-    @Override
-    public Iterator iterator() {
-        Iterator it = this.iterator();
-        return it;   
+    
+    public Jeton getCourant() {
+        return ctrl.getCourant();
     }
 
-    String getText() {
-        return "aaa";
-        }
+    public void setCourant(Jeton courant) {
+        ctrl.setCourant(courant);
+    }
 
 }

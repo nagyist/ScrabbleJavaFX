@@ -1,12 +1,14 @@
 package controllerGUI;
 
 import javafx.application.Application;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Chevalet;
 import model.Grille;
+import model.Jeton;
 import model.Mot;
-import viewGUI.ViewChevalet;
 import viewGUI.MainView;
+import viewGUI.ViewChevalet;
 import viewGUI.ViewGrille;
 
 /**
@@ -20,6 +22,7 @@ public class ControllerGUI extends Application {
     private final ViewChevalet viewChevalet;
     private final ViewGrille viewGrille;
     private Mot mot = new Mot();
+    private Jeton courant;
 
 
     public ControllerGUI() {
@@ -52,6 +55,14 @@ public class ControllerGUI extends Application {
 
     public Grille getGrille() {
         return this.grille;
+    }
+    
+    public Jeton getCourant() {
+        return this.courant;     
+    }
+    
+    public void setCourant(Jeton courant) {
+        this.courant = courant;
     }
 
     
@@ -105,6 +116,7 @@ public class ControllerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainView viewGUI = new MainView(viewGrille, viewChevalet, this, 0, 0);
     }
+
 
 
 
