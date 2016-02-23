@@ -19,8 +19,8 @@ import model.Triple;
  */
 public class ViewGrille extends GridPane {
     
-    private ControllerGUI ctrl;
-    private Grille grille;
+    private final ControllerGUI ctrl;
+    private final Grille grille;
         
     public ViewGrille(ControllerGUI ctrl) {
         this.ctrl = ctrl;

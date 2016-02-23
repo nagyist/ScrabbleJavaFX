@@ -39,10 +39,10 @@ public class Chevalet extends Observable {
     }
     
     
-    public void removeJeton(char c) {
+    public void removeJeton(Jeton jj) {
         for (Iterator<Jeton> it = chev.iterator(); it.hasNext(); ) {
             Jeton j = it.next();
-            if (j.getChar() == c) {
+            if (j == jj) {
                 it.remove();
                 return;
             }

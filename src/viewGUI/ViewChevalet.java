@@ -24,8 +24,7 @@ public class ViewChevalet extends FlowPane {
         this.ctrl = ctrl;
     }
     
-    
-    
+
     public void afficherChevalet() {
         
         for (Jeton j : chev.getChev()) {
