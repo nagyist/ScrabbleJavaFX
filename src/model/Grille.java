@@ -29,6 +29,14 @@ public class Grille extends Observable {
     public Case getCase(Point pt) {
         return this.grille[pt.x][pt.y];
     }
+    public Case getCase(int x, int y) {
+        return this.grille[x][y];
+    }
+    
+    public void setCase(int x, int y, char lettre) {
+        this.grille[x][y].setLettre(lettre);
+        
+    }
     
     public char getCharAt(Point pt) {
         return getCase(pt).getChar();
@@ -39,7 +47,7 @@ public class Grille extends Observable {
         notifyObservers();
     }
     
-    public void initGrille() {
+    private void initGrille() {
          
         doubles.add(new Point(0, 3));
         doubles.add(new Point(0, DIM-4));

@@ -1,5 +1,6 @@
 package viewGUI;
 
+import controllerGUI.ControllerGUI;
 import javafx.scene.paint.Color;
 
 /**
@@ -9,8 +10,8 @@ import javafx.scene.paint.Color;
 public class ViewSimple extends ViewCase {
 
         
-    public ViewSimple(String lettre, ViewGrille viewGrille) {
-        super(lettre, viewGrille);
+    public ViewSimple(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
+        super(x, y, lettre, viewGrille, ctrl);
         carreCase.setFill(Color.web("009966"));
     }
     

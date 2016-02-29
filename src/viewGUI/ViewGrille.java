@@ -35,20 +35,20 @@ public class ViewGrille extends GridPane {
                 Case caseCourante = grille.getCase(pt);
                 ViewCase viewCase;
                 if (caseCourante.getChar() != ' ') {
-                    viewCase = new ViewSimple("" + caseCourante.getChar(), this);
+                    viewCase = new ViewSimple(li, co, "" + caseCourante.getChar(), this, ctrl);
                 } else if (caseCourante instanceof model.Double) {
-                    viewCase = new ViewDouble("" + caseCourante.getChar(), this);
+                    viewCase = new ViewDouble(li, co, "" + caseCourante.getChar(), this, ctrl);
                 }
                 else if (caseCourante instanceof Triple) {
-                    viewCase = new ViewTriple("" + caseCourante.getChar(), this);
+                    viewCase = new ViewTriple(li, co, "" + caseCourante.getChar(), this, ctrl);
                 }
                 else if (caseCourante instanceof MotDouble) {
-                    viewCase = new ViewMotDouble("" + caseCourante.getChar(), this);
+                    viewCase = new ViewMotDouble(li, co, "" + caseCourante.getChar(), this, ctrl);
                 } 
                 else if (caseCourante instanceof MotTriple) {
-                    viewCase = new ViewMotTriple("" + caseCourante.getChar(), this);
+                    viewCase = new ViewMotTriple(li, co, "" + caseCourante.getChar(), this, ctrl);
                 } else {
-                    viewCase = new ViewSimple("" + caseCourante.getChar(), this);  
+                    viewCase = new ViewSimple(li, co, "" + caseCourante.getChar(), this, ctrl);  
                 }
                 this.add(viewCase, li, co);
                 

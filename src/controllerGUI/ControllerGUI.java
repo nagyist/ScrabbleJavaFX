@@ -1,12 +1,12 @@
 package controllerGUI;
 
 import javafx.application.Application;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Chevalet;
 import model.Grille;
 import model.Jeton;
 import model.Mot;
+import model.Case;
 import viewGUI.MainView;
 import viewGUI.ViewChevalet;
 import viewGUI.ViewGrille;
@@ -17,12 +17,14 @@ import viewGUI.ViewGrille;
  */
 public class ControllerGUI extends Application {
 
-    private Chevalet chev;
-    private Grille grille;
+    private final Chevalet chev;
+    private final Grille grille;
     private final ViewChevalet viewChevalet;
     private final ViewGrille viewGrille;
     private Mot mot = new Mot();
     private Jeton courant;
+    private boolean caseJ;
+    private Case caseCourante;
 
 
     public ControllerGUI() {
@@ -31,6 +33,7 @@ public class ControllerGUI extends Application {
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
         this.mot = new Mot();
+        this.caseJ = false;
 //        chev.addObserver((Observer) viewChevalet);
 //        grille.addObserver((Observer) viewGrille);
         lancer();
@@ -64,6 +67,20 @@ public class ControllerGUI extends Application {
     public void setCourant(Jeton courant) {
         this.courant = courant;
     }
+    
+    public boolean getCaseJ() {
+        return caseJ;
+    }
+    
+    public boolean caseJouee(int x, int y) {
+        return grille.getCase(x,y).caseLibre();
+    }
+    
+    public void placerLettre(int x, int y, Jeton j) {
+        grille.setCase(x, y, j.getChar());
+    }
+    
+
 
     
 //    public boolean verifierLettre(char ch) {
@@ -116,6 +133,10 @@ public class ControllerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainView viewGUI = new MainView(viewGrille, viewChevalet, this, 0, 0);
     }
+
+
+
+
 
 
 

@@ -6,24 +6,36 @@ package model;
  */
 public abstract class Case {
 
-    private boolean caseJouée;
+    private boolean caseJouee;
     private char lettre = ' ';
 
 
     public Case() {
-        caseJouée = false;
+        caseJouee = false;
     }
     
     public char getChar() {
         return this.lettre;
     }
     
-    public void setChar(char lettre) { 
-        
-        if (!caseJouée) {
+//    public void setChar(char lettre) { 
+//        
+//        if (!caseJouee) {
+//            this.lettre = lettre;
+//        } 
+//        caseJouee = true;
+//    }
+    
+    public boolean caseLibre() {
+        return caseJouee;
+    }
+    
+   
+    public void setLettre(char lettre) {
+        if (caseLibre())
             this.lettre = lettre;
-        } 
-        caseJouée = true;
+        
+        caseJouee = true;
     }
 
 

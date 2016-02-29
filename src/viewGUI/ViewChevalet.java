@@ -37,8 +37,4 @@ public class ViewChevalet extends FlowPane {
         return ctrl.getCourant();
     }
 
-    public void setCourant(Jeton courant) {
-        ctrl.setCourant(courant);
-    }
-
 }
