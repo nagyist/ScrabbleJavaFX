@@ -12,7 +12,7 @@ public class ViewSimple extends ViewCase {
         
     public ViewSimple(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
         super(x, y, lettre, viewGrille, ctrl);
-        carreCase.setFill(Color.web("009966"));
+        getCarreCase().setFill(Color.web("009966"));
     }
     
 

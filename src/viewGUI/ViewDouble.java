@@ -12,7 +12,7 @@ public class ViewDouble extends ViewCase {
   
     public ViewDouble(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
         super(x, y, lettre, viewGrille, ctrl);
-        carreCase.setFill(Color.web("0099ff"));
+        getCarreCase().setFill(Color.web("0099ff"));
     }
     
     @Override

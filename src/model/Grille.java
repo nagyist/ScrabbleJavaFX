@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Grille extends Observable {
     
-    public Case[][] grille;
+    private Case[][] grille;
     public static final int DIM = 15;
 
     private static final Set<Point> simples = new HashSet<>();

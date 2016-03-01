@@ -8,6 +8,8 @@ import model.Jeton;
 import model.Mot;
 import model.Case;
 import viewGUI.MainView;
+import viewGUI.ViewCase;
+import viewGUI.ViewCaseTemp;
 import viewGUI.ViewChevalet;
 import viewGUI.ViewGrille;
 
@@ -25,6 +27,8 @@ public class ControllerGUI extends Application {
     private Jeton courant;
     private boolean caseJ;
     private Case caseCourante;
+    private boolean cj;
+    ViewCase temp;
 
 
     public ControllerGUI() {
@@ -34,6 +38,7 @@ public class ControllerGUI extends Application {
         this.viewGrille = new ViewGrille(this);
         this.mot = new Mot();
         this.caseJ = false;
+        this.cj = false;
 //        chev.addObserver((Observer) viewChevalet);
 //        grille.addObserver((Observer) viewGrille);
         lancer();
@@ -68,16 +73,44 @@ public class ControllerGUI extends Application {
         this.courant = courant;
     }
     
-    public boolean getCaseJ() {
-        return caseJ;
-    }
+//    public boolean getCaseJ() {
+//        return caseJ;
+//    }
     
     public boolean caseJouee(int x, int y) {
         return grille.getCase(x,y).caseLibre();
     }
+        
     
-    public void placerLettre(int x, int y, Jeton j) {
-        grille.setCase(x, y, j.getChar());
+//    public boolean caseJouee() {
+//        return cj;
+//    }
+//    
+//    public void setCaseJouee() {
+//        if (cj == true)
+//            cj = false;
+//        else
+//            cj = true;
+//    }
+    
+    public void placerLettreTemp(int x, int y, Jeton j) {
+        String lettre = j.getStr();
+        temp = new ViewCaseTemp(x, y, lettre, viewGrille, this);
+        
+        System.out.println("temp temp");
+        System.out.println(temp);
+    }
+    
+    public void placerLettre(int x, int y, Jeton j) { 
+        grille.setCase(x, y, j.getChar()); 
+    }
+    
+    public void removeJeton(Jeton j) {
+        chev.removeJeton(j);
+    }
+    
+    public ViewCase getTemp() {
+        return temp;
     }
     
 

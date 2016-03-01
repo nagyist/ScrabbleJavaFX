@@ -1,8 +1,6 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,121 +17,149 @@ import model.Jeton;
 public abstract class ViewCase extends StackPane {
 
     
-    Text lettre;
+    private Text lettre;
     Rectangle carreCase;
-    ViewGrille viewGrille;
-    private boolean caseJ;
+    private final ViewGrille viewGrille;
     private ControllerGUI ctrl;
-    int x, y;
+    private final int x, y;
+    private final String cssCasesGrilleDefault
+                = "-fx-stroke: black;\n"
+                + "-fx-stroke-width: 1;\n"
+//                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
+            ;
+    final String cssJetonTemp
+                = "-fx-stroke: black;\n"
+                + "-fx-stroke-width: 1;\n"
+                + "-fx-stroke-dash-array: 4 4 4 4;\n"
+                + "-fx-stroke-dash-offset: 4;\n"
+//                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
+            ;
+    Color JETON_COLOR = Color.web("ffffcc");
+    Color TEMP_COLOR = Color.web("fffff3");
     
     
     public ViewCase(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
         this.x = x;
         this.y = y;
         this.viewGrille = viewGrille;
-        this.caseJ = ctrl.getCaseJ();
         
-         
-        carreCase = new Rectangle(40, 40, Color.PURPLE);
-        carreCase.setArcWidth(10);
-        carreCase.setArcHeight(10);
-        this.getChildren().add(carreCase);
+        initCarreCase();
+        initLettreCase(lettre);
         
-        styleCase(lettre);
-        
-        
-
         this.getChildren().add(this.lettre); 
-        
-        
-        
+
         this.setOnDragOver((event) -> {
-            final Dragboard db = event.getDragboard();
-            
-            if (!ctrl.caseJouee(x, y)) {
-                
+    
+            if (!ctrl.caseJouee(x, y)) {     
                 System.out.println("accepte drag n drop");
                 event.acceptTransferModes(TransferMode.ANY);
-//                }
                 event.consume();
-            }
-            
+            } 
         });
         
-        this.setOnDragDropped((DragEvent event) -> {
+        this.setOnDragDropped((event) -> {
 
-            final Dragboard db = event.getDragboard();
             boolean success = false;
             System.out.println(viewGrille.getCourant());
             System.out.println("coucou");
-            String s = db.getString();
-            Jeton j = ((ViewJeton) event.getGestureSource()).courant;
-            ctrl.placerLettre(x, y, j);
+            Jeton j = ((ViewJeton) event.getGestureSource()).getCourant();
+            ctrl.placerLettreTemp(x, y, j);
+            this.getChildren().add(ctrl.getTemp());
             
-            configDrop();
+//            setStyleCaseJouee();
+//            setStyleLettreCaseJouee();
 
             success = true;
             event.setDropCompleted(success);
             event.consume();
-            
-        });
+
+        });   
     }
     
-    
-    private void styleCase(String lettre) {
-        this.lettre = new Text(lettre);
-        this.lettre.setFont(new Font("Serif", 24));
-        this.lettre.setFill(Color.WHITE);
-
-        final String cssDefault
-                = "-fx-stroke: black;\n"
-                + "-fx-stroke-width: 1;\n"
-                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
-
-        carreCase.setStyle(cssDefault);
-    }
-        
-    private void configDrop() {
-        
-        final String cssDefault
-                = "-fx-stroke: black;\n"
-                + "-fx-stroke-width: 1;\n"
-                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
-        
-        this.carreCase = new Rectangle(40, 40, Color.web("ffffcc"));
+    private void initCarreCase() {
+        carreCase = new Rectangle(40, 40, Color.PURPLE);
         carreCase.setArcWidth(10);
         carreCase.setArcHeight(10);
+        carreCase.setStyle(cssCasesGrilleDefault);
         this.getChildren().add(carreCase);
-        carreCase.setStyle(cssDefault);
-
-        System.out.println(viewGrille.getCourant().getChar());
-        this.lettre = new Text(viewGrille.getCourant().getStr().toUpperCase());
+    }
+    
+    private void initLettreCase(String lettre) {   
+        this.lettre = new Text(lettre.toUpperCase());
         this.lettre.setFont(new Font("Serif", 24));
         this.lettre.setFill(Color.BLACK);
         this.lettre.setStyle("-fx-font-weight: bold");
-        this.getChildren().add(this.lettre);
     }
     
-    
+//    public void setStyleCaseJouee() {
+//        carreCase = new Rectangle(40, 40, Color.web("ffffcc"));
+//        carreCase.setArcWidth(10);
+//        carreCase.setArcHeight(10);
+//        carreCase.setStyle(cssDefault);
+//        this.getChildren().add(carreCase);
+//    }
+//    
+//    private void setStyleLettreCaseJouee() {
+//        System.out.println(viewGrille.getCourant().getChar());
+//        this.lettre = new Text(viewGrille.getCourant().getStr().toUpperCase());
+//        this.lettre.setFont(new Font("Serif", 24));
+//        this.lettre.setFill(Color.BLACK);
+//        this.lettre.setStyle("-fx-font-weight: bold");
+//        this.getChildren().add(this.lettre);
+//    }
+        
+   
     public Text getLettre() {
         return lettre;
     }
     
+    public void setLettre(String lettre) {
+        this.lettre = new Text(viewGrille.getCourant().getStr().toUpperCase());
+//        this.lettre.setFont(new Font("Serif", 24));
+//        this.lettre.setFill(Color.BLACK);
+//        this.lettre.setStyle("-fx-font-weight: bold");
+    }
+    
+    public Rectangle getCarreCase() {
+        return carreCase;
+    }   
+    
+//    public void setCarreCase() {
+//        carreCase.setArcWidth(10);
+//        carreCase.setArcHeight(10);
+//        carreCase.setStyle(cssDefault);
+//    }
+
     public int getX() {
         return x;
     }
-    
+
     public int getY() {
         return y;
     }
     
-    
 
+    
+    
     abstract public void affiche();
 
 
 
-    
+    //        this.setOnDragDone((event) -> {
+//            System.out.println("remove jeton");
+//                       
+//            Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
+//            if (!ctrl.caseJouee(x, y)) {
+//                ctrl.removeJeton(jj);
+//            }
+//   
+//            for (Jeton j : ctrl.getChevalet().getChev())
+//                System.out.println(j);
+//            
+//            event.consume();
+//        
+//        });
+    }
   
 
-}
+

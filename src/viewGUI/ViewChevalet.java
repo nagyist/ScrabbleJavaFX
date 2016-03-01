@@ -1,10 +1,7 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
-import java.util.Iterator;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.shape.Rectangle;
 import model.Chevalet;
 import model.Jeton;
 
@@ -25,7 +22,7 @@ public class ViewChevalet extends FlowPane {
     }
     
 
-    public void afficherChevalet() {
+    public void initChevalet() {
         
         for (Jeton j : chev.getChev()) {
             ViewJeton vJeton = new ViewJeton(j, ctrl, this);
@@ -33,8 +30,14 @@ public class ViewChevalet extends FlowPane {
         }    
     } 
     
-    public Jeton getCourant() {
-        return ctrl.getCourant();
-    }
+//    public void afficherChevalet() {
+//        for (Jeton j : chev.getChev()) {
+//            
+//        }
+//    }
+    
+//    public Jeton getCourant() {
+//        return ctrl.getCourant();
+//    }
 
 }
