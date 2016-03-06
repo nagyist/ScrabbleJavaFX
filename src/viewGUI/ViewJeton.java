@@ -116,6 +116,8 @@ public class ViewJeton extends StackPane {
     public void setCourant(Jeton courant) {
         this.courant = courant;
     }
+    
+
 
     public void appuyer() {
         rectJeton.setFill(Color.web("fff9b3"));

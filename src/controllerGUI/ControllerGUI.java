@@ -1,5 +1,6 @@
 package controllerGUI;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Chevalet;
@@ -28,8 +29,9 @@ public class ControllerGUI extends Application {
     private boolean caseJ;
     private Case caseCourante;
     private boolean cj;
-    ViewCase temp;
-
+    private ArrayList<ViewCaseTemp> casesTemp = null;
+    ViewCaseTemp temp;
+   
 
     public ControllerGUI() {
         this.chev = new Chevalet();
@@ -44,14 +46,6 @@ public class ControllerGUI extends Application {
         lancer();
     }
 
-//    private boolean exists(char c) {
-//        for (Jeton j : chev.getChev()) {
-//            if (j.getChar() == c) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     public Mot getMot() {
         return this.mot;
@@ -72,33 +66,23 @@ public class ControllerGUI extends Application {
     public void setCourant(Jeton courant) {
         this.courant = courant;
     }
-    
-//    public boolean getCaseJ() {
-//        return caseJ;
-//    }
-    
+       
     public boolean caseJouee(int x, int y) {
         return grille.getCase(x,y).caseLibre();
-    }
-        
+    }   
     
-//    public boolean caseJouee() {
-//        return cj;
-//    }
-//    
-//    public void setCaseJouee() {
-//        if (cj == true)
-//            cj = false;
-//        else
-//            cj = true;
-//    }
+    public ViewCaseTemp getTemp() {
+        return temp;
+    }  
     
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
+//        casesTemp.add(new ViewCaseTemp(x, y, lettre, viewGrille, this));
         temp = new ViewCaseTemp(x, y, lettre, viewGrille, this);
         
-        System.out.println("temp temp");
-        System.out.println(temp);
+//        System.out.print("ViewCaseTemp : ");
+//        System.out.println(casesTemp);
+//        System.out.println(temp.getLettre().toString());
     }
     
     public void placerLettre(int x, int y, Jeton j) { 
@@ -109,34 +93,16 @@ public class ControllerGUI extends Application {
         chev.removeJeton(j);
     }
     
-    public ViewCase getTemp() {
-        return temp;
+    public ViewCase getViewCaseTemp(Jeton j) {
+        ViewCaseTemp v = null;
+        for (ViewCaseTemp vv: casesTemp)
+            if (vv.getJeton() == j)
+                v = vv;          
+        return v;
     }
     
 
 
-    
-//    public boolean verifierLettre(char ch) {
-//        if (!exists(ch) && ch != CHAR_FIN_MOT)
-//            return false;
-//        return true;
-//    }
-    
-//    public boolean verifierPosition(Point pt) {
-//       return pt.x >= 0 && pt.x < DIM && pt.y >= 0 && pt.y < DIM && grille.getCharAt(pt) == ' ';
-//    }
-    
-
-//    public void positionnerLettre(Point pt, char ch) {
-//
-//        grille.getCase(pt).setChar(ch);
-//        Jeton j = chev.getJeton(ch);
-//        mot.ajouterJetonMot(j);
-//        chev.removeJeton(ch);
-//        grille.notif();
-////        demanderLettre();
-//        //chevalet.notif();
-//    }
 
     private void lancer() {
         grille.notif();

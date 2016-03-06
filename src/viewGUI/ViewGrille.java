@@ -55,15 +55,15 @@ public class ViewGrille extends GridPane {
             }
         }
     }
-    
+
     public Jeton getCourant() {
-        return ctrl.getCourant();
+        return ctrl.getCourant();     
     }
     
     public void setCourant(Jeton courant) {
         ctrl.setCourant(courant);
     }
-    
+      
 
 }
 

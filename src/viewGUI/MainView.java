@@ -68,6 +68,7 @@ public final class MainView extends Stage {
 //        
         viewGrille.afficherGrille();
         viewChevalet.initChevalet();
+//        viewChevalet.afficherChevalet();
 
         // Tests FlowPane
         Button btn = new Button();

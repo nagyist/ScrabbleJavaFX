@@ -27,15 +27,8 @@ public abstract class ViewCase extends StackPane {
                 + "-fx-stroke-width: 1;\n"
 //                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
             ;
-    final String cssJetonTemp
-                = "-fx-stroke: black;\n"
-                + "-fx-stroke-width: 1;\n"
-                + "-fx-stroke-dash-array: 4 4 4 4;\n"
-                + "-fx-stroke-dash-offset: 4;\n"
-//                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-            ;
     Color JETON_COLOR = Color.web("ffffcc");
-    Color TEMP_COLOR = Color.web("fffff3");
+    
     
     
     public ViewCase(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
@@ -60,15 +53,18 @@ public abstract class ViewCase extends StackPane {
         this.setOnDragDropped((event) -> {
 
             boolean success = false;
-            System.out.println(viewGrille.getCourant());
-            System.out.println("coucou");
+            System.out.print("courant : ");
+//            System.out.println(viewGrille.getCourant());
+            System.out.println(ctrl.getCourant());
+            
             Jeton j = ((ViewJeton) event.getGestureSource()).getCourant();
             ctrl.placerLettreTemp(x, y, j);
             this.getChildren().add(ctrl.getTemp());
+//            this.getChildren().add(ctrl.getViewCaseTemp(j));
             
 //            setStyleCaseJouee();
 //            setStyleLettreCaseJouee();
-
+            
             success = true;
             event.setDropCompleted(success);
             event.consume();
@@ -124,6 +120,14 @@ public abstract class ViewCase extends StackPane {
         return carreCase;
     }   
     
+    public void setColorCase(Color col) {
+        carreCase.setFill(col);
+    }
+    
+    public void setStyleCase(String style) {
+        carreCase.setStyle(style);
+    }
+    
 //    public void setCarreCase() {
 //        carreCase.setArcWidth(10);
 //        carreCase.setArcHeight(10);
@@ -139,7 +143,7 @@ public abstract class ViewCase extends StackPane {
     }
     
 
-    
+
     
     abstract public void affiche();
 
