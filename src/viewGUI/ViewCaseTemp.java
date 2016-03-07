@@ -34,6 +34,9 @@ public class ViewCaseTemp extends ViewCase {
         return ctrl.getCourant();
     }
     
+    public String getLettreViewCaseTemp() {
+        return getLettre().toString();
+    }
   
 
     @Override

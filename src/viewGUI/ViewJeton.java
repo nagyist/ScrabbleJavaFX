@@ -29,11 +29,13 @@ public class ViewJeton extends StackPane {
               + "-fx-stroke-width: 3;\n"
               + "-fx-border-radius: 10, 10, 10, 10;"
               + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
+    private final ViewChevalet vchev;
     
     
     public ViewJeton(Jeton jeton, ControllerGUI ctrl, ViewChevalet viewChevalet) {
 
         this.courant = jeton;
+        this.vchev = viewChevalet;
         
         setRectJeton();       
         this.getChildren().add(rectJeton);
@@ -71,22 +73,30 @@ public class ViewJeton extends StackPane {
         
         
         this.setOnDragDone((event) -> {
-            System.out.println("remove jeton");
             final Dragboard db = event.getDragboard();
             String s = db.getString();
-            System.out.println("s : " + s);
-                       
+//            System.out.println("s : " + s);
+                      
             Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
 //            boolean joue = ((ViewJeton) event.getGestureSource(). );
             
+            vchev.removeViewJeton(courant);
+            System.out.println("jeton removed");
+            
+            for (ViewJeton vj : vchev.getListJetons())
+                System.out.println(vj.getLettre());
+            
+            ctrl.setCourant(null);
+                
+//            System.out.println(vchev);
             
 //            System.out.println(ctrl.caseJouee());
 //            if (!ctrl.caseJouee()) {
 //                ctrl.removeJeton(jj);
 //            }
-            System.out.println("chevalet model : ");
-            for (Jeton j : ctrl.getChevalet().getChev())
-                System.out.println(j);
+//            System.out.println("chevalet model : ");
+//            for (Jeton j : ctrl.getChevalet().getChev())
+//                System.out.println(j);
 //            System.out.println(ctrl.caseJouee());
             
             event.consume(); 
@@ -117,6 +127,9 @@ public class ViewJeton extends StackPane {
         this.courant = courant;
     }
     
+    public String getLettre() {
+        return lettre.toString();
+    }
 
 
     public void appuyer() {

@@ -2,7 +2,10 @@ package viewGUI;
 
 import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import model.Chevalet;
 import model.Jeton;
 
@@ -10,18 +13,24 @@ import model.Jeton;
  *
  * @author raphaelgrau
  */
-public class ViewChevalet extends FlowPane {
+public class ViewChevalet extends HBox {
     
     
     private final Chevalet chev;
     private final ControllerGUI ctrl;
-    private ArrayList<ViewJeton> listJetons;
+    private final List<ViewJeton> listJetons = new ArrayList<>();
     
 
     public ViewChevalet(ControllerGUI ctrl) {
         this.chev = ctrl.getChevalet();   
         this.ctrl = ctrl;
     }
+
+    public List<ViewJeton> getListJetons() {
+        return listJetons;
+    }
+    
+    
     
 
     public void initChevalet() {        
@@ -33,6 +42,24 @@ public class ViewChevalet extends FlowPane {
 //        this.getChildren().addAll(listJetons);
         
     } 
+    
+    public void removeViewJeton(Jeton jj) {
+        
+//        for (ViewJeton vj : listJetons) {
+//            if (jj == vj.getCourant())
+//                listJetons.remove(vj);           
+//        }   
+//    }
+    
+    for (Iterator<ViewJeton> it = listJetons.iterator(); it.hasNext(); ) {
+            ViewJeton vj = it.next();
+            if (jj == vj.getCourant()) {
+                it.remove();
+                this.getChildren().remove(vj);
+                return;
+            }
+        }       
+    }
     
 //    public void afficherChevalet() {
 //        for (ViewJeton v : listJetons)
@@ -46,10 +73,7 @@ public class ViewChevalet extends FlowPane {
 //        }
 //    }
     
-    public void removeViewJeton() {
-        
-        
-    }
+
     
 //    public void afficherChevalet() {
 //        for (Jeton j : chev.getChev()) {

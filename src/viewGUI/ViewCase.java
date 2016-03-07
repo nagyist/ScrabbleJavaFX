@@ -59,7 +59,7 @@ public abstract class ViewCase extends StackPane {
             
             Jeton j = ((ViewJeton) event.getGestureSource()).getCourant();
             ctrl.placerLettreTemp(x, y, j);
-            this.getChildren().add(ctrl.getTemp());
+            this.getChildren().add(ctrl.getViewCaseTemp(j));
 //            this.getChildren().add(ctrl.getViewCaseTemp(j));
             
 //            setStyleCaseJouee();

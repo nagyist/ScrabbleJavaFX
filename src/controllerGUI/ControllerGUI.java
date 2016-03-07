@@ -1,15 +1,16 @@
 package controllerGUI;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Case;
 import model.Chevalet;
 import model.Grille;
 import model.Jeton;
 import model.Mot;
-import model.Case;
 import viewGUI.MainView;
-import viewGUI.ViewCase;
+import viewGUI.ViewButtons;
 import viewGUI.ViewCaseTemp;
 import viewGUI.ViewChevalet;
 import viewGUI.ViewGrille;
@@ -29,8 +30,9 @@ public class ControllerGUI extends Application {
     private boolean caseJ;
     private Case caseCourante;
     private boolean cj;
-    private ArrayList<ViewCaseTemp> casesTemp = null;
+    private List<ViewCaseTemp> casesTemp = new ArrayList<>();
     ViewCaseTemp temp;
+    private ViewButtons viewButtons;
    
 
     public ControllerGUI() {
@@ -71,19 +73,31 @@ public class ControllerGUI extends Application {
         return grille.getCase(x,y).caseLibre();
     }   
     
-    public ViewCaseTemp getTemp() {
-        return temp;
+    public ViewCaseTemp getViewCaseTemp(Jeton j) {
+        ViewCaseTemp v = null;
+        for (ViewCaseTemp vct: casesTemp)
+            if (j == vct.getJeton())
+                v = vct;
+        return v;
     }  
     
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
-//        casesTemp.add(new ViewCaseTemp(x, y, lettre, viewGrille, this));
-        temp = new ViewCaseTemp(x, y, lettre, viewGrille, this);
+        casesTemp.add(new ViewCaseTemp(x, y, lettre, viewGrille, this));
+//        temp = new ViewCaseTemp(x, y, lettre, viewGrille, this);
         
-//        System.out.print("ViewCaseTemp : ");
+        System.out.println("ViewCaseTemp, jetons : ");
+        afficherListViewCaseTemp();
+
 //        System.out.println(casesTemp);
 //        System.out.println(temp.getLettre().toString());
     }
+    
+    public void afficherListViewCaseTemp() {
+       for (ViewCaseTemp vct: casesTemp)
+            System.out.println(vct.getLettreViewCaseTemp());
+    }
+    
     
     public void placerLettre(int x, int y, Jeton j) { 
         grille.setCase(x, y, j.getChar()); 
@@ -93,13 +107,13 @@ public class ControllerGUI extends Application {
         chev.removeJeton(j);
     }
     
-    public ViewCase getViewCaseTemp(Jeton j) {
-        ViewCaseTemp v = null;
-        for (ViewCaseTemp vv: casesTemp)
-            if (vv.getJeton() == j)
-                v = vv;          
-        return v;
-    }
+//    public ViewCase getViewCaseTemp(Jeton j) {
+//        ViewCaseTemp v = null;
+//        for (ViewCaseTemp vv: casesTemp)
+//            if (vv.getJeton() == j)
+//                v = vv;          
+//        return v;
+//    }
     
 
 
@@ -130,7 +144,7 @@ public class ControllerGUI extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MainView viewGUI = new MainView(viewGrille, viewChevalet, this, 0, 0);
+        MainView viewGUI = new MainView(primaryStage,viewGrille, viewChevalet, this, 0, 0);
     }
 
 
