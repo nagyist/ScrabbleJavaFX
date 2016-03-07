@@ -25,7 +25,7 @@ public class ViewJeton extends StackPane {
     private int positionY;
     private Jeton courant;
     private final String cssJetonsChevalet = 
-                "-fx-stroke: black;\n"
+                "-fx-stroke: transparent;\n"
               + "-fx-stroke-width: 3;\n"
               + "-fx-border-radius: 10, 10, 10, 10;"
               + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";

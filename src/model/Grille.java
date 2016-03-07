@@ -38,8 +38,8 @@ public class Grille extends Observable {
         
     }
     
-    public char getCharAt(Point pt) {
-        return getCase(pt).getChar();
+    public String getLettreAt(int x, int y) {
+        return ""+ getCase(x,y).getChar();
     }
    
     public void notif() {

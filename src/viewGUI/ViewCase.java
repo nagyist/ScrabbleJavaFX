@@ -18,16 +18,14 @@ public abstract class ViewCase extends StackPane {
 
     
     private Text lettre;
-    Rectangle carreCase;
+    private Rectangle carreCase;
     private final ViewGrille viewGrille;
     private ControllerGUI ctrl;
     private final int x, y;
-    private final String cssCasesGrilleDefault
-                = "-fx-stroke: black;\n"
-                + "-fx-stroke-width: 1;\n"
+    private final String cssCasesGrilleDefault = "-fx-stroke: transparent; -fx-stroke-width: 3;\n"
 //                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-            ;
-    Color JETON_COLOR = Color.web("ffffcc");
+                        ;
+    private final Color JETON_COLOR = Color.web("ffffcc");
     
     
     
@@ -87,23 +85,7 @@ public abstract class ViewCase extends StackPane {
         this.lettre.setStyle("-fx-font-weight: bold");
     }
     
-//    public void setStyleCaseJouee() {
-//        carreCase = new Rectangle(40, 40, Color.web("ffffcc"));
-//        carreCase.setArcWidth(10);
-//        carreCase.setArcHeight(10);
-//        carreCase.setStyle(cssDefault);
-//        this.getChildren().add(carreCase);
-//    }
-//    
-//    private void setStyleLettreCaseJouee() {
-//        System.out.println(viewGrille.getCourant().getChar());
-//        this.lettre = new Text(viewGrille.getCourant().getStr().toUpperCase());
-//        this.lettre.setFont(new Font("Serif", 24));
-//        this.lettre.setFill(Color.BLACK);
-//        this.lettre.setStyle("-fx-font-weight: bold");
-//        this.getChildren().add(this.lettre);
-//    }
-        
+      
    
     public Text getLettre() {
         return lettre;
@@ -111,9 +93,6 @@ public abstract class ViewCase extends StackPane {
     
     public void setLettre(String lettre) {
         this.lettre = new Text(viewGrille.getCourant().getStr().toUpperCase());
-//        this.lettre.setFont(new Font("Serif", 24));
-//        this.lettre.setFill(Color.BLACK);
-//        this.lettre.setStyle("-fx-font-weight: bold");
     }
     
     public Rectangle getCarreCase() {
@@ -128,12 +107,6 @@ public abstract class ViewCase extends StackPane {
         carreCase.setStyle(style);
     }
     
-//    public void setCarreCase() {
-//        carreCase.setArcWidth(10);
-//        carreCase.setArcHeight(10);
-//        carreCase.setStyle(cssDefault);
-//    }
-
     public int getX() {
         return x;
     }
@@ -143,26 +116,8 @@ public abstract class ViewCase extends StackPane {
     }
     
 
-
-    
     abstract public void affiche();
 
-
-
-    //        this.setOnDragDone((event) -> {
-//            System.out.println("remove jeton");
-//                       
-//            Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
-//            if (!ctrl.caseJouee(x, y)) {
-//                ctrl.removeJeton(jj);
-//            }
-//   
-//            for (Jeton j : ctrl.getChevalet().getChev())
-//                System.out.println(j);
-//            
-//            event.consume();
-//        
-//        });
     }
   
 

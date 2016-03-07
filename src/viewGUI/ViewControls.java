@@ -1,7 +1,7 @@
 package viewGUI;
 
+import controllerGUI.ControllerGUI;
 import javafx.geometry.Pos;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
 /**
@@ -14,11 +14,13 @@ public class ViewControls extends HBox {
     private final ViewChevalet viewChevalet;
     
     
-    public ViewControls(ViewChevalet viewChevalet) {
+    public ViewControls(ViewChevalet viewChevalet, ControllerGUI ctrl) {
+        ControllerGUI ControllerGUI;
         
-        this.viewButtons = new ViewButtons();
+        this.viewButtons = new ViewButtons(ctrl);
         this.viewChevalet = viewChevalet;
         
+        this.viewChevalet.setSpacing(3);
         this.setAlignment(Pos.CENTER);
        
         this.setSpacing(20);
