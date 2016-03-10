@@ -150,7 +150,7 @@ public class ControllerGUI extends Application {
         
         for (ViewJeton vj : lsViewJetonsJoues) {
             
-            viewGrille.removeViewCase(vj.getX(), vj.getY());
+//            viewGrille.removeViewCase(vj.getX(), vj.getY());
 //            getViewCase(vj.getX(), vj.getY()).getChildren().add(viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
             getViewCase(vj.getX(), vj.getY()).getChildren().set(0, viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
             
@@ -165,7 +165,6 @@ public class ControllerGUI extends Application {
             System.out.println("ViewJeton y : " + vj.getY());
         };
         
-        viewGrille.afficherGrille();
 
         System.out.println("ViewCaseTemp vide? :" + ListEmpty());
         
