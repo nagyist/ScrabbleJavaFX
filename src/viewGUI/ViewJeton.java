@@ -30,12 +30,15 @@ public class ViewJeton extends StackPane {
               + "-fx-border-radius: 10, 10, 10, 10;"
               + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
     private final ViewChevalet vchev;
+    private int x, y;
     
     
-    public ViewJeton(Jeton jeton, ControllerGUI ctrl, ViewChevalet viewChevalet) {
+    public ViewJeton(int x, int y, Jeton jeton, ControllerGUI ctrl, ViewChevalet viewChevalet) {
 
         this.courant = jeton;
         this.vchev = viewChevalet;
+        this.x = x;
+        this.y = y;
         
         setRectJeton();       
         this.getChildren().add(rectJeton);
@@ -80,10 +83,10 @@ public class ViewJeton extends StackPane {
             Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
 //            boolean joue = ((ViewJeton) event.getGestureSource(). );
             
-            vchev.removeViewJeton(courant);
+            vchev.removeViewJetonFromChev(courant);
             System.out.println("jeton removed");
             
-            for (ViewJeton vj : vchev.getListJetons())
+            for (ViewJeton vj : vchev.getListViewJetons())
                 System.out.println(vj.getLettre());
             
             ctrl.setCourant(null);
@@ -122,13 +125,30 @@ public class ViewJeton extends StackPane {
     public Jeton getCourant() {
         return courant;
     }
+    
 
     public void setCourant(Jeton courant) {
         this.courant = courant;
     }
     
     public String getLettre() {
-        return lettre.toString();
+        return lettre.getText().toString();
+    }
+    
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
     }
 
 

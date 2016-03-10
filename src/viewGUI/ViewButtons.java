@@ -20,7 +20,7 @@ public class ViewButtons extends HBox {
             btnOK.setText("Valider");
             btnOK.setOnAction((ActionEvent event) -> {
                 System.out.println("OK!");
-                ctrl.validerCoup(ctrl.getListCasesTemp());
+                ctrl.validerCoup(ctrl.getListCasesTemp(), ctrl.getListJetonsJoues());
                 
             });
 

@@ -9,9 +9,11 @@ import model.Grille;
 import model.Jeton;
 import model.Mot;
 import viewGUI.MainView;
+import viewGUI.ViewCase;
 import viewGUI.ViewCaseTemp;
 import viewGUI.ViewChevalet;
 import viewGUI.ViewGrille;
+import viewGUI.ViewJeton;
 
 /**
  *
@@ -78,11 +80,26 @@ public class ControllerGUI extends Application {
         }
         return v;
     }
+    
+    public ViewJeton getViewJeton(Jeton j) {
+        ViewJeton v = null;
+        for (ViewJeton vj : viewChevalet.getListViewJetons()) {
+            if (j == vj.getCourant()) {
+                v = vj;
+            }
+        }
+        return v;
+    }
+      
+    
+    public ViewCase getViewCase(int x, int y) {
+        return viewGrille.getViewCase(x, y);
+    }
 
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
         casesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
-
+        
         System.out.println("ViewCaseTemp, jetons : ");
         afficherListViewCaseTemp();
 
@@ -91,6 +108,20 @@ public class ControllerGUI extends Application {
     public List<ViewCaseTemp> getListCasesTemp() {
         return casesTemp;
     }
+    
+    public List<ViewJeton> getListJetonsJoues() {
+        return viewChevalet.getListViewJetonsJoues();
+    }
+    
+    
+    public void setXToViewJeton(int x, Jeton j) {
+        getViewJeton(j).setX(getViewCaseTemp(j).getPosX());
+    }
+    
+    public void setYToViewJeton(int y, Jeton j) {
+        getViewJeton(j).setY(getViewCaseTemp(j).getPosY());
+    }
+
 
     private void afficherListViewCaseTemp() {
         for (ViewCaseTemp vct : casesTemp) {
@@ -107,17 +138,37 @@ public class ControllerGUI extends Application {
         grille.setCase(x, y, j.getChar());
     }
     
-    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp) {
+    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
         for (ViewCaseTemp vct : lsViewCaseTemp) {
             System.out.println(vct.getPosX());
             System.out.println(vct.getPosY());
             System.out.println(vct.getJeton().getStr());
             placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton());
+            getViewCase(vct.getPosX(),vct.getPosY()).getChildren().remove(vct);
+   
         }
+        
+        for (ViewJeton vj : lsViewJetonsJoues) {
+            
+            viewGrille.removeViewCase(vj.getX(), vj.getY());
+//            getViewCase(vj.getX(), vj.getY()).getChildren().add(viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
+            getViewCase(vj.getX(), vj.getY()).getChildren().set(0, viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
+            
+        }
+                
         lsViewCaseTemp.clear();
+        
+        System.out.println("Liste jetons joués : ");
+        for (ViewJeton vj : viewChevalet.getListViewJetonsJoues()) {
+            System.out.println("ViewJeton lettre : " + vj.getLettre());
+            System.out.println("ViewJeton x : " + vj.getX());
+            System.out.println("ViewJeton y : " + vj.getY());
+        };
+        
         viewGrille.afficherGrille();
 
         System.out.println("ViewCaseTemp vide? :" + ListEmpty());
+        
     }
     
     public String getLettreAt(int x, int y) {

@@ -21,6 +21,7 @@ public class ViewGrille extends GridPane {
     
     private final ControllerGUI ctrl;
     private final Grille grille;
+    private ViewCase viewCase;
         
     public ViewGrille(ControllerGUI ctrl) {
         this.ctrl = ctrl;
@@ -33,7 +34,7 @@ public class ViewGrille extends GridPane {
             for (int co = 0; co < DIM; co++) {
                 Point pt = new Point(li, co);
                 Case caseCourante = grille.getCase(pt);
-                ViewCase viewCase;
+                
                 if (caseCourante.getChar() != ' ') {
                     viewCase = new ViewSimple(li, co, "" + caseCourante.getChar(), this, ctrl);
                 } else if (caseCourante instanceof model.Double) {
@@ -63,7 +64,20 @@ public class ViewGrille extends GridPane {
     public void setCourant(Jeton courant) {
         ctrl.setCourant(courant);
     }
-      
+    
+    
+    public ViewCase getViewCase(int x, int y) {
+        
+        return (ViewCase)this.getChildren().get( x * DIM + y);
+    }
+    
+    public void removeViewCase(int x, int y) {
+        getViewCase(x,y).getChildren().remove(this);
+    }
+    
+
+    
+     
 
 }
 
