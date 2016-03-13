@@ -1,10 +1,10 @@
 package model;
 
+import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-import java.util.Scanner;
 
 /**
  *
@@ -12,18 +12,18 @@ import java.util.Scanner;
  */
 public class Chevalet extends Observable {
     
-    private final List<Jeton> chev; 
-    private final Scanner scanner = new Scanner(System.in);
+    private final List<Jeton> chev = new ArrayList<>(); 
+    private final int CHEV_SIZE = 7;
     
 
-    public Chevalet() {
-        this.chev = new ArrayList<>();
+    public Chevalet(ControllerGUI ctrl) {
         
-        for (int i = 0; i < 7 ; ++i) {
-            chev.add(new Jeton());
+        for (int i = 0; i < CHEV_SIZE ; ++i) {
+            chev.add(new Jeton(ctrl));
         }    
     }
-      
+     
+    
     public List<Jeton> getChev() {
         return chev;
     }

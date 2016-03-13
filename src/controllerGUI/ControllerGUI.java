@@ -8,6 +8,7 @@ import model.Chevalet;
 import model.Grille;
 import model.Jeton;
 import model.Mot;
+import model.Sac;
 import viewGUI.MainView;
 import viewGUI.ViewCase;
 import viewGUI.ViewCaseTemp;
@@ -28,13 +29,15 @@ public class ControllerGUI extends Application {
     private Mot mot = new Mot();
     private Jeton courant;
     private final List<ViewCaseTemp> casesTemp = new ArrayList<>();
+    private final Sac sac;
 
     public ControllerGUI() {
-        this.chev = new Chevalet();
+        this.chev = new Chevalet(this);
         this.grille = new Grille();
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
         this.mot = new Mot();
+        this.sac = new Sac();
 //        chev.addObserver((Observer) viewChevalet);
 //        grille.addObserver((Observer) viewGrille);
         lancer();
@@ -50,6 +53,10 @@ public class ControllerGUI extends Application {
 
     public Grille getGrille() {
         return this.grille;
+    }
+    
+    public Sac getSac() {
+        return this.sac;
     }
 
     public Jeton getCourant() {

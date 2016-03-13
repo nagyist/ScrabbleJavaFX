@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Random;
+import controllerGUI.ControllerGUI;
 
 /**
  *
@@ -8,17 +8,22 @@ import java.util.Random;
  */
 public class Jeton {
     
+//    private final Sac sac;
     
-    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n',
-                                'o','p','q','r','s','t','u','v','w','x','y','z'};
+//    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+//                                'o','p','q','r','s','t','u','v','w','x','y','z'};
     private final char lettre;
+    private ControllerGUI ctrl;
+    private final Sac sac;
 
    
-    public Jeton() {
+    public Jeton(ControllerGUI ctrl) {
+        this.sac = ctrl.getSac();
+        this.lettre = sac.getRandomLettre();
         
-        Random rand = new Random();
-        int n = rand.nextInt(lettres.length);
-        this.lettre = lettres[n];
+//        Random rand = new Random();
+//        int n = rand.nextInt(lettres.length);
+//        this.lettre = lettres[n];
 
     }
     
@@ -30,9 +35,9 @@ public class Jeton {
         return ""+lettre;
     }
 
-    public static void affJetons() {
-        for(char c : lettres)
-            System.out.print(c + "  ");
-    }
+//    public static void affJetons() {
+//        for(char c : lettres)
+//            System.out.print(c + "  ");
+//    }
 
 }
