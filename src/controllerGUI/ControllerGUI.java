@@ -65,11 +65,14 @@ public class ControllerGUI extends Application {
 //    }
 
     public boolean caseJouee(int x, int y) {
-        
-        
-        return grille.getCase(x, y).caseLibre();
+ 
+        return !grille.getCase(x, y).caseLibre();
     }
     
+//    public boolean caseTempJouee(int x, int y) {
+//        return;
+//    }
+//    
 
     public ViewCaseTemp getViewCaseTemp(Jeton j) {
         ViewCaseTemp v = null;
@@ -136,6 +139,7 @@ public class ControllerGUI extends Application {
     // place une lettre (jeton) à une position donnée dans le model Grille
     public void placerLettre(int x, int y, Jeton j) {
         grille.setCase(x, y, j.getChar());
+        System.out.println("Lettre model :" + grille.getCase(x, y).getChar());
     }
     
     public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
@@ -163,14 +167,29 @@ public class ControllerGUI extends Application {
             System.out.println("ViewJeton lettre : " + vj.getLettre());
             System.out.println("ViewJeton x : " + vj.getX());
             System.out.println("ViewJeton y : " + vj.getY());
+            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
         };
         
 
         System.out.println("ViewCaseTemp vide? :" + ListEmpty());
+       
         
     }
     
-    public String getLettreAt(int x, int y) {
+    
+    public void annulerDerniereLettre() {
+        
+        ViewCaseTemp lastVCT = casesTemp.get(casesTemp.size()-1);
+        casesTemp.remove(lastVCT);
+        getViewCase(lastVCT.getPosX(), lastVCT.getPosY()).getChildren().remove(lastVCT);
+        
+        ViewJeton lastVJ = viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size()-1);
+        viewChevalet.getListViewJetonsJoues().remove(lastVJ);
+        viewChevalet.getChildren().add(lastVJ);
+        
+    }
+    
+    public char getLettreAt(int x, int y) {
         return grille.getLettreAt(x, y);
     }
 
@@ -189,5 +208,7 @@ public class ControllerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainView viewGUI = new MainView(primaryStage, viewGrille, viewChevalet, this);
     }
+
+
 
 }

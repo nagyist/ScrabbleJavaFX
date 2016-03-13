@@ -12,10 +12,8 @@ import javafx.scene.layout.HBox;
  */
 public class ViewButtons extends HBox {
     
-    private final ControllerGUI ctrl;
     
         public ViewButtons(ControllerGUI ctrl) {
-            this.ctrl = ctrl;
             Button btnOK = new Button();
             btnOK.setText("Valider");
             btnOK.setOnAction((ActionEvent event) -> {
@@ -26,6 +24,10 @@ public class ViewButtons extends HBox {
 
             Button btnCancel = new Button();
             btnCancel.setText("Annuler");
+            btnCancel.setOnAction((ActionEvent event) -> {
+                System.out.println("Annuler!");
+                ctrl.annulerDerniereLettre();
+            });
             
             this.getChildren().addAll(btnOK, btnCancel);
             this.setSpacing(5);

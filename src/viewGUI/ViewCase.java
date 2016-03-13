@@ -20,12 +20,12 @@ public abstract class ViewCase extends StackPane {
     private Text lettre;
     private Rectangle carreCase;
     private final ViewGrille viewGrille;
-    private ControllerGUI ctrl;
+//    private ControllerGUI ctrl;
     private final int x, y;
     private final String cssCasesGrilleDefault = "-fx-stroke: transparent; -fx-stroke-width: 3;\n"
 //                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
                         ;
-    private final Color JETON_COLOR = Color.web("ffffcc");
+//    private final Color JETON_COLOR = Color.web("ffffcc");
     
     
     

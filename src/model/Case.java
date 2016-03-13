@@ -27,7 +27,7 @@ public abstract class Case {
 //    }
     
     public boolean caseLibre() {
-        return caseJouee;
+        return !caseJouee;
     }
     
    

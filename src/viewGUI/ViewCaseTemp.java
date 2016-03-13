@@ -50,6 +50,10 @@ public class ViewCaseTemp extends ViewCase {
         return getY();
     }
     
+//    public boolean viewCaseTempExist(int x, int y) {
+//        return getX() == x && getY() == y;
+//    }
+    
   
     @Override
     public void affiche() {
