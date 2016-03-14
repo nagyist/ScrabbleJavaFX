@@ -9,30 +9,30 @@ import java.util.Random;
  * @author raphaelgrau
  */
 public class Sac {
-    
-    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n',
-                            'o','p','q','r','s','t','u','v','w','x','y','z'};
+
+    private static final char[] lettres = {'*', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+        'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     private char lettre;
     private final int SAC_SIZE = 100;
-    private List<Character> sac = new ArrayList<>();
-    private static int cpt;
-    
-    
+    private final List<Character> sac = new ArrayList<>();
+//    private static int cpt;
+    private final Random rand = new Random();
+
     public Sac() {
-        
-        for (int k = 0 ; k < SAC_SIZE ; k++) {
-          Random rand = new Random();
-          int n = rand.nextInt(lettres.length);
-          lettre = lettres[n];
-          sac.add(lettre);
-          cpt++;
-        }    
+        for (int k = 0; k < SAC_SIZE; k++) {
+
+            int n = rand.nextInt(lettres.length);
+            lettre = lettres[n];
+            sac.add(lettre);
+//            cpt++
+                    ;
+        }
     }
-    
+
     public char getRandomLettre() {
-        Random rand = new Random();
         int n = rand.nextInt(sac.size());
-        cpt--;
+//        cpt--
+                ;
         return sac.get(n);
     }
 }

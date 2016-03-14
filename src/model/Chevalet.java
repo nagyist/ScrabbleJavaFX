@@ -16,10 +16,10 @@ public class Chevalet extends Observable {
     private final int CHEV_SIZE = 7;
     
 
-    public Chevalet(ControllerGUI ctrl) {
+    public Chevalet(Sac sac) {
         
         for (int i = 0; i < CHEV_SIZE ; ++i) {
-            chev.add(new Jeton(ctrl));
+            chev.add(new Jeton(sac.getRandomLettre()));
         }    
     }
      

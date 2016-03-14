@@ -13,13 +13,12 @@ public class Jeton {
 //    private static final char[] lettres = {'*','a','b','c','d','e','f','g','h','i','j','k','l','m','n',
 //                                'o','p','q','r','s','t','u','v','w','x','y','z'};
     private final char lettre;
-    private ControllerGUI ctrl;
-    private final Sac sac;
+
 
    
-    public Jeton(ControllerGUI ctrl) {
-        this.sac = ctrl.getSac();
-        this.lettre = sac.getRandomLettre();
+    public Jeton(char c) {
+//        this.sac = ctrl.getSac();
+        this.lettre = c;
         
 //        Random rand = new Random();
 //        int n = rand.nextInt(lettres.length);

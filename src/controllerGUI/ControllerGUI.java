@@ -32,12 +32,13 @@ public class ControllerGUI extends Application {
     private final Sac sac;
 
     public ControllerGUI() {
-        this.chev = new Chevalet(this);
+        this.mot = new Mot();
+        this.sac = new Sac();
+        this.chev = new Chevalet(sac);
         this.grille = new Grille();
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
-        this.mot = new Mot();
-        this.sac = new Sac();
+        
 //        chev.addObserver((Observer) viewChevalet);
 //        grille.addObserver((Observer) viewGrille);
         lancer();
@@ -179,8 +180,7 @@ public class ControllerGUI extends Application {
         
 
         System.out.println("ViewCaseTemp vide? :" + ListEmpty());
-       
-        
+   
     }
     
     
