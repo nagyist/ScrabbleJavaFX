@@ -38,7 +38,6 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
-        
 //        chev.addObserver((Observer) viewChevalet);
 //        grille.addObserver((Observer) viewGrille);
         lancer();
@@ -55,7 +54,7 @@ public class ControllerGUI extends Application {
     public Grille getGrille() {
         return this.grille;
     }
-    
+
     public Sac getSac() {
         return this.sac;
     }
@@ -68,19 +67,17 @@ public class ControllerGUI extends Application {
         this.courant = courant;
     }
 
-//    public void removeJeton(Jeton j) {
-//        chev.removeJeton(j);
-//    }
-
     public boolean caseJouee(int x, int y) {
- 
         return !grille.getCase(x, y).caseLibre();
     }
     
-//    public boolean caseTempJouee(int x, int y) {
-//        return;
-//    }
-//    
+    public boolean caseTempJouee(int x, int y) {
+        for (ViewCaseTemp vct : casesTemp) {
+            if (vct.getPosX() == x && vct.getPosY() == y)
+                return true;
+        }
+        return false;   
+    }
 
     public ViewCaseTemp getViewCaseTemp(Jeton j) {
         ViewCaseTemp v = null;
@@ -91,7 +88,7 @@ public class ControllerGUI extends Application {
         }
         return v;
     }
-    
+
     public ViewJeton getViewJeton(Jeton j) {
         ViewJeton v = null;
         for (ViewJeton vj : viewChevalet.getListViewJetons()) {
@@ -101,8 +98,7 @@ public class ControllerGUI extends Application {
         }
         return v;
     }
-      
-    
+
     public ViewCase getViewCase(int x, int y) {
         return viewGrille.getViewCase(x, y);
     }
@@ -110,92 +106,99 @@ public class ControllerGUI extends Application {
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
         casesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
-        
+
         System.out.println("ViewCaseTemp, jetons : ");
         afficherListViewCaseTemp();
-
     }
-    
+
     public List<ViewCaseTemp> getListCasesTemp() {
         return casesTemp;
     }
-    
+
     public List<ViewJeton> getListJetonsJoues() {
         return viewChevalet.getListViewJetonsJoues();
     }
-    
-    
+
     public void setXToViewJeton(int x, Jeton j) {
         getViewJeton(j).setX(getViewCaseTemp(j).getPosX());
     }
-    
+
     public void setYToViewJeton(int y, Jeton j) {
         getViewJeton(j).setY(getViewCaseTemp(j).getPosY());
     }
-
 
     private void afficherListViewCaseTemp() {
         for (ViewCaseTemp vct : casesTemp) {
             System.out.println(vct.getLettreViewCaseTemp());
         }
     }
-    
+
     private boolean ListEmpty() {
         return casesTemp.isEmpty();
     }
-     
+
     // place une lettre (jeton) à une position donnée dans le model Grille
     public void placerLettre(int x, int y, Jeton j) {
         grille.setCase(x, y, j.getChar());
         System.out.println("Lettre model :" + grille.getCase(x, y).getChar());
     }
-    
+
     public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
+
+        // placer lettres dans le model
+        // supprimer la ViewCase existante sur la grille
         for (ViewCaseTemp vct : lsViewCaseTemp) {
             System.out.println(vct.getPosX());
             System.out.println(vct.getPosY());
             System.out.println(vct.getJeton().getStr());
             placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton());
-            getViewCase(vct.getPosX(),vct.getPosY()).getChildren().remove(vct);
-   
+            getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct);
         }
-        
-        for (ViewJeton vj : lsViewJetonsJoues) {
-            
-//            viewGrille.removeViewCase(vj.getX(), vj.getY());
-//            getViewCase(vj.getX(), vj.getY()).getChildren().add(viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
-            getViewCase(vj.getX(), vj.getY()).getChildren().set(0, viewChevalet.getViewJetonAt(vj.getX(),vj.getY()));
-            
-        }
-                
-        lsViewCaseTemp.clear();
-        
-        System.out.println("Liste jetons joués : ");
-        for (ViewJeton vj : viewChevalet.getListViewJetonsJoues()) {
-            System.out.println("ViewJeton lettre : " + vj.getLettre());
-            System.out.println("ViewJeton x : " + vj.getX());
-            System.out.println("ViewJeton y : " + vj.getY());
-            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
-        };
-        
 
-        System.out.println("ViewCaseTemp vide? :" + ListEmpty());
-   
+        // placer ViewJeton sur la grille
+        for (ViewJeton vj : lsViewJetonsJoues) {
+
+            getViewCase(vj.getX(), vj.getY()).getChildren().set(0, viewChevalet.getViewJetonAt(vj.getX(), vj.getY()));
+            // enlever jeton du chevalet    
+            chev.removeJeton(vj.getCourant());
+            // recharger chevalet du nombre de jetons joués
+            chev.rechargerChevalet(sac);
+        }
+        
+        // réafficher le chevalet
+        viewChevalet.initChevalet();
+        lsViewCaseTemp.clear();
+
+        // tests console :
+//        System.out.println("Liste jetons joués : ");
+//        for (ViewJeton vj : viewChevalet.getListViewJetonsJoues()) {
+//            System.out.println("ViewJeton lettre : " + vj.getLettre());
+//            System.out.println("ViewJeton x : " + vj.getX());
+//            System.out.println("ViewJeton y : " + vj.getY());
+//            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
+//        };
+
+        
+        System.out.print("Chevalet model : ");
+        for (Jeton j : chev.getChev()) {
+            System.out.print(j.getChar() + " ");
+        }
     }
-    
-    
+
     public void annulerDerniereLettre() {
-        
-        ViewCaseTemp lastVCT = casesTemp.get(casesTemp.size()-1);
-        casesTemp.remove(lastVCT);
-        getViewCase(lastVCT.getPosX(), lastVCT.getPosY()).getChildren().remove(lastVCT);
-        
-        ViewJeton lastVJ = viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size()-1);
-        viewChevalet.getListViewJetonsJoues().remove(lastVJ);
-        viewChevalet.getChildren().add(lastVJ);
-        
+
+        if (!getListCasesTemp().isEmpty()) {
+            
+            ViewCaseTemp lastVCT = casesTemp.get(casesTemp.size() - 1);
+            casesTemp.remove(lastVCT);
+            getViewCase(lastVCT.getPosX(), lastVCT.getPosY()).getChildren().remove(lastVCT);
+            
+            ViewJeton lastVJ = viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size() - 1);
+            viewChevalet.getListViewJetonsJoues().remove(lastVJ);
+            viewChevalet.getChildren().add(lastVJ);
+        }
     }
-    
+
     public char getLettreAt(int x, int y) {
         return grille.getLettreAt(x, y);
     }
@@ -215,7 +218,5 @@ public class ControllerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainView viewGUI = new MainView(primaryStage, viewGrille, viewChevalet, this);
     }
-
-
 
 }

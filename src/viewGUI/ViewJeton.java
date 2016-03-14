@@ -69,7 +69,6 @@ public class ViewJeton extends StackPane {
             db.setContent(content);
             
             ctrl.setCourant(courant);
-//            ctrl.setCaseJouee();
 
             event.consume();
         });  
@@ -78,36 +77,24 @@ public class ViewJeton extends StackPane {
         this.setOnDragDone((event) -> {
             final Dragboard db = event.getDragboard();
             String s = db.getString();
-//            System.out.println("s : " + s);
                       
             Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
-//            boolean joue = ((ViewJeton) event.getGestureSource(). );
             
-            vchev.removeViewJetonFromChev(courant);
-            System.out.println("jeton removed");
+            if (event.isAccepted()) {
+                vchev.removeViewJetonFromChev(courant);
+                System.out.println("jeton removed");
+            }
+
             
             for (ViewJeton vj : vchev.getListViewJetons())
                 System.out.println(vj.getLettre());
             
             ctrl.setCourant(null);
-                
-//            System.out.println(vchev);
-            
-//            System.out.println(ctrl.caseJouee());
-//            if (!ctrl.caseJouee()) {
-//                ctrl.removeJeton(jj);
-//            }
-//            System.out.println("chevalet model : ");
-//            for (Jeton j : ctrl.getChevalet().getChev())
-//                System.out.println(j);
-//            System.out.println(ctrl.caseJouee());
-            
+                           
             event.consume(); 
-        });
-            
-
-        
+        });  
     }
+    
     private void setRectJeton() {
             rectJeton = new Rectangle(40, 40, Color.web("ffffcc"));
             rectJeton.setArcWidth(10);
@@ -126,7 +113,6 @@ public class ViewJeton extends StackPane {
         return courant;
     }
     
-
     public void setCourant(Jeton courant) {
         this.courant = courant;
     }
@@ -150,7 +136,6 @@ public class ViewJeton extends StackPane {
     public int getY() {
         return y;
     }
-
 
     public void appuyer() {
         rectJeton.setFill(Color.web("fff9b3"));

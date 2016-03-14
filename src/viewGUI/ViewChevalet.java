@@ -61,12 +61,17 @@ public class ViewChevalet extends HBox {
     }
     
     public void initChevalet() {        
+        listViewJetons.clear();
+        listViewJetonsJoues.clear();
         for (Jeton j : chev.getChev()) {
             ViewJeton vJeton = new ViewJeton(0, 0, j, ctrl, this);
-            this.getChildren().add(vJeton);
             listViewJetons.add(vJeton);
-        }      
+        }   
+        this.getChildren().clear();
+        this.getChildren().addAll(listViewJetons);
     } 
+    
+    
     
     public void removeViewJetonFromChev(Jeton jj) {        
         for (Iterator<ViewJeton> it = listViewJetons.iterator(); it.hasNext(); ) {

@@ -12,6 +12,7 @@ public class Sac {
 
     private static final char[] lettres = {'*', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
         'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    
     private char lettre;
     private final int SAC_SIZE = 100;
     private final List<Character> sac = new ArrayList<>();
