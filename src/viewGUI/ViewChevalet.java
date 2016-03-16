@@ -17,7 +17,7 @@ public class ViewChevalet extends HBox {
     
     private final Chevalet chev;
     private final ControllerGUI ctrl;
-    private final List<ViewJeton> listViewJetons = new ArrayList<>();
+    private final List<ViewJeton> listViewJetonsChevalet = new ArrayList<>();
     private final List<ViewJeton> listViewJetonsJoues = new ArrayList<>();
     
 
@@ -26,19 +26,14 @@ public class ViewChevalet extends HBox {
         this.ctrl = ctrl;
     }
 
-    
-    public List<ViewJeton> getListViewJetons() {
-        return listViewJetons;
+    public List<ViewJeton> getListViewJetonsChevalet() {
+        return listViewJetonsChevalet;
     }
     
     public List<ViewJeton> getListViewJetonsJoues() {
         return listViewJetonsJoues;
     }
-    
-    public void addViewJetonJoue(ViewJeton vj) {
-        listViewJetonsJoues.add(vj);
-    }
-    
+       
     public ViewJeton getViewJeton(Jeton jj) {
         for (Iterator<ViewJeton> it = listViewJetonsJoues.iterator(); it.hasNext(); ) {
             ViewJeton vj = it.next();
@@ -46,8 +41,7 @@ public class ViewChevalet extends HBox {
                 return vj;
             }
         }
-        return null;
-            
+        return null;         
     }
     
     public ViewJeton getViewJetonAt (int x, int y) {
@@ -61,20 +55,20 @@ public class ViewChevalet extends HBox {
     }
     
     public void initChevalet() {        
-        listViewJetons.clear();
+        listViewJetonsChevalet.clear();
         listViewJetonsJoues.clear();
         for (Jeton j : chev.getChev()) {
             ViewJeton vJeton = new ViewJeton(0, 0, j, ctrl, this);
-            listViewJetons.add(vJeton);
+            listViewJetonsChevalet.add(vJeton);
         }   
         this.getChildren().clear();
-        this.getChildren().addAll(listViewJetons);
+        this.getChildren().addAll(listViewJetonsChevalet);
     } 
     
     
     
-    public void removeViewJetonFromChev(Jeton jj) {        
-        for (Iterator<ViewJeton> it = listViewJetons.iterator(); it.hasNext(); ) {
+    public void removeViewJetonFromChevalet(Jeton jj) {        
+        for (Iterator<ViewJeton> it = listViewJetonsChevalet.iterator(); it.hasNext(); ) {
                 ViewJeton vj = it.next();
                 if (jj == vj.getCourant()) {
                     listViewJetonsJoues.add(vj);
@@ -83,6 +77,5 @@ public class ViewChevalet extends HBox {
                     return;
                 }
             }       
-    }
-    
+    }  
 }

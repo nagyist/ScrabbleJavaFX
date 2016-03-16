@@ -25,7 +25,7 @@ public class Chevalet extends Observable {
         return chev;
     }
     
-    // ne peut etre appelé que si ch est dans le chevalet    
+    // ne peut etre appelé que si c est dans le chevalet    
     public Jeton getJeton(char c) {
         for (Jeton j : chev)
             if (j.getChar() == c) {

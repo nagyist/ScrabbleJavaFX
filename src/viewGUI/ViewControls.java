@@ -15,7 +15,6 @@ public class ViewControls extends HBox {
     
     
     public ViewControls(ViewChevalet viewChevalet, ControllerGUI ctrl) {
-        ControllerGUI ControllerGUI;
         
         this.viewButtons = new ViewButtons(ctrl);
         this.viewChevalet = viewChevalet;

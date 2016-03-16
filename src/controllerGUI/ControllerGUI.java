@@ -4,17 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.Chevalet;
-import model.Grille;
-import model.Jeton;
-import model.Mot;
-import model.Sac;
-import viewGUI.MainView;
-import viewGUI.ViewCase;
-import viewGUI.ViewCaseTemp;
-import viewGUI.ViewChevalet;
-import viewGUI.ViewGrille;
-import viewGUI.ViewJeton;
+import model.*;
+import viewGUI.*;
 
 /**
  *
@@ -59,6 +50,8 @@ public class ControllerGUI extends Application {
         return this.sac;
     }
 
+    // Jeton courant : celui qui est en train d'être joué lorsque l'utilisateur
+    // clique sur un jeton dans le chevalet pour le placer sur la grille
     public Jeton getCourant() {
         return this.courant;
     }
@@ -91,7 +84,7 @@ public class ControllerGUI extends Application {
 
     public ViewJeton getViewJeton(Jeton j) {
         ViewJeton v = null;
-        for (ViewJeton vj : viewChevalet.getListViewJetons()) {
+        for (ViewJeton vj : viewChevalet.getListViewJetonsChevalet()) {
             if (j == vj.getCourant()) {
                 v = vj;
             }
@@ -101,14 +94,6 @@ public class ControllerGUI extends Application {
 
     public ViewCase getViewCase(int x, int y) {
         return viewGrille.getViewCase(x, y);
-    }
-
-    public void placerLettreTemp(int x, int y, Jeton j) {
-        String lettre = j.getStr();
-        casesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
-
-        System.out.println("ViewCaseTemp, jetons : ");
-        afficherListViewCaseTemp();
     }
 
     public List<ViewCaseTemp> getListCasesTemp() {
@@ -132,12 +117,16 @@ public class ControllerGUI extends Application {
             System.out.println(vct.getLettreViewCaseTemp());
         }
     }
-
-    private boolean ListEmpty() {
-        return casesTemp.isEmpty();
+    
+    // place une ViewCaseTemp
+    public void placerLettreTemp(int x, int y, Jeton j) {
+        String lettre = j.getStr();
+        casesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
+        System.out.println("ViewCaseTemp, jetons : ");
+        afficherListViewCaseTemp();
     }
 
-    // place une lettre (jeton) à une position donnée dans le model Grille
+    // placer la lettre dans le model
     public void placerLettre(int x, int y, Jeton j) {
         grille.setCase(x, y, j.getChar());
         System.out.println("Lettre model :" + grille.getCase(x, y).getChar());
@@ -199,15 +188,10 @@ public class ControllerGUI extends Application {
         }
     }
 
-    public char getLettreAt(int x, int y) {
-        return grille.getLettreAt(x, y);
-    }
-
     private void lancer() {
         grille.notif();
 //        chevalet.notif();
 //        demanderLettre();
-
     }
 
     public static void main(String[] args) {

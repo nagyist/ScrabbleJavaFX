@@ -20,14 +20,9 @@ public abstract class ViewCase extends StackPane {
     private Text lettre;
     private Rectangle carreCase;
     private final ViewGrille viewGrille;
-//    private ControllerGUI ctrl;
     private final int x, y;
-    private final String cssCasesGrilleDefault = "-fx-stroke: transparent; -fx-stroke-width: 3;\n"
-//                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-                        ;
-//    private final Color JETON_COLOR = Color.web("ffffcc");
-    
-    
+    private final String cssCasesGrilleDefault = "-fx-stroke: transparent; -fx-stroke-width: 3;\n";
+
     
     public ViewCase(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
         this.x = x;
@@ -39,6 +34,7 @@ public abstract class ViewCase extends StackPane {
         
         this.getChildren().add(this.lettre); 
 
+        
         this.setOnDragOver((event) -> {
     
             if (!ctrl.caseJouee(x, y) && !ctrl.caseTempJouee(x,y)) {     
@@ -51,7 +47,7 @@ public abstract class ViewCase extends StackPane {
         this.setOnDragDropped((event) -> {
 
             boolean success = false;
-            System.out.print("courant : ");
+//            System.out.print("courant : ");
 //            System.out.println(viewGrille.getCourant());
             System.out.println(ctrl.getCourant());
             
@@ -63,10 +59,6 @@ public abstract class ViewCase extends StackPane {
             System.out.println("ViewJeton y : " + ctrl.getViewJeton(j).getY());
             
             this.getChildren().add(ctrl.getViewCaseTemp(j));
-//            this.getChildren().add(ctrl.getViewCaseTemp(j));
-            
-//            setStyleCaseJouee();
-//            setStyleLettreCaseJouee();
             
             success = true;
             event.setDropCompleted(success);
@@ -118,12 +110,5 @@ public abstract class ViewCase extends StackPane {
 
     public int getY() {
         return y;
-    }
-    
-
-    abstract public void affiche();
-
-    }
-  
-
-
+    } 
+}

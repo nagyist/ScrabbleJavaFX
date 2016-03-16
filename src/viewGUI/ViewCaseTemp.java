@@ -14,11 +14,7 @@ public class ViewCaseTemp extends ViewCase {
     private final ControllerGUI ctrl;
     private final Jeton j;
     private final Color TEMP_COLOR = Color.web("ffffcc");//Color.SNOW;
-    private final String cssJetonTemp = "-fx-stroke:yellow; -fx-stroke-width: 2;\n"
-//                + "-fx-stroke-dash-array: 4 4 4 4;\n"
-//                + "-fx-stroke-dash-offset: 4;\n"
-//                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-            ;
+    private final String cssJetonTemp = "-fx-stroke:yellow; -fx-stroke-width: 2;\n";
 
     
     public ViewCaseTemp(int x, int y, String lettre, Jeton j, ViewGrille viewGrille, ControllerGUI ctrl) {
@@ -49,14 +45,5 @@ public class ViewCaseTemp extends ViewCase {
     public int getPosY() {
         return getY();
     }
-    
-//    public boolean viewCaseTempExist(int x, int y) {
-//        return getX() == x && getY() == y;
-//    }
-    
-  
-    @Override
-    public void affiche() {
-    }
-    
+        
 }

@@ -14,6 +14,7 @@ public class ViewButtons extends HBox {
     
     
         public ViewButtons(ControllerGUI ctrl) {
+            
             Button btnOK = new Button();
             btnOK.setText("Valider");
             btnOK.setOnAction((ActionEvent event) -> {
@@ -31,14 +32,7 @@ public class ViewButtons extends HBox {
             
             this.getChildren().addAll(btnOK, btnCancel);
             this.setSpacing(5);
-            this.setAlignment(Pos.CENTER);
-
-            
+            this.setAlignment(Pos.CENTER);          
         }
-    
-    
-
-    
-    
     
 }

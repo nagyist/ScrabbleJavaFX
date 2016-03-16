@@ -81,12 +81,11 @@ public class ViewJeton extends StackPane {
             Jeton jj = ((ViewJeton) event.getGestureSource()).courant;
             
             if (event.isAccepted()) {
-                vchev.removeViewJetonFromChev(courant);
+                vchev.removeViewJetonFromChevalet(courant);
                 System.out.println("jeton removed");
             }
-
-            
-            for (ViewJeton vj : vchev.getListViewJetons())
+ 
+            for (ViewJeton vj : vchev.getListViewJetonsChevalet())
                 System.out.println(vj.getLettre());
             
             ctrl.setCourant(null);
@@ -96,17 +95,17 @@ public class ViewJeton extends StackPane {
     }
     
     private void setRectJeton() {
-            rectJeton = new Rectangle(40, 40, Color.web("ffffcc"));
-            rectJeton.setArcWidth(10);
-            rectJeton.setArcHeight(10);
-            rectJeton.setStyle(cssJetonsChevalet);
-        }
+        rectJeton = new Rectangle(40, 40, Color.web("ffffcc"));
+        rectJeton.setArcWidth(10);
+        rectJeton.setArcHeight(10);
+        rectJeton.setStyle(cssJetonsChevalet);
+   }
     
     private void setLettreJeton() {
-        this.lettre = new Text (courant.getStr().toUpperCase());
-        this.lettre.setFont(new Font("Serif", 24));
-        this.lettre.setFill(Color.BLACK);   
-        this.lettre.setStyle("-fx-font-weight: bold");
+        lettre = new Text (courant.getStr().toUpperCase());
+        lettre.setFont(new Font("Serif", 24));
+        lettre.setFill(Color.BLACK);   
+        lettre.setStyle("-fx-font-weight: bold");
     }
 
     public Jeton getCourant() {

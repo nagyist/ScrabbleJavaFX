@@ -3,15 +3,8 @@ package viewGUI;
 import controllerGUI.ControllerGUI;
 import java.awt.Point;
 import javafx.scene.layout.GridPane;
-import model.Case;
-import model.Grille;
+import model.*;
 import static model.Grille.DIM;
-import model.Jeton;
-import model.MotDouble;
-import model.MotTriple;
-import model.Triple;
-
-
 
 /**
  *
@@ -65,9 +58,7 @@ public class ViewGrille extends GridPane {
         ctrl.setCourant(courant);
     }
     
-    
-    public ViewCase getViewCase(int x, int y) {
-        
+    public ViewCase getViewCase(int x, int y) {      
         return (ViewCase)this.getChildren().get( x * DIM + y);
     }
     

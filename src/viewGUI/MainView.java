@@ -12,7 +12,6 @@ import javafx.stage.Stage;
  */
 public final class MainView {
 
-    private final ControllerGUI ctrl;
     private final ViewChevalet viewChevalet;
     private final ViewGrille viewGrille;
     private final ViewControls viewControls;
@@ -21,7 +20,6 @@ public final class MainView {
                                     + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
 
     public MainView(Stage stage, ViewGrille viewGrille, ViewChevalet viewChevalet, ControllerGUI ctrl) {
-        this.ctrl = ctrl;
         this.viewChevalet = viewChevalet;
         this.viewGrille = viewGrille;
         this.viewControls = new ViewControls(viewChevalet, ctrl);
@@ -46,7 +44,5 @@ public final class MainView {
 
         viewGrille.afficherGrille();
         viewChevalet.initChevalet();
-//        viewChevalet.afficherChevalet();
-
     }
 }

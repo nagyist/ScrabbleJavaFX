@@ -14,11 +14,4 @@ public class ViewSimple extends ViewCase {
         super(x, y, lettre, viewGrille, ctrl);
         getCarreCase().setFill(Color.web("009966"));
     }
-    
-
-    @Override
-    public void affiche() {
-    }
-
-    
 }

@@ -13,12 +13,5 @@ public class ViewTriple extends ViewCase {
     public ViewTriple(int x, int y, String lettre, ViewGrille viewGrille, ControllerGUI ctrl) {
         super(x, y, lettre, viewGrille, ctrl);
         getCarreCase().setFill(Color.web("0066cc"));
-    }
-    
-
-    @Override
-    public void affiche() {
-    }
-
-    
+    }  
 }
