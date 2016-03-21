@@ -37,9 +37,9 @@ public abstract class ViewCase extends StackPane {
         
         this.setOnDragOver((event) -> {
     
-            
+            if (ctrl.casePossible(x,y)) { 
             // methode casePossible() avec les tests
-            if (!ctrl.caseJouee(x, y) && !ctrl.caseTempJouee(x,y)) {     
+//            if (!ctrl.caseJouee(x, y) && !ctrl.caseTempJouee(x,y)) {     
                 System.out.println("accepte drag n drop");
                 event.acceptTransferModes(TransferMode.ANY);
                 event.consume();
@@ -55,8 +55,8 @@ public abstract class ViewCase extends StackPane {
             
             Jeton j = ((ViewJeton) event.getGestureSource()).getCourant();
             ctrl.placerLettreTemp(x, y, j);
-            ctrl.setXToViewJeton(x, j);
-            ctrl.setYToViewJeton(y, j);
+//            ctrl.setXToViewJeton(x, j);
+//            ctrl.setYToViewJeton(y, j);
             System.out.println("ViewJeton x : " + ctrl.getViewJeton(j).getX());
             System.out.println("ViewJeton y : " + ctrl.getViewJeton(j).getY());
             

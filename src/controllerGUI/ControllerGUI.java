@@ -30,8 +30,8 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
-        chev.addObserver((Observer) viewChevalet);
-        grille.addObserver((Observer) viewGrille);
+//        chev.addObserver((Observer) viewChevalet);
+//        grille.addObserver((Observer) viewGrille);
         lancer();
     }
 
@@ -74,13 +74,13 @@ public class ControllerGUI extends Application {
     }
 
     public ViewCaseTemp getViewCaseTemp(Jeton j) {
-        ViewCaseTemp v = null;
+//        ViewCaseTemp v = null;
         for (ViewCaseTemp vct : casesTemp) {
             if (j == vct.getJetonCourant()) {
-                v = vct;
+                return vct;
             }
         }
-        return v;
+        return null;
     }
 
     public ViewJeton getViewJeton(Jeton j) {
@@ -119,11 +119,18 @@ public class ControllerGUI extends Application {
         }
     }
     
+    public boolean casePossible(int x, int y) {
+        return !caseJouee(x, y) && !caseTempJouee(x,y);
+    }
+    
+    
     // place une ViewCaseTemp
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
         casesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
         System.out.println("ViewCaseTemp, jetons : ");
+        setXToViewJeton(x, j);
+        setYToViewJeton(y, j);
         afficherListViewCaseTemp();
     }
 
@@ -132,31 +139,65 @@ public class ControllerGUI extends Application {
         grille.setCase(x, y, j.getChar());
         System.out.println("Lettre model :" + grille.getCase(x, y).getChar());
     }
-
-    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
-
-        // placer lettres dans le model
-        // supprimer la ViewCase existante sur la grille
-        for (ViewCaseTemp vct : lsViewCaseTemp) {
+    
+    private void placerLettreModel(List<ViewCaseTemp> lvct) {
+        for (ViewCaseTemp vct : lvct) {
             System.out.println(vct.getPosX());
             System.out.println(vct.getPosY());
             System.out.println(vct.getJeton().getStr());
             placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton());
             getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct);
         }
-
-        // placer ViewJeton sur la grille
-        for (ViewJeton vj : lsViewJetonsJoues) {
-
+    }
+    
+    private void supprViewCaseTemp(List<ViewCaseTemp> lvct) {
+        for (ViewCaseTemp vct : lvct) {
+            System.out.println(vct.getPosX());
+            System.out.println(vct.getPosY());
+            System.out.println(vct.getJeton().getStr());
+            placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton());
+            getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct);
+        }
+    }
+    
+    private void placerViewJetonSurViewCase(List<ViewJeton> lvjj) {
+        for (ViewJeton vj : lvjj) {
             getViewCase(vj.getX(), vj.getY()).getChildren().set(0, viewChevalet.getViewJetonAt(vj.getX(), vj.getY()));
-            // enlever jeton du chevalet    
+        }
+    }
+    
+    private void removeViewJetonChevalet(List<ViewJeton> lvjj) {
+        for (ViewJeton vj : lvjj) {
             chev.removeJeton(vj.getCourant());
-            // recharger chevalet du nombre de jetons joués
+        }
+    }
+    
+    private void rechargerChev(List<ViewJeton> lvjj) {
+        for (ViewJeton vj : lvjj) {
             chev.rechargerChevalet(sac);
         }
-        
-        // réafficher le chevalet
+    }
+    
+    private void reaffichChevalet() {
         viewChevalet.initChevalet();
+    }
+
+    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
+
+        // placer lettres dans le model
+        placerLettreModel(lsViewCaseTemp);
+        // supprimer la ViewCase existante sur la grille
+        supprViewCaseTemp(lsViewCaseTemp);
+        // placer ViewJeton sur la ViewCase
+        placerViewJetonSurViewCase(lsViewJetonsJoues);
+        // enlever jeton du chevalet    
+        removeViewJetonChevalet(lsViewJetonsJoues);
+        // recharger chevalet du nombre de jetons joués
+        rechargerChev(lsViewJetonsJoues);
+        // réafficher le chevalet
+        reaffichChevalet();
+        
+        // nettoyer la lsViewCaseTemp
         lsViewCaseTemp.clear();
 
         // tests console :
@@ -168,26 +209,39 @@ public class ControllerGUI extends Application {
 //            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
 //        };
 
-        
         System.out.print("Chevalet model : ");
         for (Jeton j : chev.getChev()) {
             System.out.print(j.getChar() + " ");
         }
     }
+    
+    private ViewCaseTemp getLastVCT(List<ViewCaseTemp> casesTemp) {
+        return casesTemp.get(casesTemp.size() - 1);
+    }
+    
+    private void removeLastVCTFromViewCase() {
+        ViewCaseTemp lastVCT = getLastVCT(casesTemp);
+        casesTemp.remove(lastVCT);
+        getViewCase(lastVCT.getPosX(), lastVCT.getPosY()).getChildren().remove(lastVCT);     
+    }
+    
+    private ViewJeton getLastViewJeton() {
+        return viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size() - 1);
+    }
+    
+    private void addViewJetonToChev() {
+        ViewJeton lastVJ = getLastViewJeton();
+        viewChevalet.getListViewJetonsJoues().remove(lastVJ);
+        viewChevalet.removeViewJeton(lastVJ);
+        viewChevalet.addViewJeton(lastVJ);
+    }
+    
 
     public void annulerDerniereLettre() {
 
         if (!getListCasesTemp().isEmpty()) {
-            
-            ViewCaseTemp lastVCT = casesTemp.get(casesTemp.size() - 1);
-            casesTemp.remove(lastVCT);
-            getViewCase(lastVCT.getPosX(), lastVCT.getPosY()).getChildren().remove(lastVCT);
-            
-            ViewJeton lastVJ = viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size() - 1);
-            viewChevalet.getListViewJetonsJoues().remove(lastVJ);
-            viewChevalet.getChildren().add(lastVJ);
-            viewChevalet.getListViewJetonsChevalet().add(lastVJ);
-            
+            removeLastVCTFromViewCase();
+            addViewJetonToChev();
         }
     }
 

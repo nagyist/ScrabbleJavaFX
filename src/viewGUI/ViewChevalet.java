@@ -65,6 +65,14 @@ public class ViewChevalet extends HBox {
         this.getChildren().addAll(listViewJetonsChevalet);
     } 
     
+    public void addViewJeton(ViewJeton vj) {
+        this.getChildren().add(vj);
+        listViewJetonsChevalet.add(vj);
+    }
+    
+    public void removeViewJeton(ViewJeton vj) {
+        listViewJetonsJoues.remove(vj);
+    }
     
     
     public void removeViewJetonFromChevalet(Jeton jj) {        
