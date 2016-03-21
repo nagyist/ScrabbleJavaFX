@@ -14,7 +14,7 @@ import model.Jeton;
  */
 public class ViewChevalet extends HBox {
     
-    
+     
     private final Chevalet chev;
     private final ControllerGUI ctrl;
     private final List<ViewJeton> listViewJetonsChevalet = new ArrayList<>();
