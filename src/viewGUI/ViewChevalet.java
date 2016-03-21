@@ -18,7 +18,7 @@ public class ViewChevalet extends HBox {
     private final Chevalet chev;
     private final ControllerGUI ctrl;
     private final List<ViewJeton> listViewJetonsChevalet = new ArrayList<>();
-    private final List<ViewJeton> listViewJetonsJoues = new ArrayList<>();
+    private final List<ViewJeton> listViewJetonsJoues = new ArrayList<>(); // --> ControllerGUI
     
 
     public ViewChevalet(ControllerGUI ctrl) {

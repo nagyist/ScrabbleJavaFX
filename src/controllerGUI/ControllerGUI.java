@@ -2,6 +2,7 @@ package controllerGUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;
@@ -29,8 +30,8 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
-//        chev.addObserver((Observer) viewChevalet);
-//        grille.addObserver((Observer) viewGrille);
+        chev.addObserver((Observer) viewChevalet);
+        grille.addObserver((Observer) viewGrille);
         lancer();
     }
 
@@ -83,13 +84,13 @@ public class ControllerGUI extends Application {
     }
 
     public ViewJeton getViewJeton(Jeton j) {
-        ViewJeton v = null;
+        //ViewJeton v = null;
         for (ViewJeton vj : viewChevalet.getListViewJetonsChevalet()) {
             if (j == vj.getCourant()) {
-                v = vj;
+                return vj;
             }
         }
-        return v;
+        return null;
     }
 
     public ViewCase getViewCase(int x, int y) {
@@ -185,6 +186,8 @@ public class ControllerGUI extends Application {
             ViewJeton lastVJ = viewChevalet.getListViewJetonsJoues().get(viewChevalet.getListViewJetonsJoues().size() - 1);
             viewChevalet.getListViewJetonsJoues().remove(lastVJ);
             viewChevalet.getChildren().add(lastVJ);
+            viewChevalet.getListViewJetonsChevalet().add(lastVJ);
+            
         }
     }
 

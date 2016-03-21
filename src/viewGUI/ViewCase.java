@@ -37,6 +37,8 @@ public abstract class ViewCase extends StackPane {
         
         this.setOnDragOver((event) -> {
     
+            
+            // methode casePossible() avec les tests
             if (!ctrl.caseJouee(x, y) && !ctrl.caseTempJouee(x,y)) {     
                 System.out.println("accepte drag n drop");
                 event.acceptTransferModes(TransferMode.ANY);
