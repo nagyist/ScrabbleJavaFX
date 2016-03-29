@@ -4,6 +4,8 @@ import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.scene.layout.HBox;
 import model.Chevalet;
 import model.Jeton;
@@ -12,7 +14,7 @@ import model.Jeton;
  *
  * @author raphaelgrau
  */
-public class ViewChevalet extends HBox {
+public class ViewChevalet extends HBox implements Observer {
     
      
     private final Chevalet chev;
@@ -57,4 +59,11 @@ public class ViewChevalet extends HBox {
                 }
             }       
     }  
+
+    @Override
+    public void update(Observable o, Object arg) { 
+        
+        
+        initChevalet();
+    }
 }

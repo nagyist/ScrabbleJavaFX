@@ -2,6 +2,8 @@ package viewGUI;
 
 import controllerGUI.ControllerGUI;
 import java.awt.Point;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.scene.layout.GridPane;
 import model.*;
 import static model.Grille.DIM;
@@ -10,7 +12,7 @@ import static model.Grille.DIM;
  *
  * @author raphaelgrau
  */
-public class ViewGrille extends GridPane {
+public class ViewGrille extends GridPane implements Observer {
     
     private final ControllerGUI ctrl;
     private final Grille grille;
@@ -64,6 +66,21 @@ public class ViewGrille extends GridPane {
     
     public void removeViewCase(int x, int y) {
         getViewCase(x,y).getChildren().remove(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+        for (ViewCaseTemp vct : ctrl.getListCasesTemp()) {
+            ctrl.removeViewCaseTemp(vct);    
+        }
+        
+        for (ViewJeton vj : ctrl.getListJetonsJoues()) { 
+            ctrl.placerViewJetonGrille(vj);
+        }
+        
+        ctrl.getListCasesTemp().clear();
+        
     }
     
 

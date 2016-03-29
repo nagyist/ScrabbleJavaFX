@@ -1,6 +1,8 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -107,4 +109,5 @@ public abstract class ViewCase extends StackPane {
     public int getY() {
         return y;
     } 
+
 }

@@ -1,12 +1,13 @@
 package model;
 
 import controllerGUI.ControllerGUI;
+import java.util.Observable;
 
 /**
  *
  * @author raphaelgrau
  */
-public class Scrabble {
+public class Scrabble extends Observable {
     
     private final Grille grille;
     private final Chevalet chev;
@@ -17,20 +18,26 @@ public class Scrabble {
     }
     
     public void placerLettre(int x, int y, Jeton j) {
-        System.out.println(x + "et" + y + "et" + j.getChar());
         grille.setCase(x, y, j.getChar());
-        System.out.println("Lettre model :" + grille.getCase(x, y).getChar());
+//        notif()
+                ;
     }
     
     public void removeJeton(Jeton j) {
         chev.removeJeton(j);
+//        notif()
+                ;
     }
     
     public void rechargerChevalet(Sac sac) {
         chev.rechargerChevalet(sac);
-        
+        notif();
     }
     
+    public void notif() {
+        setChanged();
+        notifyObservers();
+    }
     
     
 }
