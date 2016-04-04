@@ -24,6 +24,8 @@ public class ViewCaseTemp extends ViewCase {
         setColorCase(TEMP_COLOR);
         setStyleCase(cssJetonTemp);
         setLettre(lettre);
+        j.setX(x);
+        j.setY(y);
     }
     
     public Jeton getJeton() {
@@ -34,10 +36,9 @@ public class ViewCaseTemp extends ViewCase {
         return ctrl.getCourant();
     }
     
-    public String getLettreViewCaseTemp() {
-        return getLettre().toString();
-    }
+    // =====> meme méthode ????
     
+       
     public int getPosX() {
         return getX();
     }
@@ -45,5 +46,8 @@ public class ViewCaseTemp extends ViewCase {
     public int getPosY() {
         return getY();
     }
-        
+    
+    public char getChar() {
+        return j.getChar();
+    }        
 }

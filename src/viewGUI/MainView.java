@@ -18,7 +18,8 @@ public final class MainView {
     private final VBox root = new VBox();
     private final String cssDefault = "-fx-stroke: black; -fx-stroke-width: 100; -fx-background-radius: 5;"
                                     + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
-
+        
+    
     public MainView(Stage stage, ViewGrille viewGrille, ViewChevalet viewChevalet, ControllerGUI ctrl) {
         this.viewChevalet = viewChevalet;
         this.viewGrille = viewGrille;
@@ -45,4 +46,6 @@ public final class MainView {
         viewGrille.afficherGrille();
         viewChevalet.initChevalet();
     }
+    
+    
 }

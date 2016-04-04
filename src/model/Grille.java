@@ -34,12 +34,15 @@ public class Grille extends Observable {
     }
     
     public void setCase(int x, int y, char lettre) {
-        this.grille[x][y].setLettre(lettre);
-        
+        this.grille[x][y].setLettre(lettre);   
     }
     
     public char getLettreAt(int x, int y) {
         return getCase(x,y).getChar();
+    }
+    
+    public boolean caseJouee(int x, int y) {
+        return !(getLettreAt(x,y) == ' ');
     }
    
     public void notif() {
@@ -143,6 +146,10 @@ public class Grille extends Observable {
                     grille[li][co] = new Simple();         
             }
         }
+    }
+
+    public boolean isEmpty() {
+        return (getLettreAt(7,7) == ' ');
     }
 }
 

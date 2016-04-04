@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Comparator;
+
 /**
  *
  * @author 0404ragrau
@@ -6,9 +9,12 @@ package model;
 public class Jeton {
     
     private final char lettre;
+    private int x, y;
    
-    public Jeton(char c) {
+    public Jeton(char c, int x, int y) {
         this.lettre = c;
+        this.x = x;
+        this.y = y;
     }
     
     public char getChar() {
@@ -18,6 +24,40 @@ public class Jeton {
     public String getStr() {
         return ""+lettre;
     }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    public boolean isAtCenter() {
+        return (x == 7) && (y == 7);
+    }
+    
+    
+    public static Comparator<Jeton> COMPARE_BY_X = (Jeton j, Jeton jj) -> {
+        Integer jx = j.x;
+        Integer jjx = jj.x;
+        return jx.compareTo(jjx);
+    };
+
+    public static Comparator<Jeton> COMPARE_BY_Y = (Jeton j, Jeton jj) -> {
+        Integer jy = j.y;
+        Integer jjy = jj.y;
+        return jy.compareTo(jjy);
+    };
+    
 
     @Override
     public int hashCode() {
@@ -37,6 +77,8 @@ public class Jeton {
         final Jeton other = (Jeton) obj;
         return this.lettre == other.lettre;
     }
+
+
     
     
 }

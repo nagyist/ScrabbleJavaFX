@@ -17,7 +17,7 @@ public class Chevalet extends Observable {
 
     public Chevalet(Sac sac) { 
         for (int i = 0; i < CHEV_SIZE ; ++i) {
-            chev.add(new Jeton(sac.getRandomLettre()));
+            chev.add(new Jeton(sac.getRandomLettre(), 0, 0));
         }    
     }
      
@@ -48,7 +48,7 @@ public class Chevalet extends Observable {
     public void rechargerChevalet(Sac sac) {
         char c = sac.getRandomLettre();
         System.out.println("Jeton généré : " + c);
-        chev.add(new Jeton(c));
+        chev.add(new Jeton(c, 0, 0));
     }
 
     public void notif() {

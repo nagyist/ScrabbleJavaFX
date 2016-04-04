@@ -33,8 +33,7 @@ public abstract class Case {
    
     public void setLettre(char lettre) {
         if (caseLibre())
-            this.lettre = lettre;
-        
+            this.lettre = lettre;        
         caseJouee = true;
     }
 
