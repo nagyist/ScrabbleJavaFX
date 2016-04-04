@@ -20,14 +20,16 @@ public class VerifMot {
     
     private String errorDisplayed = "";
     private final String errorCenter = "Au moins une des lettres doit passer par le centre du plateau.";
-    private final String errorNotTouchingExisting = "Au moins une des lettres du mot placé doit toucer un mot existant déjà sur le plateau.";
+    private final String errorNotTouchingExisting = "Le mot placé doit toucher un mot existant déjà sur le plateau.";
     private final String errorNotTouching = "Les lettres du mot doivent se toucher entre elles.";
     private final String errorTooShort = "Le mot doit faire au minimum 2 lettres.";
-//    private final Alert alertError = new Alert(Alert.AlertType.ERROR);
-//    private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
+    private final Alert alertError = new Alert(Alert.AlertType.ERROR);
+    private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
    
     private final List<Jeton> motCandidate = new ArrayList<>();
     private List<Jeton> motCandidateSorted = new ArrayList<>();
+    private int nbTrousVerti;
+    private int nbTrousHoriz;
 
     
     public VerifMot(ControllerGUI ctrl) {
@@ -35,6 +37,8 @@ public class VerifMot {
     }
 
     public void ajouterMotVerif(List<ViewCaseTemp> lsViewCaseTemp) {
+        motCandidate.clear();
+        motCandidateSorted.clear();
         for (ViewCaseTemp vct : lsViewCaseTemp) {
             motCandidate.add(vct.getJeton());
         }
@@ -108,19 +112,24 @@ public class VerifMot {
     private boolean aligned(List<Jeton> mot) {
         return alignVerti(mot) || alignHoriz(mot);
     }
+    
+    private boolean uneSeuleLettre(List<Jeton> mot) {
+        return mot.size() <= 1;
+    }
+
+    private boolean touchMotGrille() {
+        for (Jeton j : motCandidate) {
+            if (touchJetonGrille(j))
+                    return true;  
+        }
+        return false;
+    }
         
     
     private void sortMot() {
-        
-//        System.out.println("before sort :");
-//        afficheMot(motCandidate);
-//        afficheMot(motCandidateSorted);
 
         motCandidateSorted = motCandidate;
         
-//        afficheMot(motCandidate);
-//        afficheMot(motCandidateSorted);
-
         if (alignVerti(motCandidate)) {
             Collections.sort(motCandidateSorted, Jeton.COMPARE_BY_Y);
             
@@ -137,23 +146,82 @@ public class VerifMot {
     
 
     private boolean trouHoriz(List<Jeton> mot) {
+//        afficheMot(mot);
         boolean result = false;
+        int posY = -1; 
+        int posXPremierTrou = -1;
         for (int i = 0; i < mot.size() - 1; i++) {
-            if (mot.get(i+1).getX() != (mot.get(i).getX() + 1)) {  
-                result = true;              
+            posY = mot.get(i).getY();
+//            System.out.println(posY);
+            if (mot.get(i+1).getX() != (mot.get(i).getX() + 1)) {
+                posXPremierTrou = mot.get(i).getX()+1;
+                nbTrousHoriz = (mot.get(i+1).getX()) - (mot.get(i).getX()+1);
+                result = true;  
             }
         }
-        return result;
+//        System.out.println("posY : " + posY);
+//        System.out.println("posXPremierTrou : " + posXPremierTrou);
+//        System.out.println("nbTrousHoriz : " + nbTrousHoriz);
+        if (result == true) { // si il y a un/des TROU
+//            System.out.println("test");
+            result =! verifTrousHorizGrille(posXPremierTrou, posY, nbTrousHoriz);  
+//            System.out.println("result" + result);
+        }                                                                  
+//        System.out.println("trouHoriz result : " + result);    
+        return result; 
+    }
+ 
+    private boolean verifTrousHorizGrille(int posX, int posY, int nbTrousHoriz) {
+        System.out.println("testVTGFDFZEFGEZ");
+        System.out.println(posX + " * " + posY + " * " + nbTrousHoriz);
+        for (int i = 0; i < nbTrousHoriz; ++i, ++posX) {
+//            System.out.println(i + "+" + posX);
+            if (!grille.caseJouee(posX, posY)) {
+//                System.out.println("pas joué dans model, vrai trou");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+
+    private boolean verifTrousVertiGrille(int posX, int posY, int nbTrousVerti) {
+//        System.out.println("testVTGFDFZEFGEZ");
+//        System.out.println(posX + " * " + posY +  " * " + nbTrousVerti);
+        for (int i = 0; i < nbTrousVerti; ++i, ++posY) {
+//            System.out.println(i + "+" + posX);
+            if (!grille.caseJouee(posX, posY)) {
+//                System.out.println("pas joué dans model, vrai trou");
+                return false;
+            }
+        }
+        return true;
     }
     
     private boolean trouVerti(List<Jeton> mot) {
-        boolean result = false;        
+//        afficheMot(mot);
+        boolean result = false; 
+        int posX = -1; 
+        int posYPremierTrou = -1;
         for (int i = 0; i < mot.size() - 1; i++) {
-            if (mot.get(i+1).getY() != (mot.get(i).getY() + 1)) {  
+            posX = mot.get(i).getX();
+//            System.out.println(posX);
+            if (mot.get(i+1).getY() != (mot.get(i).getY() + 1)) {
+                posYPremierTrou = mot.get(i).getY()+1;
+                nbTrousVerti = (mot.get(i+1).getY()) - (mot.get(i).getY()+1);
                 result = true;
             }    
         }
-        return result;
+//        System.out.println("posX : " + posX);
+//        System.out.println("posYPremierTrou : " + posYPremierTrou);
+//        System.out.println("nbTrousVerti : " + nbTrousVerti);
+        if (result == true) { 
+//            System.out.println("test");
+            result =! verifTrousVertiGrille(posX, posYPremierTrou, nbTrousVerti); 
+//            System.out.println("result" + result);
+        }                                                                 
+//        System.out.println("trouVerti result : " + result);    
+        return result;                  
     }
 
     private boolean motLineaire() {
@@ -170,7 +238,7 @@ public class VerifMot {
                 }
             } else if (alignHoriz(motCandidateSorted)) { // OK
                 System.out.println("align HORIZ");
-                if (trouHoriz(motCandidateSorted)) { //  PAS OK 
+                if (trouHoriz(motCandidateSorted)) { // OK 
                     System.out.println("trou horiz");
                     return false;
 
@@ -184,17 +252,7 @@ public class VerifMot {
         }
     }
     
-    private boolean uneSeuleLettre(List<Jeton> mot) {
-        return mot.size() <= 1;
-    }
 
-    private boolean touchMotGrille() {
-        for (Jeton j : motCandidate) {
-            if (touchJetonGrille(j))
-                    return true;  
-        }
-        return false;
-    }
 
     public void displayError() {
         System.out.println(errorDisplayed);
@@ -224,9 +282,19 @@ public class VerifMot {
     
     public String displayMot(List<Jeton> mot) {
         String str = "";
-        for (Jeton j : mot)
-            str += j.getStr().toUpperCase() + " ";
+        if (firstCoup()) {
+
+            for (Jeton j : mot) {
+                str += j.getStr().toUpperCase() + " ";
+            }
+            return str;
+        } else {
+            for (Jeton j : mot) {
+                str += j.getStr().toUpperCase() + " ";
+            }
+        }
         return str;
+
     }
     
     public void setAlert(PopupAlert pop) {
@@ -245,35 +313,77 @@ public class VerifMot {
         if (!lettreAtCenter()) {          
 		errorDisplayed = errorCenter;
                 displayError();
+                displayAlert(alertError);
 		return false;
 	} else if (!motLineaire()) {
 		errorDisplayed = errorNotTouching;
                 displayError();
+                displayAlert(alertError);
 		return false;
 	} else if (uneSeuleLettre(motCandidate)) {
 		errorDisplayed = errorTooShort;
                 displayError();
+                displayAlert(alertError);
 		return false;
 	} else {
                 System.out.println("Premier coup OK!");
+                displayAlert(alertConfirm);
 		return true;
             }
 	}
     
     public boolean otherCoup() {
-        //...
+        
+        if (!touchMotGrille()) {
+            errorDisplayed = errorNotTouchingExisting;
+            System.out.println("touche pas grille");  // pas ok
+            displayError();
+            displayAlert(alertError);
+            return false;
+        }
+            
+        if (!motLineaire()) {
+            if (alignHoriz(motCandidateSorted)) {
+                if (trouHoriz(motCandidateSorted)) {
+                        errorDisplayed = errorNotTouchingExisting;   // OK
+                        System.out.println("trou horiz et touche pas grille");
+                        displayError();
+                        displayAlert(alertError);
+                        return false;
+                    }
+            } else if (alignVerti(motCandidateSorted)) {      // ------> OK !!!
+                if (trouVerti(motCandidateSorted)) {
+                        errorDisplayed = errorNotTouchingExisting;
+                        System.out.println("trou verti et touche pas grille");
+                        displayError();
+                        displayAlert(alertError);
+                        return false;
+                    }
+                }
+            } else {
+                if (!touchMotGrille()) {
+                    errorDisplayed = errorNotTouchingExisting;
+                    System.out.println("aligné mais touche pas grille");  // pas ok
+                    displayError();
+                    displayAlert(alertError);
+                    return false;
+                }
+        }
+        System.out.println("mot ok!");
+        displayAlert(alertConfirm);
         return true;
     }
+        
     
 
     public boolean coupOK() {
-       
         
         if (isItFirstCoup()) {
+            System.out.println("1e coup");
             return firstCoup();    // OK
         } else {
+            System.out.println("autre coup coup");
             return otherCoup();
         } 
     }
-
 }
