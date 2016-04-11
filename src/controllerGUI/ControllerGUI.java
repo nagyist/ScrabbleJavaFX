@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observer;
 import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.*;
 import viewGUI.*;
@@ -45,8 +45,8 @@ public class ControllerGUI extends Application {
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
 //        this.popupAlert = new PopupAlert(type);
-        scrabble.addObserver((Observer) viewChevalet);
-        scrabble.addObserver((Observer) viewGrille);
+        scrabble.addObserver(viewChevalet);
+        scrabble.addObserver(viewGrille);
 //        scrabble.addObserver((Observer) popupAlert); 
         lancer();
     }
@@ -254,36 +254,75 @@ public class ControllerGUI extends Application {
     // 	return lettreAtCenter();
 
 
-
+    public List<Jeton> lsVCTtolsJetons(List<ViewCaseTemp> lsViewCaseTemp) {
+        List<Jeton> lsJetons = new ArrayList<>();
+        for (ViewCaseTemp vct : lsViewCaseTemp) {
+            lsJetons.add(vct.getJeton());
+        }
+        return lsJetons;
+    }
+    
+    public List<Jeton> lsVJJtolsJetons(List<ViewJeton> lsViewJetonsJoues) {
+        List<Jeton> lsJetons = new ArrayList<>();
+        for (ViewJeton vj : lsViewJetonsJoues) {
+            lsJetons.add(vj.getCourant());
+        }
+        return lsJetons;
+    }
     
 
     public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
+       List<Jeton> lsJetons = lsVJJtolsJetons(lsViewJetonsJoues);
+        
        
+       
+//        scrabble.ajouterMotVerif2(lsJetons);
+//        scrabble.ajouterMotVerif(lsViewCaseTemp);
         
-        scrabble.ajouterMotVerif(lsViewCaseTemp);
         
-        if (!scrabble.coupOK()) {
-//            scrabble.displayError();
-//            scrabble.setAlert(popupAlert);
+        if (!scrabble.verifMot(lsJetons)) {
             System.out.println("coup pas OK");
+//        }
+//            
+//        if (!scrabble.coupOK()) {
+////            scrabble.displayError();
+////            scrabble.setAlert(popupAlert);
+//            System.out.println("coup pas OK");
             
         } else {
             
 //            scrabble.displayConfirm();
+            
+            
+            
+            
+//            scrabble.placerLettres(lsVCTtolsJetons(lsViewCaseTemp));
+//            
+////            for (ViewCaseTemp vct : lsViewCaseTemp) {
+////                scrabble.placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton()); // <--- grille : model modifié
+//////            removeViewCaseTemp(vct); // <--- grille : update ViewGrille
+////            }
+//            scrabble.removeJetons(lsVJJtolsJetons(lsViewJetonsJoues));
+//            
+//            scrabble.rechargerChevalet(lsVJJtolsJetons(lsViewJetonsJoues), sac);
+            
+            
+            scrabble.jouerCoup(lsVJJtolsJetons(lsViewJetonsJoues), sac);
+            
+//            for (Iterator<ViewJeton> it = lsViewJetonsJoues.iterator(); it.hasNext();) {
+//                ViewJeton vj = it.next();
+//                scrabble.removeJeton(vj.getCourant()); // <--- chevalet : model modifié
+//                scrabble.rechargerChevalet(sac);
+//                return;
 
-
-            for (ViewCaseTemp vct : lsViewCaseTemp) {
-                scrabble.placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton()); // <--- grille : model modifié
-//            removeViewCaseTemp(vct); // <--- grille : update ViewGrille
+//            }
+            
+            System.out.print("Chevalet model : ");
+            for (Jeton j : chev.getChev()) {
+                System.out.print(j.getChar() + " ");
             }
-
-            for (Iterator<ViewJeton> it = lsViewJetonsJoues.iterator(); it.hasNext();) {
-                ViewJeton vj = it.next();
-                scrabble.removeJeton(vj.getCourant()); // <--- chevalet : model modifié
-                scrabble.rechargerChevalet(sac);
-                return;
-
-            }
+            
+            
             
 //            scrabble.setAlert(popupAlert);
             
@@ -317,10 +356,7 @@ public class ControllerGUI extends Application {
 //            System.out.println("ViewJeton y : " + vj.getY());
 //            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
 //        };
-            System.out.print("Chevalet model : ");
-            for (Jeton j : chev.getChev()) {
-                System.out.print(j.getChar() + " ");
-            }
+
         }
     }
     
