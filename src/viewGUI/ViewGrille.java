@@ -72,7 +72,8 @@ public class ViewGrille extends GridPane implements Observer {
     public void update(Observable o, Object arg) {
         
         for (ViewCaseTemp vct : ctrl.getListCasesTemp()) {
-            ctrl.removeViewCaseTemp(vct);    
+            ctrl.removeViewCaseTemp(vct);
+//            ctrl.placerViewJetonGrille(vct);
         }
         
         for (ViewJeton vj : ctrl.getListJetonsJoues()) { 

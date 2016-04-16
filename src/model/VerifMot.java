@@ -4,11 +4,7 @@ import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
-//import javafx.scene.control.ButtonType;
-//import viewGUI.PopupAlert;
-import viewGUI.ViewCaseTemp;
+
 
 /**
  *
@@ -23,8 +19,8 @@ public class VerifMot {
     private final String errorNotTouchingExisting = "Le mot placé doit toucher un mot existant déjà sur le plateau.";
     private final String errorNotTouching = "Les lettres du mot doivent se toucher entre elles.";
     private final String errorTooShort = "Le mot doit faire au minimum 2 lettres.";
-//    private final Alert alertError = new Alert(Alert.AlertType.ERROR);
-//    private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
+    private final String errorMotNotAligned = "Le mot placé doit être horizontal ou vertical.";
+
 
     private final List<Jeton> motCandidate = new ArrayList<>();
     private List<Jeton> motCandidateSorted = new ArrayList<>();
@@ -35,7 +31,11 @@ public class VerifMot {
         this.grille = ctrl.getGrille();
     }
     
-    public boolean ajouterMotVerif2(List<Jeton> lsJetons) {
+    public String getError() {
+        return errorDisplayed;
+    }
+    
+    public boolean ajouterMotVerif(List<Jeton> lsJetons) {
         motCandidate.clear();
         motCandidateSorted.clear();
         for (Jeton j : lsJetons) {
@@ -44,21 +44,13 @@ public class VerifMot {
         return this.coupOK(); 
     }
 
-    public void ajouterMotVerif(List<ViewCaseTemp> lsViewCaseTemp) {
-        motCandidate.clear();
-        motCandidateSorted.clear();
-        for (ViewCaseTemp vct : lsViewCaseTemp) {
-            motCandidate.add(vct.getJeton());
-        }
-    }
-
     private boolean isItFirstCoup() {
         return grille.isEmpty();
     }
 
     private boolean lettreAtCenter() {
         for (Jeton j : motCandidate) {
-            if (j.isAtCenter()) {
+            if (grille.jAtCenter(j.getX(), j.getY())) {
                 return true;
             }
         }
@@ -285,16 +277,16 @@ public class VerifMot {
 //            }
 //        });
 //    }
-    public String displayMot(List<Jeton> mot) {
+    public String getMotJoue() {
         String str = "";
         if (firstCoup()) {
 
-            for (Jeton j : mot) {
+            for (Jeton j : motCandidateSorted) {
                 str += j.getStr().toUpperCase() + " ";
             }
             return str;
         } else {
-            for (Jeton j : mot) {
+            for (Jeton j : motCandidateSorted) {
                 str += j.getStr().toUpperCase() + " ";
             }
         }
@@ -302,16 +294,7 @@ public class VerifMot {
 
     }
 
-//    public void setAlert(PopupAlert pop) {
-//        pop.alertType(AlertType.ERROR);
-//        errorDisplayed = errorCenter;
-//        
-//    }
-//    
-//    public void setConfirm(AlertType type) {
-//        type = AlertType.CONFIRMATION;
-//        
-//    }
+
     public boolean firstCoup() {
         if (!lettreAtCenter()) {
             errorDisplayed = errorCenter;
@@ -345,7 +328,7 @@ public class VerifMot {
             return false;
         }
 
-        if (!motLineaire()) {
+        if (motLineaire()) {
             if (alignHoriz(motCandidateSorted)) {
                 if (trouHoriz(motCandidateSorted)) {
                     errorDisplayed = errorNotTouchingExisting;   // OK
@@ -363,6 +346,11 @@ public class VerifMot {
                     return false;
                 }
             }
+        } else if (!motLineaire()) {
+            errorDisplayed = errorMotNotAligned;
+            displayError();
+            System.out.println("mot pas aligné");
+            return false;
         } else {
             if (!touchMotGrille()) {
                 errorDisplayed = errorNotTouchingExisting;

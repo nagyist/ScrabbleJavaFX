@@ -39,12 +39,7 @@ public class Jeton {
 
     public void setY(int y) {
         this.y = y;
-    }
-    
-    public boolean isAtCenter() {
-        return (x == 7) && (y == 7);
-    }
-    
+    }      
     
     public static Comparator<Jeton> COMPARE_BY_X = (Jeton j, Jeton jj) -> {
         Integer jx = j.x;

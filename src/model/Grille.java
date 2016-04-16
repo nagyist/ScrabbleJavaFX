@@ -44,6 +44,15 @@ public class Grille extends Observable {
     public boolean caseJouee(int x, int y) {
         return !(getLettreAt(x,y) == ' ');
     }
+    
+    public boolean isEmpty() {
+        return (getLettreAt(7,7) == ' ');
+    }
+    
+    public boolean jAtCenter(int x, int y) {
+        return x == DIM/2 && y == DIM/2;
+
+    }
    
     public void notif() {
         setChanged();
@@ -146,10 +155,6 @@ public class Grille extends Observable {
                     grille[li][co] = new Simple();         
             }
         }
-    }
-
-    public boolean isEmpty() {
-        return (getLettreAt(7,7) == ' ');
     }
 }
 

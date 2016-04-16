@@ -19,7 +19,8 @@ public class ViewButtons extends HBox {
             btnOK.setText("Valider");
             btnOK.setOnAction((ActionEvent event) -> {
                 System.out.println("OK!");
-                ctrl.validerCoup(ctrl.getListCasesTemp(), ctrl.getListJetonsJoues());
+                ctrl.validerCoup(ctrl.getListCasesTemp());
+//                , ctrl.getListJetonsJoues());
                 
             });
 
@@ -30,7 +31,15 @@ public class ViewButtons extends HBox {
                 ctrl.annulerDerniereLettre();
             });
             
-            this.getChildren().addAll(btnOK, btnCancel);
+//            Button btnNewWindow = new Button();
+//            btnNewWindow.setText("Nouvelle fenêtre");
+//            btnNewWindow.setOnAction((ActionEvent event) -> {
+//                System.out.println("Nouvelle fenêtre!");
+//                ctrl.nouvelleFenetre();
+//            });
+                    
+            
+            this.getChildren().addAll(btnOK, btnCancel); //, btnNewWindow);
             this.setSpacing(5);
             this.setAlignment(Pos.CENTER);          
         }

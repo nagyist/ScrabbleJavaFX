@@ -3,10 +3,10 @@ package controllerGUI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observer;
 import javafx.application.Application;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.*;
 import viewGUI.*;
@@ -28,9 +28,8 @@ public class ControllerGUI extends Application {
     private final List<ViewCaseTemp> listCasesTemp = new ArrayList<>();
     private final List<ViewJeton> listJetonsJoues = new ArrayList<>();
     private final Sac sac;
-//    private final PopupAlert popupAlert;
-//    private AlertType type = AlertType.NONE;
-//    private Alert alert;
+    private final Alert alertError = new Alert(Alert.AlertType.ERROR);
+    private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
     
 
 
@@ -44,10 +43,8 @@ public class ControllerGUI extends Application {
         this.scrabble = new Scrabble(this);
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
-//        this.popupAlert = new PopupAlert(type);
         scrabble.addObserver(viewChevalet);
         scrabble.addObserver(viewGrille);
-//        scrabble.addObserver((Observer) popupAlert); 
         lancer();
     }
 
@@ -146,113 +143,36 @@ public class ControllerGUI extends Application {
     public void setYToViewJeton(int y, Jeton j) {
         getViewJeton(j).setY(getViewCaseTemp(j).getPosY());
     }
-
-//    private void afficherListViewCaseTemp() {
-//        for (ViewCaseTemp vct : listCasesTemp) {
-//            System.out.println(vct.getLettreViewCaseTemp());
-//        }
-//    }
-    
+   
     public boolean casePossible(int x, int y) {
         return !caseJouee(x, y) && !caseTempJouee(x,y);
     }
     
     
-    // place une ViewCaseTemp
+    // on place une ViewCaseTemp
     public void placerLettreTemp(int x, int y, Jeton j) {
         String lettre = j.getStr();
         listCasesTemp.add(new ViewCaseTemp(x, y, lettre, j, viewGrille, this));
-//        System.out.println("ViewCaseTemp, jetons : ");
         setXToViewJeton(x, j);
-        setYToViewJeton(y, j);
-        
-//        afficherListViewCaseTemp();
+        setYToViewJeton(y, j);      
     }
     
+    // on place une ViewJeton sur la grille à la position où était la ViewCaseTemp
     public void placerViewJetonGrille(ViewJeton vj) {
-        getViewCase(vj.getX(), vj.getY()).getChildren().set(0, getViewJetonAt(vj.getX(), vj.getY())); // <--- update ViewGrille?
+//        getViewCase(vct.getX(), vct.getY()).getChildren().set(0, new ViewJeton(vct.getX(), vct.getY(), vct.getJeton(), this, viewChevalet));
+            getViewCase(vj.getX(), vj.getY()).getChildren().set(0, getViewJetonAt(vj.getX(), vj.getY())); 
 
     }
     
+    
+
+    
+    
+
     public void removeViewCaseTemp(ViewCaseTemp vct) {
         getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct);
     }
    
-//    private void placerLettreModel(List<ViewCaseTemp> lvct) {
-//        for (ViewCaseTemp vct : lvct) {
-//            scrabble.placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton()); // <--- model modifié
-//            getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct); // <--- update ViewGrille?
-//        }
-//    }
-//    
-//    private void supprViewCaseTemp(List<ViewCaseTemp> lvct) {
-//        for (ViewCaseTemp vct : lvct) {
-//            scrabble.placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton()); // ??? 2 fois placerLettre?
-//            getViewCase(vct.getPosX(), vct.getPosY()).getChildren().remove(vct); // <--- update ViewGrille? ??? 2 fois ??
-//        }
-//    }
-//    
-//    private void placerViewJetonSurViewCase(List<ViewJeton> lvjj) {
-//        for (ViewJeton vj : lvjj) {
-//            getViewCase(vj.getX(), vj.getY()).getChildren().set(0, getViewJetonAt(vj.getX(), vj.getY())); // <--- update ViewGrille?
-//        }
-//    }
-//    
-//    private void removeViewJetonChevalet(List<ViewJeton> lvjj) {
-//        for (ViewJeton vj : lvjj) {
-//            scrabble.removeJeton(vj.getCourant()); // <--- model modifié
-////            chev.removeJeton(vj.getCourant())
-//                    ;
-//        }
-//    }
-//    
-//    private void rechargerChev(List<ViewJeton> lvjj) {
-//        for (ViewJeton vj : lvjj) {
-//            scrabble.rechargerChevalet(sac); // <--- model modifié
-////            chev.rechargerChevalet(sac)
-//                    ;
-//        }
-//    }
-    
-//    private void reaffichChevalet() {
-//        viewChevalet.initChevalet(); // <--- update ViewChevalet ???
-//    }
-    
-    
-    
-    
-    
-//    private boolean firstCoup() {
-//        return grille.isEmpty();
-//    }
-    
-//    private boolean lettreAtCenter(List<ViewCaseTemp> lsViewCaseTemp) {
-//        for (ViewCaseTemp vct : lsViewCaseTemp) {
-//            if (vct.isAtCenter())
-//                return true;
-//        }
-//        return false;
-//    }
-    
-//    private boolean lettresNotTouching(List<ViewCaseTemp> lsViewCaseTemp) {
-//        for (ViewCaseTemp vct : lsViewCaseTemp) {
-//            //if vct is first/last --> touching 1
-//            //else --> touching 2
-//            ?????????
-//        }
-//    }
-//    
-//    private boolean notTouchingExistingMot(List<ViewCaseTemp> lsViewCaseTemp) {
-//        for (ViewCaseTemp vct : lsViewCaseTemp) { 
-//            // if vct touch viewJeton --> return false
-//            ?????????
-//        }
-//        // else return true
-//    }
-    
-    // bool placerFirstCoup()
-    // 	return lettreAtCenter();
-
 
     public List<Jeton> lsVCTtolsJetons(List<ViewCaseTemp> lsViewCaseTemp) {
         List<Jeton> lsJetons = new ArrayList<>();
@@ -269,10 +189,38 @@ public class ControllerGUI extends Application {
         }
         return lsJetons;
     }
+
+    
+    public void displayAlert(Alert alert) {
+        
+        if(alert.getAlertType() == AlertType.ERROR) {
+            alert.setTitle("Erreur"); 
+            alert.setHeaderText("Mauvais coup : ");
+            alert.setContentText(verifMot.getError());
+        } else {
+            alert.setTitle("Mot valide");
+            alert.setHeaderText("Le mot joué est : ");
+            alert.setContentText(verifMot.getMotJoue());
+        }
+
+        
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                System.out.println("alert clicked OK");
+                //formatSystem() ===> fonction qui 'annule le coup'
+                ;
+            }
+        });
+    }
+    
+    
     
 
-    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp, List<ViewJeton> lsViewJetonsJoues) {
-       List<Jeton> lsJetons = lsVJJtolsJetons(lsViewJetonsJoues);
+    public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp) {
+//        , List<ViewJeton> lsViewJetonsJoues
+//            }) {
+        
+       List<Jeton> lsJetons = lsVCTtolsJetons(lsViewCaseTemp);
         
        
        
@@ -282,6 +230,7 @@ public class ControllerGUI extends Application {
         
         if (!scrabble.verifMot(lsJetons)) {
             System.out.println("coup pas OK");
+            displayAlert(alertError);
 //        }
 //            
 //        if (!scrabble.coupOK()) {
@@ -291,10 +240,8 @@ public class ControllerGUI extends Application {
             
         } else {
             
-//            scrabble.displayConfirm();
-            
-            
-            
+            displayAlert(alertConfirm);
+             
             
 //            scrabble.placerLettres(lsVCTtolsJetons(lsViewCaseTemp));
 //            
@@ -307,7 +254,7 @@ public class ControllerGUI extends Application {
 //            scrabble.rechargerChevalet(lsVJJtolsJetons(lsViewJetonsJoues), sac);
             
             
-            scrabble.jouerCoup(lsVJJtolsJetons(lsViewJetonsJoues), sac);
+            scrabble.jouerCoup(lsJetons, sac);
             
 //            for (Iterator<ViewJeton> it = lsViewJetonsJoues.iterator(); it.hasNext();) {
 //                ViewJeton vj = it.next();
@@ -321,42 +268,7 @@ public class ControllerGUI extends Application {
             for (Jeton j : chev.getChev()) {
                 System.out.print(j.getChar() + " ");
             }
-            
-            
-            
-//            scrabble.setAlert(popupAlert);
-            
-
-//        for (ViewJeton vj : lsViewJetonsJoues) {    
-////            placerViewJetonGrille(vj); // <--- grille : update ViewGrille
-//            scrabble.removeJeton(vj.getCourant()); // <--- chevalet : model modifié
-//            scrabble.rechargerChevalet(sac); // <--- chevalet : model modifié
-//        }
-//        reaffichChevalet(); // <--- chevalet : update viewChevalet
-//        lsViewCaseTemp.clear(); // <--- grille : update ViewGrille
-//        // placer lettres dans le model
-//        placerLettreModel(lsViewCaseTemp);
-//        // supprimer la ViewCase existante sur la grille
-//        supprViewCaseTemp(lsViewCaseTemp);
-//        // placer ViewJeton sur la ViewCase
-//        placerViewJetonSurViewCase(lsViewJetonsJoues);
-//        // enlever jeton du chevalet    
-//        removeViewJetonChevalet(lsViewJetonsJoues);
-//        // recharger chevalet du nombre de jetons joués
-//        rechargerChev(lsViewJetonsJoues);
-            // réafficher le chevalet
-//        reaffichChevalet();
-        // nettoyer la lsViewCaseTemp
-//        lsViewCaseTemp.clear();
-        // tests console :
-//        System.out.println("Liste jetons joués : ");
-//        for (ViewJeton vj : viewChevalet.getListViewJetonsJoues()) {
-//            System.out.println("ViewJeton lettre : " + vj.getLettre());
-//            System.out.println("ViewJeton x : " + vj.getX());
-//            System.out.println("ViewJeton y : " + vj.getY());
-//            System.out.println("Model : " + getLettreAt(vj.getX(), vj.getY()));
-//        };
-
+ 
         }
     }
     
@@ -397,9 +309,28 @@ public class ControllerGUI extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+//    
+//    private static Stage pStage;
+//    
+//    private void setPrimaryStage(Stage pStage) {
+//        this.pStage = pStage;
+//    }
+//    
+//    public static Stage getPrimaryStage() {
+//        return pStage;
+//    }
+//    
+//    Stage newStage = new Stage();
+//    
+//    
+//    public void nouvelleFenetre() {
+//        MainView anotherViewGUI = new MainView(newStage, viewGrille, viewChevalet, this);
+//    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+//        setPrimaryStage(primaryStage);
         MainView viewGUI = new MainView(primaryStage, viewGrille, viewChevalet, this);
     }
 
