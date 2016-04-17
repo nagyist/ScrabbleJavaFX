@@ -1,6 +1,9 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
+import javafx.geometry.Point2D;
+import javafx.scene.control.PopupControl;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -10,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.PopupWindow;
+import javax.swing.ToolTipManager;
 import model.Jeton;
 
 /**
@@ -31,6 +36,9 @@ public class ViewJeton extends StackPane {
               + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
     private final ViewChevalet vchev;
     private int x, y;
+    private final String cssJetonTemp = "-fx-stroke:yellow; -fx-stroke-width: 2;\n"
+                          + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);";
+
     
     
     public ViewJeton(int x, int y, Jeton jeton, ControllerGUI ctrl, ViewChevalet viewChevalet) {
@@ -44,7 +52,11 @@ public class ViewJeton extends StackPane {
         this.getChildren().add(rectJeton);
         setLettreJeton();
         this.getChildren().add(this.lettre);    
+
+        Tooltip t = new Tooltip(jeton.afficherPoints());
+        Tooltip.install(this, t);
         
+
 
         this.setOnMouseEntered((MouseEvent me) -> {
             rectJeton.setFill(Color.web("f9ffe6"));
@@ -59,6 +71,34 @@ public class ViewJeton extends StackPane {
             relacher();
         });
         
+        
+        
+        
+        this.setOnMouseClicked((event) -> {
+            System.out.println("click !!!");
+            System.out.println(courant.getChar());
+
+            if (rectJeton.getStyle() == cssJetonTemp) {
+                rectJeton.setStyle(cssJetonsChevalet);
+                ctrl.removeListJetonsChange(jeton);
+            } else {
+                rectJeton.setStyle(cssJetonTemp);
+                ctrl.addListJetonsChange(jeton);
+            }
+            
+            ctrl.afficheListJetonsChange();
+
+
+//            if (vjt != null) {
+//                ctrl.removeViewJetonTemp(ctrl.getViewJetonTemp(jeton));
+//                this.getChildren().remove(ctrl.getViewJetonTemp(jeton));
+//            } else {
+//                ctrl.placerViewJetonTemp(courant);
+//                this.getChildren().add(ctrl.getViewJetonTemp(jeton));
+//            }
+
+        });
+
         
         this.setOnDragDetected((event) -> {
             System.out.println("drag n drop détecté");
@@ -84,10 +124,10 @@ public class ViewJeton extends StackPane {
                 vchev.removeViewJetonFromChevalet(courant);
                 System.out.println("jeton removed");
             }
- 
+            
             for (ViewJeton vj : vchev.getListViewJetonsChevalet())
                 System.out.println(vj.getLettre());
-            
+            ctrl.removeListJetonsChange(courant);
             ctrl.setCourant(null);
                            
             event.consume(); 
@@ -108,6 +148,11 @@ public class ViewJeton extends StackPane {
         lettre.setStyle("-fx-font-weight: bold");
     }
 
+    public Rectangle getRectJeton() {
+        return rectJeton;
+    } 
+    
+
     public Jeton getCourant() {
         return courant;
     }
@@ -119,6 +164,11 @@ public class ViewJeton extends StackPane {
     public String getLettre() {
         return lettre.getText().toString();
     }
+    
+    public void setColor(Color col) {
+        rectJeton.setFill(col);
+    }
+       
     
     public void setX(int x) {
         this.x = x;

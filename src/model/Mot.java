@@ -9,19 +9,18 @@ import java.util.List;
  */
 public class Mot {
 
-    List<Jeton> mot = new ArrayList<>();
+    List<Jeton> motPrincipal = new ArrayList<>();
+    List<Mot> lsMots = new ArrayList<>();
 
-    public void ajouterJetonMot(Jeton j) {
-        mot.add(j);
-    }
 
-    public List<Jeton> getMot() {
-        return mot;
+    public Mot(List<Jeton> mot) {
+        for (Jeton j : mot)
+            motPrincipal.add(j);
     }
-
-    public void afficherMot() {
-        for (Jeton j : mot) {
-            System.out.print(j.getChar());
-        }
+    
+    
+    public void addMot(List<Jeton> mot) {
+        
     }
+    
 }

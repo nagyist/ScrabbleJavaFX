@@ -36,7 +36,6 @@ public class View {
         this.ctrl = ctrl;
         this.chev = ctrl.getChevalet();
         this.grille = ctrl.getGrille();
-        this.mot = ctrl.getMot();
     }
 
       

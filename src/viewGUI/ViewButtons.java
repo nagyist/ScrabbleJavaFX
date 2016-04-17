@@ -4,6 +4,7 @@ import controllerGUI.ControllerGUI;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
 /**
@@ -31,15 +32,24 @@ public class ViewButtons extends HBox {
                 ctrl.annulerDerniereLettre();
             });
             
+            Button btnChange = new Button();
+            btnChange.setText("Changer jetons");
+            btnChange.setOnAction((ActionEvent event) -> {
+                System.out.println("Change!");
+                ctrl.changerJetonsSelected();
+            });
+            
 //            Button btnNewWindow = new Button();
 //            btnNewWindow.setText("Nouvelle fenêtre");
 //            btnNewWindow.setOnAction((ActionEvent event) -> {
 //                System.out.println("Nouvelle fenêtre!");
 //                ctrl.nouvelleFenetre();
 //            });
-                    
             
-            this.getChildren().addAll(btnOK, btnCancel); //, btnNewWindow);
+            Tooltip t = new Tooltip("Tooltip!");
+        Tooltip.install(btnCancel, t);
+            
+            this.getChildren().addAll(btnOK, btnCancel, btnChange); //, btnNewWindow);
             this.setSpacing(5);
             this.setAlignment(Pos.CENTER);          
         }

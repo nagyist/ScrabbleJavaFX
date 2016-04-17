@@ -2,6 +2,7 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import model.Jeton;
 
@@ -26,6 +27,9 @@ public class ViewCaseTemp extends ViewCase {
         setLettre(lettre);
         j.setX(x);
         j.setY(y);
+        
+        Tooltip t = new Tooltip(j.afficherPoints());
+        Tooltip.install(this, t);
     }
     
     public Jeton getJeton() {

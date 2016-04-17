@@ -13,7 +13,6 @@ public class ViewMot {
     private List<Jeton> mot;
     
     public ViewMot(Mot m) {
-        this.mot = m.getMot();
     }
    
     public void afficherMot() {

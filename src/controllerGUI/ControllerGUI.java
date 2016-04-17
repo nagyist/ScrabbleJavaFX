@@ -22,20 +22,23 @@ public class ControllerGUI extends Application {
     private final Grille grille;
     private final ViewChevalet viewChevalet;
     private final ViewGrille viewGrille;
-    private Mot mot = new Mot();
+//    private final Mot mot;
     private final VerifMot verifMot;
     private Jeton courant;
     private final List<ViewCaseTemp> listCasesTemp = new ArrayList<>();
     private final List<ViewJeton> listJetonsJoues = new ArrayList<>();
     private final Sac sac;
     private final Alert alertError = new Alert(Alert.AlertType.ERROR);
+    private final Alert alertWarning = new Alert(Alert.AlertType.WARNING);
     private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
+//    private final List<ViewJetonTemp> listViewJetonsTemp = new ArrayList<>();
+    private final List<Jeton> listJetonsChange = new ArrayList<>();
     
 
 
     public ControllerGUI() {
         
-        this.mot = new Mot();
+//        this.mot = new Mot();
         this.sac = new Sac();
         this.chev = new Chevalet(sac);
         this.grille = new Grille();
@@ -48,9 +51,9 @@ public class ControllerGUI extends Application {
         lancer();
     }
 
-    public Mot getMot() {
-        return this.mot;
-    }
+//    public Mot getMot() {
+//        return this.mot;
+//    }
 
     public Chevalet getChevalet() {
         return this.chev;
@@ -157,6 +160,62 @@ public class ControllerGUI extends Application {
         setYToViewJeton(y, j);      
     }
     
+    public void addListJetonsChange(Jeton j) {
+        listJetonsChange.add(j);
+    }
+    
+    public void removeListJetonsChange(Jeton j) {
+        listJetonsChange.remove(j);
+    }
+    
+    public void changerJetonsSelected() {
+        if (!listJetonsChange.isEmpty()) {
+            scrabble.changeJetons(listJetonsChange, sac);
+            listJetonsChange.clear();
+            sac.afficherSac();
+        } else
+            displayAlert(alertWarning);
+    }
+    
+    public void afficheListJetonsChange() {
+        System.out.println("list : ");
+        for (Jeton j : listJetonsChange)
+            System.out.println(j.getChar() + " ");
+    }
+    
+//    public void placerViewJetonTemp(Jeton j) {
+//        listViewJetonsTemp.add(new ViewJetonTemp(0,0,j,this,viewChevalet));
+//    }
+//    
+//    public void removeViewJetonTemp(ViewJetonTemp vjt) {
+//        listViewJetonsTemp.remove(vjt);
+//        System.out.println("hello");
+//
+//    }
+//    
+//    public boolean isViewJetonTempSelected(Jeton j) {
+//        ViewJetonTemp v = null;
+//        for (ViewJetonTemp vjt : listViewJetonsTemp) {
+//            if (j == vjt.getJeton()) {
+//                v = vjt;
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//    
+//    public ViewJetonTemp getViewJetonTemp(Jeton j) {
+//        ViewJetonTemp v = null;
+//        for (ViewJetonTemp vjt : listViewJetonsTemp) {
+//            if (j == vjt.getJeton()) {
+//                v = vjt;
+//            }
+//        }
+//        return v;
+//    }
+    
+   
+    
     // on place une ViewJeton sur la grille à la position où était la ViewCaseTemp
     public void placerViewJetonGrille(ViewJeton vj) {
 //        getViewCase(vct.getX(), vct.getY()).getChildren().set(0, new ViewJeton(vct.getX(), vct.getY(), vct.getJeton(), this, viewChevalet));
@@ -197,6 +256,11 @@ public class ControllerGUI extends Application {
             alert.setTitle("Erreur"); 
             alert.setHeaderText("Mauvais coup : ");
             alert.setContentText(verifMot.getError());
+        } else if (alert.getAlertType() == AlertType.WARNING) {
+            alert.setTitle("Attention");
+            alert.setHeaderText("Échanger des lettres : ");
+            alert.setContentText("Sélectionnez d'abord les jetons du chevalet que vous voulez échanger.");
+
         } else {
             alert.setTitle("Mot valide");
             alert.setHeaderText("Le mot joué est : ");
@@ -268,6 +332,9 @@ public class ControllerGUI extends Application {
             for (Jeton j : chev.getChev()) {
                 System.out.print(j.getChar() + " ");
             }
+            
+            System.out.println("Sac contenu : ");
+            sac.afficherSac();
  
         }
     }
