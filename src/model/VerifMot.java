@@ -72,25 +72,30 @@ public class VerifMot {
 //             || (xj == xjj && yj+1 == yjj);
 //            
 //    }
-    private boolean watchUp(Jeton j) {
-        return grille.caseJouee(j.getX(), j.getY() - 1);
-    }
-
-    private boolean watchRight(Jeton j) {
-        return grille.caseJouee(j.getX() + 1, j.getY());
-    }
-
-    private boolean watchDown(Jeton j) {
-        return grille.caseJouee(j.getX(), j.getY() + 1);
-    }
-
-    private boolean watchLeft(Jeton j) {
-        return grille.caseJouee(j.getX() - 1, j.getY());
-    }
-
-    private boolean touchJetonGrille(Jeton j) {
-        return watchUp(j) || watchRight(j) || watchDown(j) || watchLeft(j);
-    }
+    
+//    private boolean watchUp(Jeton j) {
+//        return grille.watchUp(j);
+//    }
+//    
+//    private boolean watchUp(Jeton j) {
+//        return grille.caseJouee(j.getX(), j.getY() - 1);
+//    }
+//
+//    private boolean watchRight(Jeton j) {
+//        return grille.caseJouee(j.getX() + 1, j.getY());
+//    }
+//
+//    private boolean watchDown(Jeton j) {
+//        return grille.caseJouee(j.getX(), j.getY() + 1);
+//    }
+//
+//    private boolean watchLeft(Jeton j) {
+//        return grille.caseJouee(j.getX() - 1, j.getY());
+//    }
+//
+//    private boolean touchJetonGrille(Jeton j) {
+//        return watchUp(j) || watchRight(j) || watchDown(j) || watchLeft(j);
+//    }
 
     private boolean alignVerti(List<Jeton> mot) {
         int x = mot.get(0).getX();
@@ -122,7 +127,7 @@ public class VerifMot {
 
     private boolean touchMotGrille() {
         for (Jeton j : motCandidate) {
-            if (touchJetonGrille(j)) {
+            if (grille.watchAround(j)) {
                 return true;
             }
         }

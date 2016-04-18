@@ -72,9 +72,16 @@ public class Scrabble extends Observable {
         removeJetonsSac(lsJetons);
         notif();
     }
+    
+//    private WordMaker buildmot(List<Jeton>) {
+//        return wordmaker.getWord();
+//    }
 
-    public boolean verifMot(List<Jeton> lsJetons) {
-        return verif.ajouterMotVerif(lsJetons);
+    public boolean motValide(List<Jeton> lsJetons) {
+//        Wordmaker wm = new WordMaker(lsJetons);
+//        buildMot(wm);
+        
+        return verif.ajouterMotVerif(lsJetons);// && verifDict.ajouterMotDict(lsJetons);
     }
 
     

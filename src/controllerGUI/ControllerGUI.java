@@ -292,7 +292,7 @@ public class ControllerGUI extends Application {
 //        scrabble.ajouterMotVerif(lsViewCaseTemp);
         
         
-        if (!scrabble.verifMot(lsJetons)) {
+        if (!scrabble.motValide(lsJetons)) {
             System.out.println("coup pas OK");
             displayAlert(alertError);
 //        }

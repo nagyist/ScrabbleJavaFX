@@ -53,6 +53,68 @@ public class Grille extends Observable {
         return x == DIM/2 && y == DIM/2;
 
     }
+    
+    public int getLastXLeft(Jeton j) {
+        int posX = j.getX();
+        int posY = j.getY();
+        
+        while (caseJouee(posX,posY))
+            posX--;
+        
+        return posX;
+    }
+    
+    public int getLastYUp(Jeton j) {
+        int posX = j.getX();
+        int posY = j.getY();
+        
+        while (caseJouee(posX,posY))
+            posY--;
+        
+        return posY;
+    }
+    
+    public int getLastXRight(Jeton j) {
+        int posX = j.getX();
+        int posY = j.getY();
+        
+        while (caseJouee(posX,posY))
+            posX++;
+        
+        return posX;
+    }
+    
+    public int getLastYDown(Jeton j) {
+        int posX = j.getX();
+        int posY = j.getY();
+        
+        while (caseJouee(posX,posY))
+            posY++;
+        
+        return posY;
+    }
+    
+    
+    public boolean watchUp(Jeton j) {
+        return caseJouee(j.getX(), j.getY() - 1);
+    }
+
+    public boolean watchRight(Jeton j) {
+        return caseJouee(j.getX() + 1, j.getY());
+    }
+
+    public boolean watchDown(Jeton j) {
+        return caseJouee(j.getX(), j.getY() + 1);
+    }
+
+    public boolean watchLeft(Jeton j) {
+        return caseJouee(j.getX() - 1, j.getY());
+    }
+
+    public boolean watchAround(Jeton j) {
+        return watchUp(j) || watchRight(j) || watchDown(j) || watchLeft(j);
+    }
+    
    
     public void notif() {
         setChanged();

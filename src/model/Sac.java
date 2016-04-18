@@ -11,7 +11,7 @@ import java.util.Random;
 public final class Sac {
     
     
-    private List<Jeton> jetons = new ArrayList<>();
+    private final List<Jeton> jetons = new ArrayList<>();
 
 //    private static final char[] lettres = {
 //        '*', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -52,7 +52,7 @@ public final class Sac {
         jetons.remove(j);
     }
         
-    public void remplirSac() {
+    private void remplirSac() {
         
         ajouterJeton(2,  '*', 0);
         
