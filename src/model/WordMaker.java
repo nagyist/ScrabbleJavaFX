@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author 0404ragrau
  */
-public class WordMaker {
+public final class WordMaker {
 
     private final Grille grille;
     private ControllerGUI ctrl;
@@ -17,11 +17,22 @@ public class WordMaker {
     private int lastX, lastY;
     private boolean wordIsVertical;
 
-    public WordMaker(List<Jeton> lsJetons, Grille grille) {
+    public WordMaker(Grille grille) {
+        
         this.grille = grille;
+        
+    }
+    
+    public void makeWord(List<Jeton> lsJetons) {
         getPosDebutMot(lsJetons);
         getPosFinMot(lsJetons);
         buildMot(lsJetons);
+        System.out.print("mot : ");
+        System.out.println(getMot());
+    }
+    
+    public String getMot() {
+        return afficheStr(mot);
     }
 
     public void getPosDebutMot(List<Jeton> lsJetons) {
@@ -94,6 +105,8 @@ public class WordMaker {
     
     public List<Jeton> buildMot(List<Jeton> lsJetons) {
         
+        mot.clear();
+        
         do  {
             if (grille.caseJouee(x, y)) {
                 mot.add(grille.getJetonAt(x, y));
@@ -114,53 +127,22 @@ public class WordMaker {
        
     }
     
-    public void afficheMot() {
-        System.out.println("Mot a tester :");
-        for (Jeton j : mot)
-            System.out.println(j.getChar());
-    }
-    
-    public String afficheStr() {
+    public String afficheMot() {
         String str = "";
         for (Jeton j : mot)
-            str = str+ " " + j.getChar();
+            str = str+ j.getChar();
         
         return str.toUpperCase();
     }
-                
-                
-            //j1 -> if touchLeftGrille or touchUpGrille
-            // get jeton + aller en gauche/aller en haut sur la grille
-            
-            //j1 -> if touchDownGrille or touchRightGrille
-            // get jeton + aller en droite/aller en haut sur la grille
-            
-            //j1 -> touchGrille && touchNextlisteJetons
-            // 
-            
-            //j1 -> if touchNextlisteJetons
-            // get jeton + avancer dans la liste
-                    
-            
-            
-//            if (j.toucheNextJeton())
-                
-                
-//            grille.watchAround(j);
-            // jeton 1 : regarder autour (il touche d'office soit la grille soit la lsJetons)
-            // si jeton 2 est a coté : touche un de la liste -> add + avance
-            // sinon -> grille.watchAround(j) : oui -> add + avance
-            //                                  non -> stop
-             
-               
-        }
-
-//    }
     
-//    public boolean watchAround(Jeton j) {
-////            return watch(j);
-//        }
+    public String afficheStr(List<Jeton> mot) {
+        String str = "";
+        for (Jeton j : mot)
+            str = str+ j.getChar();
+        
+        return str.toUpperCase();
+    }
     
-//    
-//    
-//}
+    
+}
+  

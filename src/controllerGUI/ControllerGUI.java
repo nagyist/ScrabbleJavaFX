@@ -1,5 +1,6 @@
 package controllerGUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,13 +32,15 @@ public class ControllerGUI extends Application {
     private final Alert alertError = new Alert(Alert.AlertType.ERROR);
     private final Alert alertWarning = new Alert(Alert.AlertType.WARNING);
     private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
+    private final Alert alertDict = new Alert(Alert.AlertType.INFORMATION);
 //    private final List<ViewJetonTemp> listViewJetonsTemp = new ArrayList<>();
     private final List<Jeton> listJetonsChange = new ArrayList<>();
     private WordMaker wm;
+    private final VerifDict verifDict;
     
 
 
-    public ControllerGUI() {
+    public ControllerGUI() throws IOException {
         
 //        this.mot = new Mot();
         this.sac = new Sac();
@@ -45,8 +48,11 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.verifMot = new VerifMot(this);
         this.scrabble = new Scrabble(this);
+        this.wm = new WordMaker(grille);
+        this.verifDict = new VerifDict(this);
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this);
+        
         scrabble.addObserver(viewChevalet);
         scrabble.addObserver(viewGrille);
         lancer();
@@ -70,6 +76,14 @@ public class ControllerGUI extends Application {
     
     public VerifMot getVerifMot() {
         return this.verifMot;
+    }
+    
+    public VerifDict getVerifDict() {
+        return this.verifDict;
+    }
+    
+    public WordMaker getWordMaker() {
+        return this.wm;
     }
 
     // Jeton courant : celui qui est en train d'être joué lorsque l'utilisateur
@@ -261,11 +275,14 @@ public class ControllerGUI extends Application {
             alert.setTitle("Attention");
             alert.setHeaderText("Échanger des lettres : ");
             alert.setContentText("Sélectionnez d'abord les jetons du chevalet que vous voulez échanger.");
-
+        } else if (alert.getAlertType() == AlertType.INFORMATION) {
+            alert.setTitle("Attention");
+            alert.setHeaderText("Mot absent du dictionnaire : ");
+            alert.setContentText("Le mot que vous essayez de placer n'existe pas dans le dictionnaire.");
         } else {
             alert.setTitle("Mot valide");
             alert.setHeaderText("Le mot joué est : ");
-            alert.setContentText(wm.afficheStr());
+            alert.setContentText(wm.afficheMot());
         }
 
         
@@ -289,17 +306,21 @@ public class ControllerGUI extends Application {
        lsJetons = scrabble.sort(lsJetons);
 //       scrabble.wordMakerTest(lsJetons);
        
-        wm = new WordMaker(lsJetons, grille);
-        wm.afficheMot();
-       
+       wm.makeWord(lsJetons);
+       String str = wm.getMot();
+//       wm.afficheMot();
        
 //        scrabble.ajouterMotVerif2(lsJetons);
 //        scrabble.ajouterMotVerif(lsViewCaseTemp);
         
         
         if (!scrabble.motValide(lsJetons)) {
-            System.out.println("coup pas OK");
+            System.out.println("mauvaise position mot");
             displayAlert(alertError);
+        } else if (!verifDict.ajouterMotDict(str)) {
+            System.out.println("test ->" + str);
+            System.out.println("mot pas dans le dict");
+            displayAlert(alertDict);
 //        }
 //            
 //        if (!scrabble.coupOK()) {
