@@ -33,8 +33,13 @@ public class Grille extends Observable {
         return this.grille[x][y];
     }
     
-    public void setCase(int x, int y, char lettre) {
-        this.grille[x][y].setLettre(lettre);   
+    
+//    public void setCase(int x, int y, char lettre) {
+//        this.grille[x][y].setLettre(lettre);   
+//    }
+    
+    public void setCase(int x, int y, Jeton j) {
+        this.grille[x][y].setJeton(j);
     }
     
     public char getLettreAt(int x, int y) {
@@ -54,11 +59,15 @@ public class Grille extends Observable {
 
     }
     
+    public Jeton getJetonAt(int x, int y) {
+        return getCase(x,y).getJeton();
+    }
+    
     public int getLastXLeft(Jeton j) {
         int posX = j.getX();
         int posY = j.getY();
         
-        while (caseJouee(posX,posY))
+        while (caseJouee(posX-1,posY))
             posX--;
         
         return posX;
@@ -68,7 +77,7 @@ public class Grille extends Observable {
         int posX = j.getX();
         int posY = j.getY();
         
-        while (caseJouee(posX,posY))
+        while (caseJouee(posX,posY-1))
             posY--;
         
         return posY;
@@ -78,7 +87,7 @@ public class Grille extends Observable {
         int posX = j.getX();
         int posY = j.getY();
         
-        while (caseJouee(posX,posY))
+        while (caseJouee(posX+1,posY))
             posX++;
         
         return posX;
@@ -88,7 +97,7 @@ public class Grille extends Observable {
         int posX = j.getX();
         int posY = j.getY();
         
-        while (caseJouee(posX,posY))
+        while (caseJouee(posX,posY+1))
             posY++;
         
         return posY;
@@ -96,18 +105,26 @@ public class Grille extends Observable {
     
     
     public boolean watchUp(Jeton j) {
+        if (j.getY() == 0)
+            return false;
         return caseJouee(j.getX(), j.getY() - 1);
     }
 
     public boolean watchRight(Jeton j) {
+        if (j.getX() == DIM-1)
+            return false;
         return caseJouee(j.getX() + 1, j.getY());
     }
 
     public boolean watchDown(Jeton j) {
+        if (j.getY() == DIM-1)
+            return false;
         return caseJouee(j.getX(), j.getY() + 1);
     }
 
     public boolean watchLeft(Jeton j) {
+        if (j.getX() == 0)
+            return false;
         return caseJouee(j.getX() - 1, j.getY());
     }
 

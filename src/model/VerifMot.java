@@ -133,7 +133,16 @@ public class VerifMot {
         }
         return false;
     }
+    
+    public List<Jeton> sort(List<Jeton> lsJetons) {
+        if(alignVerti(lsJetons))
+            Collections.sort(lsJetons, Jeton.COMPARE_BY_Y);
+        else if (alignHoriz(lsJetons))
+            Collections.sort(lsJetons, Jeton.COMPARE_BY_X);
+        return lsJetons;
+   }
 
+    
     private void sortMot() {
 
         motCandidateSorted = motCandidate;

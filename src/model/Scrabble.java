@@ -23,7 +23,8 @@ public class Scrabble extends Observable {
     }
     
     private void placerLettre(int x, int y, Jeton j) {
-        grille.setCase(x, y, j.getChar());
+//        grille.setCase(x, y, j.getChar());
+        grille.setCase(x, y, j);
 
     }
     
@@ -58,6 +59,10 @@ public class Scrabble extends Observable {
         removeJetonsSac(lsJetons);
         notif();
     }
+    
+    public List<Jeton> sort(List<Jeton> lsJetons) {
+        return verif.sort(lsJetons);
+    }
        
     private void rechargerChevalet(List<Jeton> lsJetons, Sac sac) {
         for (Jeton j : lsJetons) {
@@ -73,14 +78,17 @@ public class Scrabble extends Observable {
         notif();
     }
     
-//    private WordMaker buildmot(List<Jeton>) {
+//    private WordMaker build(List<Jeton>) {
 //        return wordmaker.getWord();
+//    }
+    
+//    public void wordMakerTest(List<Jeton> lsJetons) {
+//        WordMaker wm = new WordMaker(lsJetons, grille);
+//        wm.afficheMot();
 //    }
 
     public boolean motValide(List<Jeton> lsJetons) {
-//        Wordmaker wm = new WordMaker(lsJetons);
-//        buildMot(wm);
-        
+
         return verif.ajouterMotVerif(lsJetons);// && verifDict.ajouterMotDict(lsJetons);
     }
 

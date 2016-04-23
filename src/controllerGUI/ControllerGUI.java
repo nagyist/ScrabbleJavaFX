@@ -33,6 +33,7 @@ public class ControllerGUI extends Application {
     private final Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION);
 //    private final List<ViewJetonTemp> listViewJetonsTemp = new ArrayList<>();
     private final List<Jeton> listJetonsChange = new ArrayList<>();
+    private WordMaker wm;
     
 
 
@@ -264,7 +265,7 @@ public class ControllerGUI extends Application {
         } else {
             alert.setTitle("Mot valide");
             alert.setHeaderText("Le mot joué est : ");
-            alert.setContentText(verifMot.getMotJoue());
+            alert.setContentText(wm.afficheStr());
         }
 
         
@@ -285,7 +286,11 @@ public class ControllerGUI extends Application {
 //            }) {
         
        List<Jeton> lsJetons = lsVCTtolsJetons(lsViewCaseTemp);
-        
+       lsJetons = scrabble.sort(lsJetons);
+//       scrabble.wordMakerTest(lsJetons);
+       
+        wm = new WordMaker(lsJetons, grille);
+        wm.afficheMot();
        
        
 //        scrabble.ajouterMotVerif2(lsJetons);
@@ -335,6 +340,8 @@ public class ControllerGUI extends Application {
             
             System.out.println("Sac contenu : ");
             sac.afficherSac();
+            
+            
  
         }
     }

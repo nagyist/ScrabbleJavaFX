@@ -8,6 +8,7 @@ public abstract class Case {
 
     private boolean caseJouee;
     private char lettre = ' ';
+    private Jeton jeton = null;
 
 
     public Case() {
@@ -16,6 +17,10 @@ public abstract class Case {
     
     public char getChar() {
         return this.lettre;
+    }
+    
+    public Jeton getJeton() {
+        return this.jeton;
     }
     
 //    public void setChar(char lettre) { 
@@ -30,12 +35,20 @@ public abstract class Case {
         return !caseJouee;
     }
     
-   
-    public void setLettre(char lettre) {
-        if (caseLibre())
-            this.lettre = lettre;        
+    public void setJeton(Jeton j) {
+        if (caseLibre()) {
+            this.jeton = j;
+            this.lettre = j.getChar();
+        }
+            
         caseJouee = true;
     }
+//   
+//    public void setLettre(char lettre) {
+//        if (caseLibre())
+//            this.lettre = lettre;        
+//        caseJouee = true;
+//    }
 
 
    
