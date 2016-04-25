@@ -125,9 +125,13 @@ public final class WordMaker {
         } else if (motIsVertical()) {
             if (grille.watchLeft(grille.getJetonAt(x, y))) {
                 // x = getLastXLeft();
+                // y = y;
+                // lastY = y;
                 // lastX = getLastXRight();
             } else if (grille.watchRight(grille.getJetonAt(x, y))) {
                 // x = getLastXRight(); 
+                // y = y;
+                // lastY = y;
                 // lastX = getLastXLeft();
             }
   
