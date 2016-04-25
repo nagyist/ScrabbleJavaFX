@@ -35,8 +35,8 @@ public class ControllerGUI extends Application {
     private final Alert alertDict = new Alert(Alert.AlertType.INFORMATION);
 //    private final List<ViewJetonTemp> listViewJetonsTemp = new ArrayList<>();
     private final List<Jeton> listJetonsChange = new ArrayList<>();
-    private WordMaker wm;
-    private final VerifDict verifDict;
+    private final WordMaker wm;
+    private final Dictionnaire dict;
     
 
 
@@ -47,12 +47,11 @@ public class ControllerGUI extends Application {
         this.chev = new Chevalet(sac);
         this.grille = new Grille();
         this.verifMot = new VerifMot(this);
-        this.scrabble = new Scrabble(this);
+        this.dict = new Dictionnaire();
         this.wm = new WordMaker(grille);
-        this.verifDict = new VerifDict(this);
+        this.scrabble = new Scrabble(this);    
         this.viewChevalet = new ViewChevalet(this);
-        this.viewGrille = new ViewGrille(this);
-        
+        this.viewGrille = new ViewGrille(this); 
         scrabble.addObserver(viewChevalet);
         scrabble.addObserver(viewGrille);
         lancer();
@@ -77,13 +76,13 @@ public class ControllerGUI extends Application {
     public VerifMot getVerifMot() {
         return this.verifMot;
     }
-    
-    public VerifDict getVerifDict() {
-        return this.verifDict;
-    }
-    
+       
     public WordMaker getWordMaker() {
         return this.wm;
+    }
+    
+    public Dictionnaire getDict() {
+        return this.dict;
     }
 
     // Jeton courant : celui qui est en train d'être joué lorsque l'utilisateur
@@ -198,39 +197,7 @@ public class ControllerGUI extends Application {
             System.out.println(j.getChar() + " ");
     }
     
-//    public void placerViewJetonTemp(Jeton j) {
-//        listViewJetonsTemp.add(new ViewJetonTemp(0,0,j,this,viewChevalet));
-//    }
-//    
-//    public void removeViewJetonTemp(ViewJetonTemp vjt) {
-//        listViewJetonsTemp.remove(vjt);
-//        System.out.println("hello");
-//
-//    }
-//    
-//    public boolean isViewJetonTempSelected(Jeton j) {
-//        ViewJetonTemp v = null;
-//        for (ViewJetonTemp vjt : listViewJetonsTemp) {
-//            if (j == vjt.getJeton()) {
-//                v = vjt;
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//    
-//    public ViewJetonTemp getViewJetonTemp(Jeton j) {
-//        ViewJetonTemp v = null;
-//        for (ViewJetonTemp vjt : listViewJetonsTemp) {
-//            if (j == vjt.getJeton()) {
-//                v = vjt;
-//            }
-//        }
-//        return v;
-//    }
-    
    
-    
     // on place une ViewJeton sur la grille à la position où était la ViewCaseTemp
     public void placerViewJetonGrille(ViewJeton vj) {
 //        getViewCase(vct.getX(), vct.getY()).getChildren().set(0, new ViewJeton(vct.getX(), vct.getY(), vct.getJeton(), this, viewChevalet));
@@ -299,61 +266,33 @@ public class ControllerGUI extends Application {
     
 
     public void validerCoup(List<ViewCaseTemp> lsViewCaseTemp) {
-//        , List<ViewJeton> lsViewJetonsJoues
-//            }) {
         
        List<Jeton> lsJetons = lsVCTtolsJetons(lsViewCaseTemp);
        lsJetons = scrabble.sort(lsJetons);
-//       scrabble.wordMakerTest(lsJetons);
        
-       wm.makeWord(lsJetons);
-       String str = wm.getMot();
+//       wm.makeWord(lsJetons);
+//       String str = wm.getMot();
 //       wm.afficheMot();
        
-//        scrabble.ajouterMotVerif2(lsJetons);
-//        scrabble.ajouterMotVerif(lsViewCaseTemp);
-        
-        
-        if (!scrabble.motValide(lsJetons)) {
+
+
+        if (!scrabble.motPosition(lsJetons)) {
             System.out.println("mauvaise position mot");
             displayAlert(alertError);
-        } else if (!verifDict.ajouterMotDict(str)) {
-            System.out.println("test ->" + str);
-            System.out.println("mot pas dans le dict");
-            displayAlert(alertDict);
-//        }
-//            
-//        if (!scrabble.coupOK()) {
-////            scrabble.displayError();
-////            scrabble.setAlert(popupAlert);
-//            System.out.println("coup pas OK");
             
+//        } else if (!scrabble.motDico(lsJetons)) {
+////        } else if (!dict.contains(str)) {
+////            System.out.println("test ->" + str);
+//            System.out.println("mot pas dans le dict");
+//            displayAlert(alertDict);
+     
         } else {
             
             displayAlert(alertConfirm);
-             
-            
-//            scrabble.placerLettres(lsVCTtolsJetons(lsViewCaseTemp));
-//            
-////            for (ViewCaseTemp vct : lsViewCaseTemp) {
-////                scrabble.placerLettre(vct.getPosX(), vct.getPosY(), vct.getJeton()); // <--- grille : model modifié
-//////            removeViewCaseTemp(vct); // <--- grille : update ViewGrille
-////            }
-//            scrabble.removeJetons(lsVJJtolsJetons(lsViewJetonsJoues));
-//            
-//            scrabble.rechargerChevalet(lsVJJtolsJetons(lsViewJetonsJoues), sac);
-            
-            
             scrabble.jouerCoup(lsJetons, sac);
             
-//            for (Iterator<ViewJeton> it = lsViewJetonsJoues.iterator(); it.hasNext();) {
-//                ViewJeton vj = it.next();
-//                scrabble.removeJeton(vj.getCourant()); // <--- chevalet : model modifié
-//                scrabble.rechargerChevalet(sac);
-//                return;
 
-//            }
-            
+        // TESTS :    
             System.out.print("Chevalet model : ");
             for (Jeton j : chev.getChev()) {
                 System.out.print(j.getChar() + " ");
@@ -361,9 +300,7 @@ public class ControllerGUI extends Application {
             
             System.out.println("Sac contenu : ");
             sac.afficherSac();
-            
-            
- 
+
         }
     }
     
@@ -388,7 +325,6 @@ public class ControllerGUI extends Application {
         viewChevalet.addViewJeton(lastVJ);
     }
     
-
     public void annulerDerniereLettre() {
 
         if (!getListCasesTemp().isEmpty()) {

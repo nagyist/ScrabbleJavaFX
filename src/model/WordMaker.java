@@ -1,6 +1,5 @@
 package model;
 
-import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +10,13 @@ import java.util.List;
 public final class WordMaker {
 
     private final Grille grille;
-    private ControllerGUI ctrl;
     private final List<Jeton> mot = new ArrayList<>();
     private int x, y;
     private int lastX, lastY;
-    private boolean wordIsVertical;
+    private final List<Mot> tour = new ArrayList<>();
 
     public WordMaker(Grille grille) {
-        
-        this.grille = grille;
-        
+        this.grille = grille;  
     }
     
     public void makeWord(List<Jeton> lsJetons) {
@@ -102,12 +98,50 @@ public final class WordMaker {
         }
     }
     
+//    public List<Mot> buildMots() {
+//        
+//        return tour;
+//    }
+    
+    
+    public List<Jeton> buildAutreMot(List<Jeton> lsJetons) {
+        
+        mot.clear();
+    
+        if (!motIsVertical()) {
+            if (grille.watchUp(grille.getJetonAt(x, y))) {
+                // y = getLastYUp();
+                // x = x;
+                // lastX = x;
+                // lastY = getLastYDown();
+                
+            } else if (grille.watchDown(grille.getJetonAt(x, y))) {
+                // y = getLastYDown(); 
+                // x = x;
+                // lastX = x;
+                // lastY = getLastYUp();
+            }
+
+        } else if (motIsVertical()) {
+            if (grille.watchLeft(grille.getJetonAt(x, y))) {
+                // x = getLastXLeft();
+                // lastX = getLastXRight();
+            } else if (grille.watchRight(grille.getJetonAt(x, y))) {
+                // x = getLastXRight(); 
+                // lastX = getLastXLeft();
+            }
+  
+            buildMot(lsJetons);
+        } 
+
+        return mot;
+    }
     
     public List<Jeton> buildMot(List<Jeton> lsJetons) {
         
         mot.clear();
         
-        do  {
+        do  {           
             if (grille.caseJouee(x, y)) {
                 mot.add(grille.getJetonAt(x, y));
                 System.out.println("test1");
@@ -119,11 +153,20 @@ public final class WordMaker {
             System.out.println("hihi");
             goNext();
             
+//            } 
         } while (jetonNext(x,y));
+        
+        
+        
         System.out.println(x + "," + y);
                 System.out.println("coucou");
-
+        
+//        Mot m = new Mot(mot);
+//        tour.add(m);
+//        return m;
+        
         return mot;
+
        
     }
     

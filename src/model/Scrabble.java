@@ -15,7 +15,7 @@ public class Scrabble extends Observable {
     private final VerifMot verif;
     private final Sac sac;
     private final WordMaker wm;
-    private final VerifDict verifDict;
+    private final Dictionnaire dict;
     
     public Scrabble(ControllerGUI ctrl) {
         this.grille = ctrl.getGrille();
@@ -23,7 +23,7 @@ public class Scrabble extends Observable {
         this.verif = ctrl.getVerifMot();
         this.sac = ctrl.getSac();
         this.wm = ctrl.getWordMaker();
-        this.verifDict = ctrl.getVerifDict();
+        this.dict = ctrl.getDict();
     }
     
     private void placerLettre(int x, int y, Jeton j) {
@@ -86,16 +86,20 @@ public class Scrabble extends Observable {
 //        return wordmaker.getWord();
 //    }
     
-    public void buildMot(List<Jeton> lsJetons) {
+    private String buildMot(List<Jeton> lsJetons) {
         wm.makeWord(lsJetons);
+        return wm.getMot();
+    }
+    
+    public boolean motDico(List<Jeton> lsJetons) {
+        String str = buildMot(lsJetons);
+//        wm.makeWord(lsJetons);
+//        String str = wm.getMot();
+        return dict.contains(str);
     }
 
-    public boolean motValide(List<Jeton> lsJetons) {
-        
-//        buildMot(lsJetons);
-       
-
-        return verif.ajouterMotVerif(lsJetons);// && verifDict.ajouterMotDict(mot);
+    public boolean motPosition(List<Jeton> lsJetons) {
+        return verif.ajouterMotVerif(lsJetons);
     }
 
     
