@@ -14,7 +14,7 @@ public class Scrabble extends Observable {
     private final Chevalet chev;
     private final VerifMot verif;
     private final Sac sac;
-    private final WordMaker wm;
+    private final WordsMaker wm;
     private final Dictionnaire dict;
     
     public Scrabble(ControllerGUI ctrl) {
@@ -82,20 +82,30 @@ public class Scrabble extends Observable {
         notif();
     }
     
-//    private WordMaker build(List<Jeton>) {
+//    private WordsMaker build(List<Jeton>) {
 //        return wordmaker.getWord();
 //    }
     
-    private String buildMot(List<Jeton> lsJetons) {
-        wm.makeWord(lsJetons);
-        return wm.getMot();
+//    private String buildMot(List<Jeton> lsJetons) {
+//        wm.makeWord(lsJetons);
+//        return wm.getMot();
+//    }
+    
+    public List<Mot> buildMots(List<Jeton> lsJetons) {
+//        wm.makeWords(lsJetons);
+        
+        wm.makeWords(lsJetons);
+        return wm.getMots();
     }
     
     public boolean motDico(List<Jeton> lsJetons) {
-        String str = buildMot(lsJetons);
+//        String str = buildMot(lsJetons);
 //        wm.makeWord(lsJetons);
-//        String str = wm.getMot();
-        return dict.contains(str);
+//        String str = wm.getMot();       
+        
+        List lsMots = buildMots(lsJetons);
+      return dict.contains(lsMots);
+//        return dict.contains(str);
     }
 
     public boolean motPosition(List<Jeton> lsJetons) {

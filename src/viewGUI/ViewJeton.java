@@ -1,8 +1,6 @@
 package viewGUI;
 
 import controllerGUI.ControllerGUI;
-import javafx.geometry.Point2D;
-import javafx.scene.control.PopupControl;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -13,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.PopupWindow;
-import javax.swing.ToolTipManager;
 import model.Jeton;
 
 /**
@@ -101,7 +97,6 @@ public class ViewJeton extends StackPane {
 
         
         this.setOnDragDetected((event) -> {
-            System.out.println("drag n drop détecté");
             
             final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
             final ClipboardContent content = new ClipboardContent();
@@ -122,7 +117,6 @@ public class ViewJeton extends StackPane {
             
             if (event.isAccepted()) {
                 vchev.removeViewJetonFromChevalet(courant);
-                System.out.println("jeton removed");
             }
             
             for (ViewJeton vj : vchev.getListViewJetonsChevalet())

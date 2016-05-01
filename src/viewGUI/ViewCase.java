@@ -39,7 +39,6 @@ public abstract class ViewCase extends StackPane {
     
             if (ctrl.casePossible(x,y)) { 
   
-                System.out.println("accepte drag n drop");
                 event.acceptTransferModes(TransferMode.ANY);
                 event.consume();
             } 
@@ -49,7 +48,6 @@ public abstract class ViewCase extends StackPane {
 
             boolean success = false;
 
-            System.out.println("courant :" + ctrl.getCourant().getStr());
             
             Jeton j = ((ViewJeton) event.getGestureSource()).getCourant();
             ctrl.placerLettreTemp(x, y, j);

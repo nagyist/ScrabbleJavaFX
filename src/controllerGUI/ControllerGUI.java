@@ -35,7 +35,7 @@ public class ControllerGUI extends Application {
     private final Alert alertDict = new Alert(Alert.AlertType.INFORMATION);
 //    private final List<ViewJetonTemp> listViewJetonsTemp = new ArrayList<>();
     private final List<Jeton> listJetonsChange = new ArrayList<>();
-    private final WordMaker wm;
+    private final WordsMaker wm;
     private final Dictionnaire dict;
     
 
@@ -48,7 +48,7 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.verifMot = new VerifMot(this);
         this.dict = new Dictionnaire();
-        this.wm = new WordMaker(grille);
+        this.wm = new WordsMaker(grille);
         this.scrabble = new Scrabble(this);    
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this); 
@@ -77,7 +77,7 @@ public class ControllerGUI extends Application {
         return this.verifMot;
     }
        
-    public WordMaker getWordMaker() {
+    public WordsMaker getWordMaker() {
         return this.wm;
     }
     
@@ -248,8 +248,8 @@ public class ControllerGUI extends Application {
             alert.setContentText("Le mot que vous essayez de placer n'existe pas dans le dictionnaire.");
         } else {
             alert.setTitle("Mot valide");
-            alert.setHeaderText("Le mot joué est : ");
-            alert.setContentText(wm.afficheMot());
+            alert.setHeaderText("Mot(s) joué(s) : ");
+            alert.setContentText("");
         }
 
         
@@ -274,12 +274,12 @@ public class ControllerGUI extends Application {
 //       String str = wm.getMot();
 //       wm.afficheMot();
        
-
-
+       
         if (!scrabble.motPosition(lsJetons)) {
             System.out.println("mauvaise position mot");
             displayAlert(alertError);
             
+                        
 //        } else if (!scrabble.motDico(lsJetons)) {
 ////        } else if (!dict.contains(str)) {
 ////            System.out.println("test ->" + str);
@@ -287,6 +287,8 @@ public class ControllerGUI extends Application {
 //            displayAlert(alertDict);
      
         } else {
+            
+            scrabble.buildMots(lsJetons);
             
             displayAlert(alertConfirm);
             scrabble.jouerCoup(lsJetons, sac);
@@ -300,6 +302,14 @@ public class ControllerGUI extends Application {
             
             System.out.println("Sac contenu : ");
             sac.afficherSac();
+            
+            System.out.println("nb mots");
+            System.out.println(wm.getMots().size());
+            System.out.println("mots : ");
+            System.out.println("");
+            
+            
+
 
         }
     }

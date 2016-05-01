@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -36,6 +37,20 @@ public class Dictionnaire {
     }
         return false;
     }
+    
+    public boolean contains(Mot m) {
+        return dictionnaire.contains(m.getString());
+    }
+    
+    
+    public boolean contains(List<Mot> lsMots) {    
+        for (Mot m : lsMots) {
+            if (!dictionnaire.contains(m))
+                return false;
+        }
+        return true; 
+    }
+    
     
     public int count() {
         return dictionnaire.size();
