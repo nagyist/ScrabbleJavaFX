@@ -95,17 +95,25 @@ public class WordsMaker {
     public List<Mot> getMots() {
         return lsMots;
     }
+    
+    public String affListMots() {
+        String str = "";
+        for (Mot m : lsMots) {
+//            System.out.println(m.size() + "lettre(s)");
+            str += m.getString();
+        }
+        return str.toUpperCase();
+    }
    
     
     public void makeWords(List<Jeton> lsJetons) {
+        lsMots.clear();
         makeAWord(lsJetons);
         System.out.println("others words? " + othersWords(lsJetons) );
+        
         if (othersWords(lsJetons))
             makeAWord(lsJetons);
-    }
-    
-    public void cleanListMots() {
-        lsMots.clear();
+        System.out.println("nb mots --->" + lsMots.size());
     }
     
     public void makeAWord(List<Jeton> lsJetons) {
@@ -370,13 +378,19 @@ public class WordsMaker {
 
                 for (int i = yDeb; i <= yFin; ++i) {
 
-                    if (grille.caseJouee(i, xDeb)) {
-                        lettresPourMot.add(grille.getJetonAt(i, xDeb));
+                    if (grille.caseJouee(xDeb, i)) {
+                        lettresPourMot.add(grille.getJetonAt(xDeb, i));
                     } else {
-                        lettresPourMot.add(getJetonFromList(i, xDeb, lsJetons));
+                        lettresPourMot.add(getJetonFromList(xDeb, i, lsJetons));
                     }
                 }
             }
+            
+            System.out.println("2e mot : ");
+            for (Jeton j : lettresPourMot)
+                System.out.println(j);
+
+
 
             
         } else {
@@ -407,6 +421,10 @@ public class WordsMaker {
             }
 
         }
+        
+        
+        
+        
         System.out.println("size liste :" + lettresPourMot.size());
 //        for (Jeton j : lettresPourMot)
 //            System.out.println(j.getChar());

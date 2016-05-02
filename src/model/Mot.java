@@ -1,6 +1,5 @@
 package model;
 
-import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ public class Mot {
     private Jeton jDeb;
     private Jeton jFin;
     private boolean vertical;
+    private int valeurMot;
 
 
     public Mot() {
@@ -25,8 +25,18 @@ public class Mot {
     }
 
     public Mot(List<Jeton> lsJetons) {
-        for (Jeton j : lsJetons)
-            mot.add(j);      
+        for (Jeton j : lsJetons) {
+            mot.add(j);  
+        }              
+    }
+    
+    public void calcPoints(List<Jeton> lsJetons) {
+        for (Jeton j : lsJetons) {
+        }
+    }
+    
+    public int getPointsMot() {
+        return valeurMot;
     }
        
     public void setJDeb(Jeton j) {
@@ -93,10 +103,12 @@ public class Mot {
     public String getString() {
 
         StringBuilder sb = new StringBuilder();
-        
+               
         for (Jeton j : mot) {
             sb.append(j.getStr());
         }
+        
+        sb.append("\n");
 
         return sb.toString();
     }

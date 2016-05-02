@@ -249,7 +249,7 @@ public class ControllerGUI extends Application {
         } else {
             alert.setTitle("Mot valide");
             alert.setHeaderText("Mot(s) joué(s) : ");
-            alert.setContentText("");
+            alert.setContentText(wm.affListMots());
         }
 
         
@@ -305,8 +305,8 @@ public class ControllerGUI extends Application {
             
             System.out.println("nb mots");
             System.out.println(wm.getMots().size());
-            System.out.println("mots : ");
-            System.out.println("");
+            System.out.println("mots : ");            
+            System.out.println(wm.affListMots());
             
             
 
