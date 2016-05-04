@@ -328,7 +328,7 @@ public class VerifMot {
         } else {
             System.out.println("Premier coup OK!");
 //                displayAlert(alertConfirm);
-            Mot firstMot = new Mot(motCandidateSorted);
+//            Mot firstMot = new Mot(motCandidateSorted);
             return true;
         }
     }

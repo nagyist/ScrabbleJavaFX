@@ -16,7 +16,7 @@ public class Mot {
     private int valeurMot;
 
 
-    public Mot() {
+    public Mot() {   
     }
     
     public void fill(List<Jeton> lsJetons) {
@@ -24,14 +24,34 @@ public class Mot {
             mot.add(j); 
     }
 
-    public Mot(List<Jeton> lsJetons) {
-        for (Jeton j : lsJetons) {
-            mot.add(j);  
-        }              
-    }
-    
-    public void calcPoints(List<Jeton> lsJetons) {
-        for (Jeton j : lsJetons) {
+    public void calcPoints(Grille grille) {
+        for (Jeton j : mot) {
+            if (!grille.caseJouee(j.getX(), j.getY())) {
+                if (grille.getCaseType(j).equals("double")) {
+                    valeurMot = valeurMot + (j.getPoints()) * 2;
+                    System.out.println("double");
+                } else if (grille.getCaseType(j).equals("triple")) {
+                    valeurMot = valeurMot + (j.getPoints()) * 3;
+                    System.out.println("triple");
+                } else {
+                    System.out.println("simple ou motdouble ou mottriple");
+                    valeurMot = valeurMot + j.getPoints();
+                }
+                
+            } else {
+                valeurMot = valeurMot + j.getPoints();
+                System.out.println("simple ou case déjà jouée");
+            }
+        }
+        for (Jeton j : mot) {
+            if (!grille.caseJouee(j.getX(), j.getY())) {
+                if (grille.getCaseType(j).equals("motDouble")) {
+                    valeurMot = valeurMot * 2;
+                } else if (grille.getCaseType(j).equals("motTriple")) {
+                    valeurMot = valeurMot * 3;
+                }
+            }
+
         }
     }
     
@@ -108,6 +128,10 @@ public class Mot {
             sb.append(j.getStr());
         }
         
+        
+        sb.append(" (");
+        sb.append(getPointsMot());
+        sb.append(")");
         sb.append("\n");
 
         return sb.toString();

@@ -48,7 +48,7 @@ public class ControllerGUI extends Application {
         this.grille = new Grille();
         this.verifMot = new VerifMot(this);
         this.dict = new Dictionnaire();
-        this.wm = new WordsMaker(grille);
+        this.wm = new WordsMaker(this,grille);
         this.scrabble = new Scrabble(this);    
         this.viewChevalet = new ViewChevalet(this);
         this.viewGrille = new ViewGrille(this); 
@@ -307,6 +307,8 @@ public class ControllerGUI extends Application {
             System.out.println(wm.getMots().size());
             System.out.println("mots : ");            
             System.out.println(wm.affListMots());
+            System.out.println("points");
+            
             
             
 

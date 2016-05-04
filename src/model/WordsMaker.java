@@ -1,5 +1,6 @@
 package model;
 
+import controllerGUI.ControllerGUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,101 +11,45 @@ import java.util.List;
 public class WordsMaker {
 
     private final Grille grille;
+    private final ControllerGUI ctrl;
     private final List<Jeton> lettresPourMot = new ArrayList<>();
     private final List<Mot> lsMots = new ArrayList<>();
-//    private int x, y;
-//    private int otherX = -1;
-//    private int otherY = -1;
-//    private int lastOtherX, lastOtherY;
-//    private int lastX, lastY;
-//    private int xtemp = x;
-//    private int ytemp = y;
     private Mot motPrincipal;
     private Mot autreMot;
     private Mot temp;
-//    int xDeb, yDeb;
 
-    public WordsMaker(Grille grille) {
-        
-//        motPrincipal = new Mot();
-//        autreMot = new Mot();
-//        temp = new Mot();
-//        x = -1;
-//        y = -1;
-//        lastOtherX = -1;
-//        lastOtherY = -1;
-//        lastX = -1;
-//        lastY = -1;
-        this.grille = grille; 
+    public WordsMaker(ControllerGUI ctrl, Grille grille) {
+        this.ctrl = ctrl;
+        this.grille = ctrl.getGrille();
     }
-    
-    public void makeFirstWord(List<Jeton> lsJetons) {
-//        lsMots.clear();
-        
-        
-//        System.out.println("first word");
-//        getPosDebutMot(lsJetons);
-//        getPosFinMot(lsJetons);
-//        buildMot(lsJetons);
-//        System.out.print("mot : ");
-//        System.out.println(getMot());
-    }
-    
-//    public void makeOtherWord(List<Jeton> lsJetons) {
-//        System.out.println("another word");
-//        getPosDebutMot(lsJetons);
-//        getPosFinMot(lsJetons);
-//        buildMot(lsJetons);
-//    }
-//    
-//
-//    public boolean othersWords(List<Jeton> lsJetons) {
-//
-//        motPrincipal = lsMots.get(0);
-//        
-//        System.out.println("mot verti? " + motIsVertical());
-//
-//        for (Jeton j : lsJetons) {
-//            if (motIsVertical()) {
-//                if (grille.watchLeft(j) || grille.watchRight(j)) {
-//
-//                    return true;
-//                }
-//            } else {
-//                if (grille.watchDown(j) || grille.watchUp(j)) {
-//
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-//    
-//    public void makeWords(List<Jeton> lsJetons) {  
-//        makeFirstWord(lsJetons);
-//        System.out.println("others words? "+othersWords(lsJetons));
-//        if (othersWords(lsJetons))
-//            makeOtherWord(lsJetons);
-//    }
-    
-    
-//    public String getMot(Mot m) {
-//        return afficheStr(m);
-//    }
-    
+     
     public List<Mot> getMots() {
         return lsMots;
     }
     
-    public String affListMots() {
-        String str = "";
-        for (Mot m : lsMots) {
-//            System.out.println(m.size() + "lettre(s)");
-            str += m.getString();
-        }
-        return str.toUpperCase();
+    public String getTotalPoints() {
+        int tot = 0;
+        for (Mot m : lsMots)
+            tot += m.getPointsMot();
+        return ""+tot;
     }
-   
+
+    public String affListMots() {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Mot m : lsMots) {
+            sb.append(m.getString().toUpperCase());
+        }
+        
+        sb.append("\n");
+        sb.append("TOTAL : ");
+        sb.append(getTotalPoints());
+        sb.append(" points.");
+
+        return sb.toString();
+    }
+      
     
     public void makeWords(List<Jeton> lsJetons) {
         lsMots.clear();
@@ -119,12 +64,14 @@ public class WordsMaker {
     public void makeAWord(List<Jeton> lsJetons) {
         
         lettresPourMot.clear();
+        
+        if (lsMots.isEmpty()) {
+          motPrincipal = new Mot();
+        }
         temp = new Mot();
-        motPrincipal = new Mot();
-        autreMot = new Mot();
         
-              
         
+   
         System.out.println("-");
         temp.setJDeb(getJDebut(lsJetons));
         temp.setJFin(getJFin(lsJetons));
@@ -138,14 +85,16 @@ public class WordsMaker {
         
         if (lsMots.isEmpty()) {
             motPrincipal = temp;
+            motPrincipal.calcPoints(grille);
             lsMots.add(motPrincipal);
         } else {
             autreMot = temp;
+            autreMot.calcPoints(grille);
             lsMots.add(autreMot);
         }
             
-        
-        
+    
+        System.out.println("mot principal : ");
         motPrincipal.affAlign();
 //        affMotStr(motPrincipal);
         
@@ -166,6 +115,24 @@ public class WordsMaker {
     }
     
     
+    public boolean motDejaPlace(Jeton j) {
+        
+  
+        for (Mot m : lsMots) {
+            if (m == motPrincipal)
+                System.out.println("coucou mot principal");
+            else {
+                if (m.getJDeb() == j)
+                return true;
+            else if (m.getJFin() == j)
+                return true;
+            }           
+        }
+        return false;
+    }
+    
+    
+    
     public Jeton getJDebut(List<Jeton> lsJetons) {
         int xDeb;
         int yDeb;
@@ -176,32 +143,42 @@ public class WordsMaker {
         // first word
         // if mot verti : watch up(Y) else watch left(X) --> get last
         // else temp
+        
+        
+               
         if (!lsMots.isEmpty()) {
+            
+            System.out.println("motPrincipal verti? "+ motPrincipal.isVerti());
 
             temp.setJDeb(lsJetons.get(0));
             
             for (Jeton j : lsJetons) {
                 if (motPrincipal.isVerti()) {
-                    if (grille.watchLeft(j)) {
+                    if (grille.watchLeft(j)){// && !motDejaPlace(j)) {
                         xDeb = grille.getLastXLeft(j);
                         yDeb = j.getY();
+                                                
                         setJDeb(xDeb, yDeb, lsJetons);
                         System.out.println("deb 2nd mot horiz");
-                    } else if (grille.watchRight(j)) {
+                    } else if (grille.watchRight(j)){// && !motDejaPlace(j)) {
                         xDeb = j.getX();
                         yDeb = j.getY();
                         setJDeb(xDeb, yDeb, lsJetons);
+                        System.out.println("deb 2nd mot horiz z z z");
                     }
-                } else {
-                    if (grille.watchUp(j)) {
+                } else if (!motPrincipal.isVerti()) {
+                    System.out.println("test deb");
+                    System.out.println();
+                    if (grille.watchUp(j)){// && !motDejaPlace(j)) {
                         xDeb = j.getX();
                         yDeb = grille.getLastYUp(j);
                         setJDeb(xDeb, yDeb, lsJetons);
                         System.out.println("deb 2nd mot vert");
-                    } else if (grille.watchDown(j)) {
+                    } else if (grille.watchDown(j)){// && !motDejaPlace(j)) {
                         xDeb = j.getX();
                         yDeb = j.getY();
                         setJDeb(xDeb, yDeb, lsJetons);
+                        System.out.println("deb 2nd mot vert i i");
                     }
                         
                             
@@ -251,35 +228,39 @@ public class WordsMaker {
         // if mot verti watch down(Y) else watch right(X) --> get last
         // else last from temp
         if (!lsMots.isEmpty()) {
-            
+            System.out.println("fin 2nd mot");
 //            Jeton j = grille.getJetonAt(temp.getXDeb(), temp.getYDeb());
             
             for (Jeton j : lsJetons) {
                 if (motPrincipal.isVerti()) {
-                    if (grille.watchRight(j)) {
+                    if (grille.watchRight(j)){// && !motDejaPlace(j)) {
                         yFin = j.getY();
                         xFin = grille.getLastXRight(j);
+                        setJFin(xFin, yFin, lsJetons);
                         System.out.println("fin 2nd mot horiz");
                     } else if (grille.watchLeft(j)) {
                         xFin = j.getX();
                         yFin = j.getY();
+                        setJFin(xFin, yFin, lsJetons);
                         System.out.println("fin 2nd mot verti");
                     }
-                } else {
+                } else if (!motPrincipal.isVerti()){// && !motDejaPlace(j)) {
                     if (grille.watchUp(j)) {
                         xFin = j.getX();
                         yFin = j.getY();
+                        setJFin(xFin, yFin, lsJetons);
                         System.out.println("fin 2nd mot verti * * * *");
                         System.out.println(xFin + "/" + yFin);
                     }
                     else if (grille.watchDown(j)) {
                         xFin = j.getX();
                         yFin = grille.getLastYDown(j);
+                        setJFin(xFin, yFin, lsJetons);
                         System.out.println("fin 2nd mot verti");
                     }
                 }
             }
-            setJFin(xFin, yFin, lsJetons);
+            
             
             
             
@@ -403,7 +384,7 @@ public class WordsMaker {
                     } else {
                         lettresPourMot.add(getJetonFromList(xDeb, i, lsJetons));
                     }
-                    System.out.println("mot verti");
+                    System.out.println("1er mot verti");
                     System.out.println("xDeb, yDeb : " + xDeb + ", " + i);
                 }
             } else {
@@ -414,7 +395,7 @@ public class WordsMaker {
                     } else {
                         lettresPourMot.add(getJetonFromList(i, yDeb, lsJetons));
                     }
-                    System.out.println("mot horiz");
+                    System.out.println("1er mot horiz");
                     System.out.println("xDeb, yDeb : " + i + ", " + yDeb);
 
                 }
@@ -435,136 +416,6 @@ public class WordsMaker {
         
     }
     
-//    private void next(Mot mot) {
-//        if (mot.isVerti())
-//            xDeb = xDeb+1;
-//        else
-//            yDeb = yDeb+1;                   
-//    }
-//    
-//    private boolean hasNext(int xFin, int yFin) {
-//        return xDeb <= xFin && yDeb <= yFin;
-//    }
-    
-
-//    public void getPosDebutMot(List<Jeton> lsJetons) {
-//        
-//        System.out.println("debut mot ");
-//        if (!lsMots.isEmpty()) {
-////            Jeton j = lsJetons.get(0);
-//            
-//            for (Jeton j : lsJetons) {
-//                if (motIsVertical()) {
-//                    if (grille.watchLeft(j)) {
-//                        otherX = grille.getLastXLeft(j);
-//                        otherY = j.getY();
-//                        System.out.println("deb 2nd mot horiz");
-//                        System.out.println(otherX + ".." + otherY);
-//                    }       
-//                } else {
-//                    if (grille.watchUp(j)) {
-//                        otherX = j.getX();
-//                        otherY = grille.getLastYUp(j);
-//                        System.out.println("deb 2nd mot vert");
-//                        System.out.println(otherX + ".." + otherY);
-//
-//                    }
-//                }  
-//            }
-//            
-//            
-//        } else {
-//        
-//        
-//            Jeton j = lsJetons.get(0);
-////        for (Jeton j : lsJetons) {
-//            if (grille.watchUp(j)) {
-//                
-//                
-//                x = j.getX();
-//                y = grille.getLastYUp(j);
-//            } else if (grille.watchLeft(j)) {
-//                x = grille.getLastXLeft(j);
-//                y = j.getY();
-//             } else {
-//                x = j.getX();
-//                y = j.getY();
-//            }
-//            System.out.println("pos debut :");
-//            System.out.println(x + "/"+ y);
-////        }
-//        }
-//    }
-//    
-//    
-//    
-//    
-//    public void getPosFinMot(List<Jeton> lsJetons) {
-//        
-//        Jeton lastJeton = lsJetons.get(lsJetons.size()-1);
-//        
-//        
-//        System.out.println("otherz XY");
-//        System.out.println(otherX + " ! "+ otherY);
-//        
-//        if (!lsMots.isEmpty()) {
-//            Jeton j = grille.getJetonAt(otherX, otherY);
-//            
-//            
-//            
-//            
-//            
-//            // 
-//            
-//                if (motIsVertical()) {
-//                    if (grille.watchRight(j)) {
-//                        
-//                        lastOtherY = j.getY();
-//                        
-//                        for (Jeton jj : lsJetons) {
-//                            if (jj.getY() == lastOtherY)
-//                                lastOtherX = jj.getX();
-//                        
-//                        }
-//                        
-//                        
-//                        
-//                        System.out.println("fin 2nd mot horiz");
-//                        System.out.println(lastOtherX + ".." + lastOtherY);
-//                        
-//                    }       
-//                } else {
-//                    if (grille.watchDown(j)) {
-//                        lastOtherX = j.getX();
-//                        lastOtherY = grille.getLastYDown(j);
-//                        System.out.println("fin 2nd mot verti");
-//                        System.out.println(lastOtherX + ".." + lastOtherY);
-//
-//                    }
-//                }  
-//            
-//
-//        } else {
-//
-//            Jeton j = lsJetons.get(0);
-////        for (Jeton j : lsJetons) {
-//            if (grille.watchRight(lastJeton) || grille.watchDown(lastJeton)) {
-////                Jeton lastJeton = lsJetons.get(lsJetons.size());
-//                lastX = grille.getLastXRight(lastJeton);
-//                lastY = grille.getLastYDown(lastJeton);
-//                System.out.println("right or down");
-//            } else {
-//                lastX = lastJeton.getX();
-//                lastY = lastJeton.getY();
-//            }
-//            
-//            System.out.println("pos fin :");
-//            System.out.println(lastX + "/"+ lastY);
-//            
-////       }
-//        }
-//        
-//    }
     
     
     private Jeton getJetonFromList(int x, int y, List<Jeton> lsJetons) {
@@ -576,117 +427,7 @@ public class WordsMaker {
         }
         return jj;
     }
-    
-//    private boolean jetonNext(int x, int y) {
-//        if (!lsMots.isEmpty())
-//            return x <= lastOtherX && y <= lastOtherY;
-//        else     
-//            return x <= lastX && y <= lastY;
-//    }
-//    
-//    private boolean motIsVertical() {
-//        return x == lastX;
-//    }
-//    
-//    private boolean newMotIsVertical() {
-//        System.out.println("otherZ");
-//        System.out.println(otherX +"'''"+lastOtherX);
-//        return otherX == lastOtherX;
-//    }
-//    
-//    private void goNext() {
-//        
-//        System.out.println("new mot vert?" + newMotIsVertical());
-//        if (!lsMots.isEmpty()) {
-//            if (newMotIsVertical()) {
-//                otherX = otherX;
-//                otherY = otherY + 1;
-//            } else {
-//                otherX = otherX + 1;
-//                otherY = otherY;
-//            }
-//
-//        } else {
-//            if (motIsVertical()) {
-//                x = x;
-//                y = y + 1;
-//            } else {
-//                x = x + 1;
-//                y = y;
-//            }
-//        }
-//
-//    }
-//
-//       
-//    public Mot buildMot(List<Jeton> lsJetons) {
-//        
-//        mot.clear();
-//        
-//        System.out.println("otherz XY :");
-//        
-//        if (!lsMots.isEmpty()) {
-//            do {
-//                if (grille.caseJouee(otherX, otherY)) {
-//                    mot.add(grille.getJetonAt(otherX, otherY));
-//                    System.out.println("test autre mot");
-//
-//                } else {
-//                    mot.add(getJetonFromList(otherX, otherY, lsJetons));
-//                    System.out.println("testuuu autre mot");
-//                }
-//                System.out.println("hihi autre mot");
-//                goNext();
-//            } while (jetonNext(otherX, otherY));
-//            
-//            
-//            
-//
-//        } else 
-//        
-//            
-//        do  { 
-//            
-//                    
-//            if (grille.caseJouee(x, y)) {
-//                mot.add(grille.getJetonAt(x, y));
-//                System.out.println("test1");
-//                
-//            } else {
-//                mot.add(getJetonFromList(x, y,lsJetons));
-//                System.out.println("test");
-//            }
-//            System.out.println("hihi");
-//            goNext();
-//            
-//        } while (jetonNext(x,y));
-//        
-//              
-//        getPosDebutMot(lsJetons);
-//        getPosFinMot(lsJetons);
-//        
-//        
-//        System.out.println(x + "," + y);
-//        System.out.println("coucou");
-//        
-//        Mot m = new Mot(mot);
-//        lsMots.add(m);
-//        System.out.println("lsMots size : " + lsMots.size());
-////        return m;
-//        
-//        return m;
-//
-//       
-//    }
-    
-//    public String afficheMot() {
-//        String str = "";
-//        for (Jeton j : mot)
-//            str = str+ j.getChar();
-//        
-//        return str.toUpperCase();
-//    }
-    
+        
     public String afficheMots() {
         StringBuilder sb = new StringBuilder();
         

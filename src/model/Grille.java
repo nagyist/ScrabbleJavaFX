@@ -19,7 +19,7 @@ public class Grille extends Observable {
     private static final Set<Point> triples = new HashSet<>();
     private static final Set<Point> motsDoubles = new HashSet<>();
     private static final Set<Point> motsTriples = new HashSet<>();
-       
+    
     
     public Grille() {
         this.grille = new Case[DIM][DIM];
@@ -34,6 +34,21 @@ public class Grille extends Observable {
     }
     
     
+    public String getCaseType(Jeton j) {
+        Point pt = new Point(j.getX(), j.getY());
+        
+        if (motsTriples.contains(pt))
+            return "motTriple";
+        else if(motsDoubles.contains(pt))
+            return "motDouble";
+        else if (triples.contains(pt))
+            return "triple";
+        else if (doubles.contains(pt))
+            return "double";
+        else
+            return "simple";
+    }
+  
 //    public void setCase(int x, int y, char lettre) {
 //        this.grille[x][y].setLettre(lettre);   
 //    }
@@ -139,7 +154,7 @@ public class Grille extends Observable {
     }
     
     private void initGrille() {
-         
+                
         doubles.add(new Point(0, 3));
         doubles.add(new Point(0, DIM-4));
         doubles.add(new Point(2, 6));
