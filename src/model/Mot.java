@@ -119,6 +119,15 @@ public class Mot {
             return -1;        
     }
     
+    public String getMotStr() {
+        StringBuilder sb = new StringBuilder();
+               
+        for (Jeton j : mot) {
+            sb.append(j.getStr());
+        }
+        return sb.toString();
+    }
+    
     
     public String getString() {
 

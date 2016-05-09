@@ -280,11 +280,11 @@ public class ControllerGUI extends Application {
             displayAlert(alertError);
             
                         
-//        } else if (!scrabble.motDico(lsJetons)) {
-////        } else if (!dict.contains(str)) {
-////            System.out.println("test ->" + str);
-//            System.out.println("mot pas dans le dict");
-//            displayAlert(alertDict);
+        } else if (!scrabble.motDico(lsJetons)) {
+//        } else if (!dict.contains(str)) {
+//            System.out.println("test ->" + str);
+            System.out.println("mot pas dans le dict");
+            displayAlert(alertDict);
      
         } else {
             

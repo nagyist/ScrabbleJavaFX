@@ -17,11 +17,177 @@ public class WordsMaker {
     private Mot motPrincipal;
     private Mot autreMot;
     private Mot temp;
+    private List<Jeton> lsJDeb = new ArrayList<>();
+    private List<Jeton> lsJFin = new ArrayList<>();
+    
 
     public WordsMaker(ControllerGUI ctrl, Grille grille) {
         this.ctrl = ctrl;
         this.grille = ctrl.getGrille();
     }
+    
+    
+    public void construireMots(List<Jeton> lsJetons) {
+
+        if (lsMots.isEmpty()) {
+
+            temp = new Mot();
+
+            temp.setJDeb(lsJetons.get(0));
+            temp.setJFin(lsJetons.get(lsJetons.size() - 1));
+
+            construct(lsJetons, temp.getJDeb(), temp.getJFin());
+            lsMots.add(temp);
+
+        } else {
+
+            temp = new Mot();
+
+            for (Jeton j : lsJetons) {
+
+                int xDeb = -1;
+                int yDeb = -1;
+                int xFin = -1;
+                int yFin = -1;
+
+                if (lsMots.get(0).isVerti()) {
+                    //regarder à gauche et à droite // watchHoriz
+
+                    if (grille.watchLeft(j)) {
+                        xDeb = grille.getLastXLeft(j);
+                        yDeb = j.getY();
+
+                        xFin = j.getX();
+                        yFin = j.getY();
+
+                    } else if (grille.watchRight(j)) {
+                        xDeb = j.getX();
+                        yDeb = j.getY();
+
+                        yFin = j.getY();
+                        xFin = grille.getLastXRight(j);
+
+                        //xDeb = getXLeft
+                        //yDeb = j.getY()
+                        //xFin =
+                        //yFin =
+//                        setJDeb(xDeb, yDeb, lsJetons);
+//                        setJFin(xFin, yFin, lsJetons);
+//                        construct(lsJetons, temp.getJDeb(), temp.getJFin());
+//                        lsMots.add(temp);
+
+                    } else {
+                        //regarder en haut et en bas // watchVerti
+
+                        if (grille.watchUp(j)) {
+                            xDeb = j.getX();
+                            yDeb = grille.getLastYUp(j);
+
+                            xFin = j.getX();
+                            yFin = j.getY();
+
+                        } else if (grille.watchDown(j)) {
+                            xDeb = j.getX();
+                            yDeb = j.getY();
+
+                            xFin = j.getX();
+                            yFin = grille.getLastYDown(j);
+
+                            //xDeb = 
+                            //yDeb = 
+                            //xFin =
+                            //yFin =
+//                            setJDeb(xDeb, yDeb, lsJetons);
+//                            setJFin(xFin, yFin, lsJetons);
+//                            construct(lsJetons, temp.getJDeb(), temp.getJFin());
+//                            lsMots.add(temp);
+
+                        }
+                    }
+                    
+                    setJDeb(xDeb, yDeb, lsJetons);
+                    setJFin(xFin, yFin, lsJetons);
+                    construct(lsJetons, temp.getJDeb(), temp.getJFin());
+                    lsMots.add(temp);
+                }
+            }
+        }
+    }
+    
+    public void construct(List<Jeton> lsJetons, Jeton jDeb, Jeton Jfin) {
+
+        if (lsMots.isEmpty()) {
+
+            temp.fill(lsJetons);
+
+        } else {
+            
+            
+            do {
+                
+            } while (j != jFin)
+            
+            //do
+            //jdeb.add
+            //go next
+            //(while j != jfin)
+        }
+    }
+
+    
+    public void goNext(List<Jeton> lsJetons, Jeton jDeb, Jeton jFin) {
+
+        if (lsMots.get(0).isVerti()) {
+            // go horiz
+        } else {
+            // go verti
+        }
+
+    }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
      
     public List<Mot> getMots() {
         return lsMots;
@@ -53,11 +219,15 @@ public class WordsMaker {
     
     public void makeWords(List<Jeton> lsJetons) {
         lsMots.clear();
+//        lsJDeb.clear();
+//        lsJFin.clear();
         makeAWord(lsJetons);
         System.out.println("others words? " + othersWords(lsJetons) );
         
         if (othersWords(lsJetons))
             makeAWord(lsJetons);
+        
+        
         System.out.println("nb mots --->" + lsMots.size());
     }
     
@@ -137,6 +307,7 @@ public class WordsMaker {
         int xDeb;
         int yDeb;
         Jeton jDeb = null;
+        
 
         // another word
         //...
@@ -215,13 +386,17 @@ public class WordsMaker {
             System.out.println(temp.getYDeb());
         }
         System.out.println("** : " + temp.getJDeb().getChar());
+        
+        lsJDeb.add(jDeb);
+        System.out.println("taille :::::" + lsJDeb.size());
+        
         return temp.getJDeb();
     }
     
     public Jeton getJFin(List<Jeton> lsJetons) {
-        int xFin = -1;
-        int yFin = -1;
-        Jeton jFin;
+        int xFin;// = -1;
+        int yFin;// = -1;
+        Jeton jFin = null;
         // another word
         //...
 
@@ -297,6 +472,9 @@ public class WordsMaker {
         System.out.println("jFin : ");
         System.out.println(temp.getXFin());
         System.out.println(temp.getYFin());
+        
+        lsJFin.add(jFin);
+        
         return temp.getJFin();
     }
     
@@ -332,6 +510,18 @@ public class WordsMaker {
         System.out.println("is verti : "+ temp.isVerti());
         System.out.println("size : "+ temp.size());
 
+        
+        System.out.println("lsJDeb size : " + lsJDeb.size());
+        
+//        for (int k = 0 ; k <= lsJDeb.size()-1 ; ++k ) 
+//        {
+//            System.out.println("coucou");
+//         int xDeb = lsJDeb.get(k).getX();
+//         int yDeb = lsJDeb.get(k).getY();
+//         int xFin = lsJFin.get(k).getX();
+//         int yFin = lsJFin.get(k).getY();
+            
+            
         int xDeb = temp.getXDeb();
         int yDeb = temp.getYDeb();
         int xFin = temp.getXFin();
@@ -403,13 +593,19 @@ public class WordsMaker {
 
         }
         
-        
+//        }
         
         
         System.out.println("size liste :" + lettresPourMot.size());
 //        for (Jeton j : lettresPourMot)
 //            System.out.println(j.getChar());
 
+        
+        System.out.println("lettres pour mot *******");
+        for (Jeton j : lettresPourMot) {
+            System.out.println(j.getStr());
+        }
+            
 
         temp.fill(lettresPourMot);
 

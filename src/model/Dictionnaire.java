@@ -31,22 +31,29 @@ public class Dictionnaire {
         }
     }
     
-    public boolean contains(String str) {
-        if (dictionnaire.contains(str)) {
-                return true;
-    }
-        return false;
-    }
     
-    public boolean contains(Mot m) {
-        return dictionnaire.contains(m.getString());
-    }
+//    public boolean contains(String str) {
+//        if (dictionnaire.contains(str)) {
+//                return true;
+//    }
+//        return false;
+//    }
+    
+//    public boolean contains(Mot m) {
+//        return dictionnaire.contains(m.getMotStr());
+//    }
+    
     
     
     public boolean contains(List<Mot> lsMots) {    
         for (Mot m : lsMots) {
-            if (!dictionnaire.contains(m))
+            System.out.println("mot -> " + m.getMotStr());
+            if (!dictionnaire.contains(m.getMotStr().toUpperCase())) {
+                System.out.println("trezytresqtgre");
                 return false;
+            }
+            else
+                return true;
         }
         return true; 
     }

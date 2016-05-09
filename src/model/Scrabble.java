@@ -1,6 +1,7 @@
 package model;
 
 import controllerGUI.ControllerGUI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -102,8 +103,15 @@ public class Scrabble extends Observable {
 //        String str = buildMot(lsJetons);
 //        wm.makeWord(lsJetons);
 //        String str = wm.getMot();       
-        
-        List lsMots = buildMots(lsJetons);
+      List<Mot> lsMots = new ArrayList<>();
+      lsMots = buildMots(lsJetons);
+      
+        System.out.println("lsMots mots :");
+      for (Mot m : lsMots) {
+          System.out.println(m.getMotStr());
+      }
+          
+
       return dict.contains(lsMots);
 //        return dict.contains(str);
     }
