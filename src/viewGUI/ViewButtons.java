@@ -19,7 +19,7 @@ public class ViewButtons extends HBox {
             Button btnOK = new Button();
             btnOK.setText("Valider");
             btnOK.setOnAction((ActionEvent event) -> {
-                System.out.println("OK!");
+//                System.out.println("OK!");
                 ctrl.validerCoup(ctrl.getListCasesTemp());
 //                , ctrl.getListJetonsJoues());
                 
@@ -28,14 +28,14 @@ public class ViewButtons extends HBox {
             Button btnCancel = new Button();
             btnCancel.setText("Annuler");
             btnCancel.setOnAction((ActionEvent event) -> {
-                System.out.println("Annuler!");
+//                System.out.println("Annuler!");
                 ctrl.annulerDerniereLettre();
             });
             
             Button btnChange = new Button();
             btnChange.setText("Changer jetons");
             btnChange.setOnAction((ActionEvent event) -> {
-                System.out.println("Change!");
+//                System.out.println("Change!");
                 ctrl.changerJetonsSelected();
             });
             

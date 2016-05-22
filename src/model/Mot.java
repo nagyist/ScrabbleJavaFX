@@ -23,6 +23,10 @@ public class Mot {
         for (Jeton j : lsJetons)
             mot.add(j); 
     }
+    
+    public void add(Jeton j) {
+        mot.add(j);
+    }
 
     public void calcPoints(Grille grille) {
         for (Jeton j : mot) {
@@ -110,14 +114,21 @@ public class Mot {
         return jFin.getY();
     }
     
-    public int size() {
-        if (vertical)
-            return getYFin() - getYDeb() + 1;
-        else if (!vertical)
-            return getXFin() - getXDeb() + 1;
-        else
-            return -1;        
-    }
+//    public int size() {
+//        if (vertical)
+//            return getYFin() - getYDeb() + 1;
+//        else if (!vertical)
+//            return getXFin() - getXDeb() + 1;
+//        else
+//            return -1;        
+//    }
+//    
+//    public int si() {
+//        int cpt = 0 ;
+//        for (Jeton j : mot)
+//            cpt++;
+//        return cpt;
+//    }
     
     public String getMotStr() {
         StringBuilder sb = new StringBuilder();
@@ -127,6 +138,8 @@ public class Mot {
         }
         return sb.toString();
     }
+    
+    
     
     
     public String getString() {

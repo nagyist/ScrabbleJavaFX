@@ -7,6 +7,8 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.*;
@@ -37,6 +39,7 @@ public class ControllerGUI extends Application {
     private final List<Jeton> listJetonsChange = new ArrayList<>();
     private final WordsMaker wm;
     private final Dictionnaire dict;
+    private boolean testMode;
     
 
 
@@ -237,7 +240,8 @@ public class ControllerGUI extends Application {
         if(alert.getAlertType() == AlertType.ERROR) {
             alert.setTitle("Erreur"); 
             alert.setHeaderText("Mauvais coup : ");
-            alert.setContentText(verifMot.getError());
+            alert.setContentText(verifMot.getError());           
+            
         } else if (alert.getAlertType() == AlertType.WARNING) {
             alert.setTitle("Attention");
             alert.setHeaderText("Échanger des lettres : ");
@@ -252,14 +256,15 @@ public class ControllerGUI extends Application {
             alert.setContentText(wm.affListMots());
         }
 
+        alert.showAndWait();
         
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                System.out.println("alert clicked OK");
-                //formatSystem() ===> fonction qui 'annule le coup'
-                ;
-            }
-        });
+//        alert.showAndWait().ifPresent(response -> {
+//            if (response == ButtonType.OK) {
+////                System.out.println("alert clicked OK");
+//                //formatSystem() ===> fonction qui 'annule le coup'
+//                ;
+//            }
+//        });
     }
     
     
@@ -276,11 +281,17 @@ public class ControllerGUI extends Application {
        
        
         if (!scrabble.motPosition(lsJetons)) {
-            System.out.println("mauvaise position mot");
+//            System.out.println("mauvaise position mot");
             displayAlert(alertError);
             
-                        
-        } else if (!scrabble.motDico(lsJetons)) {
+//        if (!testMode) {
+//            if (!scrabble.motDico(lsJetons)) {
+////        } else if (!dict.contains(str)) {
+////            System.out.println("test ->" + str);
+//            System.out.println("mot pas dans le dict");
+//            displayAlert(alertDict);
+//        }  }              
+        } else if (!testMode && !scrabble.motDico(lsJetons)) {
 //        } else if (!dict.contains(str)) {
 //            System.out.println("test ->" + str);
             System.out.println("mot pas dans le dict");
@@ -295,19 +306,19 @@ public class ControllerGUI extends Application {
             
 
         // TESTS :    
-            System.out.print("Chevalet model : ");
-            for (Jeton j : chev.getChev()) {
-                System.out.print(j.getChar() + " ");
-            }
-            
-            System.out.println("Sac contenu : ");
-            sac.afficherSac();
-            
-            System.out.println("nb mots");
-            System.out.println(wm.getMots().size());
-            System.out.println("mots : ");            
-            System.out.println(wm.affListMots());
-            System.out.println("points");
+//            System.out.print("Chevalet model : ");
+//            for (Jeton j : chev.getChev()) {
+//                System.out.print(j.getChar() + " ");
+//            }
+//            
+//            System.out.println("Sac contenu : ");
+//            sac.afficherSac();
+//            
+//            System.out.println("nb mots");
+//            System.out.println(wm.getMots().size());
+//            System.out.println("mots : ");            
+//            System.out.println(wm.affListMots());
+//            System.out.println("points");
             
             
             
@@ -375,6 +386,24 @@ public class ControllerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
 //        setPrimaryStage(primaryStage);
         MainView viewGUI = new MainView(primaryStage, viewGrille, viewChevalet, this);
+        ButtonType jeu = new ButtonType("Jeu");
+        ButtonType test = new ButtonType("Test");
+        Alert al = new Alert(Alert.AlertType.NONE, "Choisir Mode", jeu, test);
+        al.setTitle("Mode de jeu");
+        al.setHeaderText("Jeu ou Test");
+        al.setContentText("Choisissez le mode Jeu pour jouer une partie normale ou le mode Test pour jouer avec le dictionnaire désactivé.");
+
+        al.showAndWait().ifPresent(response -> {
+            if (response == jeu) {
+                testMode = false;
+            } else if (response == test) {
+                testMode = true;
+            }
+        });
+        
+        System.out.println(testMode);
+
+        
     }
 
 }

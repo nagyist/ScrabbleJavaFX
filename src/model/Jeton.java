@@ -36,6 +36,10 @@ public class Jeton {
         
     }
     
+    public void affJeton() {
+        System.out.println(x + "/" + y);
+    }
+    
     public char getChar() {
         return lettre;
     }

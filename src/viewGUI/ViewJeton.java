@@ -82,7 +82,7 @@ public class ViewJeton extends StackPane {
                 ctrl.addListJetonsChange(jeton);
             }
             
-            ctrl.afficheListJetonsChange();
+//            ctrl.afficheListJetonsChange();
 
 
 //            if (vjt != null) {
@@ -119,8 +119,8 @@ public class ViewJeton extends StackPane {
                 vchev.removeViewJetonFromChevalet(courant);
             }
             
-            for (ViewJeton vj : vchev.getListViewJetonsChevalet())
-                System.out.println(vj.getLettre());
+//            for (ViewJeton vj : vchev.getListViewJetonsChevalet())
+//                System.out.println(vj.getLettre());
             ctrl.removeListJetonsChange(courant);
             ctrl.setCourant(null);
                            

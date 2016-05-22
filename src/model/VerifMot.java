@@ -188,8 +188,8 @@ public class VerifMot {
     }
 
     private boolean verifTrousHorizGrille(int posX, int posY, int nbTrousHoriz) {
-        System.out.println("testVTGFDFZEFGEZ");
-        System.out.println(posX + " * " + posY + " * " + nbTrousHoriz);
+//        System.out.println("testVTGFDFZEFGEZ");
+//        System.out.println(posX + " * " + posY + " * " + nbTrousHoriz);
         for (int i = 0; i < nbTrousHoriz; ++i, ++posX) {
 //            System.out.println(i + "+" + posX);
             if (!grille.caseJouee(posX, posY)) {
@@ -242,26 +242,26 @@ public class VerifMot {
     private boolean motLineaire() {
 
         if (aligned(motCandidate)) { // OK
-            System.out.println("--- mot aligné ---");
+//            System.out.println("--- mot aligné ---");
             sortMot();
 
             if (alignVerti(motCandidateSorted)) { // OK
-                System.out.println("align VERTI");
+//                System.out.println("align VERTI");
                 if (trouVerti(motCandidateSorted)) { // OK 
-                    System.out.println("trou verti");
+//                    System.out.println("trou verti");
                     return false;
                 }
             } else if (alignHoriz(motCandidateSorted)) { // OK
-                System.out.println("align HORIZ");
+//                System.out.println("align HORIZ");
                 if (trouHoriz(motCandidateSorted)) { // OK 
-                    System.out.println("trou horiz");
+//                    System.out.println("trou horiz");
                     return false;
 
                 }
             }
             return true;
         } else {
-            System.out.println("NOT ALIGNED !!! "); // OK
+//            System.out.println("NOT ALIGNED !!! "); // OK
             return false;
         }
     }
@@ -326,7 +326,7 @@ public class VerifMot {
 //                displayAlert(alertError);
             return false;
         } else {
-            System.out.println("Premier coup OK!");
+//            System.out.println("Premier coup OK!");
 //                displayAlert(alertConfirm);
 //            Mot firstMot = new Mot(motCandidateSorted);
             return true;
@@ -337,7 +337,7 @@ public class VerifMot {
 
         if (!touchMotGrille()) {
             errorDisplayed = errorNotTouchingExisting;
-            System.out.println("touche pas grille");  // pas ok
+//            System.out.println("touche pas grille");  // pas ok
             displayError();
 //            displayAlert(alertError);
             return false;
@@ -347,7 +347,7 @@ public class VerifMot {
             if (alignHoriz(motCandidateSorted)) {
                 if (trouHoriz(motCandidateSorted)) {
                     errorDisplayed = errorNotTouchingExisting;   // OK
-                    System.out.println("trou horiz et touche pas grille");
+//                    System.out.println("trou horiz et touche pas grille");
                     displayError();
 //                        displayAlert(alertError);
                     return false;
@@ -355,7 +355,7 @@ public class VerifMot {
             } else if (alignVerti(motCandidateSorted)) {      // ------> OK !!!
                 if (trouVerti(motCandidateSorted)) {
                     errorDisplayed = errorNotTouchingExisting;
-                    System.out.println("trou verti et touche pas grille");
+//                    System.out.println("trou verti et touche pas grille");
                     displayError();
 //                        displayAlert(alertError);
                     return false;
@@ -364,18 +364,18 @@ public class VerifMot {
         } else if (!motLineaire()) {
             errorDisplayed = errorMotNotAligned;
             displayError();
-            System.out.println("mot pas aligné");
+//            System.out.println("mot pas aligné");
             return false;
         } else {
             if (!touchMotGrille()) {
                 errorDisplayed = errorNotTouchingExisting;
-                System.out.println("aligné mais touche pas grille");  // pas ok
+//                System.out.println("aligné mais touche pas grille");  // pas ok
                 displayError();
 //                    displayAlert(alertError);
                 return false;
             }
         }
-        System.out.println("mot ok!");
+//        System.out.println("mot ok!");
 //        displayAlert(alertConfirm);
         return true;
     }
@@ -383,10 +383,10 @@ public class VerifMot {
     public boolean coupOK() {
 
         if (isItFirstCoup()) {
-            System.out.println("1e coup");
+//            System.out.println("1e coup");
             return firstCoup();    // OK
         } else {
-            System.out.println("autre coup coup");
+//            System.out.println("autre coup coup");
             return otherCoup();
         }
     }

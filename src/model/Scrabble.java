@@ -95,8 +95,8 @@ public class Scrabble extends Observable {
     public List<Mot> buildMots(List<Jeton> lsJetons) {
 //        wm.makeWords(lsJetons);
         
-        wm.makeWords(lsJetons);
-        return wm.getMots();
+        return wm.prepareMots(lsJetons);
+//        return wm.getMots();
     }
     
     public boolean motDico(List<Jeton> lsJetons) {

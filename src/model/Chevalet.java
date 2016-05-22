@@ -41,7 +41,7 @@ public class Chevalet extends Observable {
             Jeton j = it.next();
             if (j == jj) {
                 it.remove();
-                System.out.println("TROUVE ET RETIRE : " + j.getChar());
+//                System.out.println("TROUVE ET RETIRE : " + j.getChar());
                 return;
             }
         }       
